@@ -1,0 +1,28 @@
+
+    \begin{table}[!h]
+        \centering
+        \resizebox{\textwidth}{!}{%
+        \begin{tabular}{|l|r|r|r|r|r|r|r|}
+        \hline
+        \multicolumn{1}{|c|}{} &
+          \multicolumn{3}{c|}{Ave Execution Time (s)} &
+          \multicolumn{3}{c|}{Ave Total Tokens} &
+          \multicolumn{1}{c|}{} \\ \cline{2-7}
+        \multicolumn{1}{|c|}{\multirow{-2}{*}{Stages}} &
+          \multicolumn{1}{c|}{Overall} &
+          \multicolumn{1}{c|}{Pass} &
+          \multicolumn{1}{c|}{Fail} &
+          \multicolumn{1}{c|}{Overall} &
+          \multicolumn{1}{c|}{Pass} &
+          \multicolumn{1}{c|}{Fail} &
+          \multicolumn{1}{|c|}{\multirow{-2}{*}{\shortstack{Success\\Rate}}} \\ \hline
+    SG & 244.70 & 244.70 & 0.00 & 21389 & 21389 & 0 & 1.000 \\ \hline
+PSG & 150.86 & 138.42 & 511.64 & 12101 & 10262 & 65422 & 0.967 \\ \hline
+TPUSG & 175.36 & 149.45 & 408.53 & 15027 & 11095 & 50411 & 0.900 \\ \hline
+
+        \end{tabular}%
+        }
+        \caption{Performance metrics of passed and failed runs,including execution time, token consumption, and success rate in three stages. Batch ID: 40f1, Model: gpt-5-2025-08-07, Date: 02.03, Parameters: extra-body={}}
+        \label{tab:performance_metrics_ave_40f1_gpt-5-2025-08-07_02.03}
+        \end{table}
+    

@@ -1,0 +1,33 @@
+
+    \begin{table}[!h]
+        \centering
+        \resizebox{\textwidth}{!}{%
+        \begin{tabular}{|l|r|r|r|r|r|r|r|r|r|r|r|r|}
+        \hline
+        \multicolumn{1}{|c|}{} &
+          \multicolumn{4}{c|}{Overall Token} &
+          \multicolumn{4}{c|}{Input Token} &
+          \multicolumn{4}{c|}{Output Token} \\ \cline{2-13}
+        \multicolumn{1}{|c|}{\multirow{-2}{*}{Stages}} &
+          \multicolumn{1}{c|}{Ave} &
+          \multicolumn{1}{c|}{Med} &
+          \multicolumn{1}{c|}{Max} &
+          \multicolumn{1}{c|}{Min} &
+          \multicolumn{1}{c|}{Ave} &
+          \multicolumn{1}{c|}{Med} &
+          \multicolumn{1}{c|}{Max} &
+          \multicolumn{1}{c|}{Min} &
+          \multicolumn{1}{c|}{Ave} &
+          \multicolumn{1}{c|}{Med} &
+          \multicolumn{1}{c|}{Max} &
+          \multicolumn{1}{c|}{Min} \\ \hline
+    SG & 21389 & 20309 & 33629 & 11487 & 8985 & 8449 & 16638 & 3069 & 12404 & 12143 & 16991 & 8416 \\ \hline
+PSG & 12101 & 10106 & 65422 & 7429 & 2598 & 1500 & 28850 & 1500 & 9502 & 8606 & 36572 & 5929 \\ \hline
+TPUSG & 15027 & 9624 & 55222 & 8212 & 4556 & 1764 & 24086 & 1764 & 10470 & 7860 & 31136 & 6448 \\ \hline
+
+        \end{tabular}%
+        }
+        \caption{Token consumption details regarding Overall, Input, and Output in three stages. Batch ID: 40f1, Model: gpt-5-2025-08-07, Date: 02.03, Parameters: extra-body={}}
+        \label{tab:token_details_40f1_gpt-5-2025-08-07_02.03}
+        \end{table}
+    

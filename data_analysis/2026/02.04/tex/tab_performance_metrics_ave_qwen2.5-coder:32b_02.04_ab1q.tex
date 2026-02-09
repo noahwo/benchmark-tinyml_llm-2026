@@ -1,0 +1,28 @@
+
+    \begin{table}[!h]
+        \centering
+        \resizebox{\textwidth}{!}{%
+        \begin{tabular}{|l|r|r|r|r|r|r|r|}
+        \hline
+        \multicolumn{1}{|c|}{} &
+          \multicolumn{3}{c|}{Ave Execution Time (s)} &
+          \multicolumn{3}{c|}{Ave Total Tokens} &
+          \multicolumn{1}{c|}{} \\ \cline{2-7}
+        \multicolumn{1}{|c|}{\multirow{-2}{*}{Stages}} &
+          \multicolumn{1}{c|}{Overall} &
+          \multicolumn{1}{c|}{Pass} &
+          \multicolumn{1}{c|}{Fail} &
+          \multicolumn{1}{c|}{Overall} &
+          \multicolumn{1}{c|}{Pass} &
+          \multicolumn{1}{c|}{Fail} &
+          \multicolumn{1}{|c|}{\multirow{-2}{*}{\shortstack{Success\\Rate}}} \\ \hline
+    SG & 194.86 & 0.00 & 194.86 & 6847 & 0 & 6847 & 0.000 \\ \hline
+PSG & 83.94 & 69.17 & 143.01 & 2535 & 2064 & 4419 & 0.800 \\ \hline
+TPUSG & 95.12 & 82.91 & 143.94 & 3020 & 2611 & 4658 & 0.800 \\ \hline
+
+        \end{tabular}%
+        }
+        \caption{Performance metrics of passed and failed runs,including execution time, token consumption, and success rate in three stages. Batch ID: ab1q, Model: qwen2.5-coder:32b, Date: 02.04, Parameters: None}
+        \label{tab:performance_metrics_ave_ab1q_qwen2.5-coder:32b_02.04}
+        \end{table}
+    

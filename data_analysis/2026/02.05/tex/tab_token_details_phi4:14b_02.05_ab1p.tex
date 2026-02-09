@@ -1,0 +1,33 @@
+
+    \begin{table}[!h]
+        \centering
+        \resizebox{\textwidth}{!}{%
+        \begin{tabular}{|l|r|r|r|r|r|r|r|r|r|r|r|r|}
+        \hline
+        \multicolumn{1}{|c|}{} &
+          \multicolumn{4}{c|}{Overall Token} &
+          \multicolumn{4}{c|}{Input Token} &
+          \multicolumn{4}{c|}{Output Token} \\ \cline{2-13}
+        \multicolumn{1}{|c|}{\multirow{-2}{*}{Stages}} &
+          \multicolumn{1}{c|}{Ave} &
+          \multicolumn{1}{c|}{Med} &
+          \multicolumn{1}{c|}{Max} &
+          \multicolumn{1}{c|}{Min} &
+          \multicolumn{1}{c|}{Ave} &
+          \multicolumn{1}{c|}{Med} &
+          \multicolumn{1}{c|}{Max} &
+          \multicolumn{1}{c|}{Min} &
+          \multicolumn{1}{c|}{Ave} &
+          \multicolumn{1}{c|}{Med} &
+          \multicolumn{1}{c|}{Max} &
+          \multicolumn{1}{c|}{Min} \\ \hline
+    SG & 6522 & 6556 & 7293 & 5925 & 1868 & 1807 & 2320 & 1610 & 4653 & 4698 & 5248 & 4145 \\ \hline
+PSG & 3613 & 4189 & 4847 & 829 & 545 & 665 & 665 & 133 & 3068 & 3524 & 4182 & 696 \\ \hline
+TPUSG & 4015 & 4644 & 5236 & 976 & 681 & 805 & 805 & 161 & 3333 & 3839 & 4431 & 815 \\ \hline
+
+        \end{tabular}%
+        }
+        \caption{Token consumption details regarding Overall, Input, and Output in three stages. Batch ID: ab1p, Model: phi4:14b, Date: 02.05, Parameters: None}
+        \label{tab:token_details_ab1p_phi4:14b_02.05}
+        \end{table}
+    
