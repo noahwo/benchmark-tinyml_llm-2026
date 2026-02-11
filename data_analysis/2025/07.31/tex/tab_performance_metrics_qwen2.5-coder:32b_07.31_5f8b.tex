@@ -1,0 +1,27 @@
+
+    \begin{table}[!h]
+        \centering
+        \resizebox{\textwidth}{!}{%
+        \begin{tabular}{|l|r|r|r|r|r|r|r|}
+        \hline
+        \multicolumn{1}{|c|}{} &
+          \multicolumn{3}{c|}{Execution Time (s)} &
+          \multicolumn{3}{c|}{Token Consumption} &
+          \multicolumn{1}{c|}{} \\ \cline{2-7}
+        \multicolumn{1}{|c|}{\multirow{-2}{*}{Stages}} &
+          \multicolumn{1}{c|}{Ave} &
+          \multicolumn{1}{c|}{Max} &
+          \multicolumn{1}{c|}{Min} &
+          \multicolumn{1}{c|}{Ave} &
+          \multicolumn{1}{c|}{Max} &
+          \multicolumn{1}{c|}{Min} &
+          \multicolumn{1}{|c|}{\multirow{-2}{*}{\shortstack{Success\\Rate}}} \\ \hline
+    PSG & 83.49 & 143.62 & 18.41 & 9201 & 14789 & 2243 & 0.600 \\ \hline
+TPUSG & 45.44 & 153.74 & 21.72 & 4759 & 15371 & 2570 & 0.967 \\ \hline
+
+        \end{tabular}%
+        }
+        \caption{Performance metrics including execution time, token consumption, and success rate in three stages. Batch ID: 5f8b, Model: qwen2.5-coder:32b, Date: 07.31, Parameters: None}
+        \label{tab:performance_metrics_5f8b_qwen2.5-coder:32b_07.31}
+        \end{table}
+    

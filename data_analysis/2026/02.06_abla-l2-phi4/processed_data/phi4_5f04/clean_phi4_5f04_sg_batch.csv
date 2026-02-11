@@ -1,0 +1,12 @@
+num_run,name,trace_id,batch_id,status,latency,total_tokens,prompt_tokens,completion_tokens,total_cost,parameters,generation_count,prompt_cost,completion_cost,tags,timestamp
+1,5ef4_sketch_generator,5ef402b1,phi4_5f04_sg_batch,failure,72.4,13609,8662,4947,0.0,N/A,6,0,0,"['benchmark', 'phi4:latest', 'sketch_generator']",1770435604
+3,ab69_sketch_generator,ab695685,phi4_5f04_sg_batch,failure,71.07,12556,7827,4729,0.0,N/A,6,0,0,"['benchmark', 'phi4:latest', 'sketch_generator']",1770435960
+5,63b0_sketch_generator,63b02dac,phi4_5f04_sg_batch,failure,75.81,13890,8826,5064,0.0,N/A,6,0,0,"['benchmark', 'phi4:latest', 'sketch_generator']",1770436305
+10,d113_sketch_generator,d1133c7e,phi4_5f04_sg_batch,failure,79.65,15209,9762,5447,0.0,N/A,6,0,0,"['benchmark', 'phi4:latest', 'sketch_generator']",1770437043
+15,8981_sketch_generator,89813dfd,phi4_5f04_sg_batch,failure,58.86,10977,6852,4125,0.0,N/A,6,0,0,"['benchmark', 'phi4:latest', 'sketch_generator']",1770437774
+17,f9f3_sketch_generator,f9f338f9,phi4_5f04_sg_batch,failure,70.87,13525,8657,4868,0.0,N/A,6,0,0,"['benchmark', 'phi4:latest', 'sketch_generator']",1770438031
+18,e236_sketch_generator,e2361854,phi4_5f04_sg_batch,failure,75.52,14033,8847,5186,0.0,N/A,6,0,0,"['benchmark', 'phi4:latest', 'sketch_generator']",1770438235
+24,6bb1_sketch_generator,6bb18a90,phi4_5f04_sg_batch,failure,57.63,10732,6685,4047,0.0,N/A,6,0,0,"['benchmark', 'phi4:latest', 'sketch_generator']",1770438982
+25,7e09_sketch_generator,7e09b983,phi4_5f04_sg_batch,failure,70.07,12717,7864,4853,0.0,N/A,6,0,0,"['benchmark', 'phi4:latest', 'sketch_generator']",1770439114
+27,8374_sketch_generator,8374dced,phi4_5f04_sg_batch,failure,70.34,14500,9736,4764,0.0,N/A,6,0,0,"['benchmark', 'phi4:latest', 'sketch_generator']",1770439393
+30,6103_sketch_generator,61036989,phi4_5f04_sg_batch,failure,66.38,12416,7809,4607,0.0,N/A,6,0,0,"['benchmark', 'phi4:latest', 'sketch_generator']",1770439810

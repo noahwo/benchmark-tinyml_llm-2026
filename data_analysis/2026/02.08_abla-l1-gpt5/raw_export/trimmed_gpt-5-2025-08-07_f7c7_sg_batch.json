@@ -1,0 +1,205 @@
+{
+  "data": [
+    {
+      "id": "94ce6be1",
+      "timestamp": "2026-02-05T13:49:26.479000+00:00",
+      "name": "94ce_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "failed",
+        "last_code": null,
+        "last_error": "Max 5 attempts exceeded. Last error from code execution: /home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205155611_gpt-5-2025-08-07/compiling_20260205155611_gpt-5-2025-08-07.ino: In function 'void setup()':\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205155611_gpt-5-2025-08-07/compiling_20260205155611_gpt-5-2025-08-07.ino:86:18: error: 'MicroErrorReporter' in namespace 'tflite' does not name a type\n   static tflite::MicroErrorReporter micro_error_reporter;\n                  ^~~~~~~~~~~~~~~~~~\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205155611_gpt-5-2025-08-07/compiling_20260205155611_gpt-5-2025-08-07.ino:87:21: error: 'micro_error_reporter' was not declared in this scope\n   error_reporter = &micro_error_reporter;\n                     ^~~~~~~~~~~~~~~~~~~~\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205155611_gpt-5-2025-08-07/compiling_20260205155611_gpt-5-2025-08-07.ino:87:21: note: suggested alternative: 'mbed_error_type_t'\n   error_reporter = &micro_error_reporter;\n                     ^~~~~~~~~~~~~~~~~~~~\n                     mbed_error_type_t\n\nError during build: exit status 1\n"
+      },
+      "session_id": "gpt-5-2025-08-07_f7c7_sg_batch",
+      "metadata": {
+        "num_run": 1
+      },
+      "tags": [
+        "benchmark",
+        "gpt-5-2025-08-07",
+        "sketch_generator"
+      ],
+      "latency": 431.761,
+      "total_cost": 0.2609175,
+      "observations": [
+        {
+          "id": "time-15-49-27-105620_chatcmpl-D5u1XG56zzgzIOOshdQvv3cidT1fs",
+          "traceId": "94ce6be1",
+          "type": "GENERATION",
+          "name": "94_sg_spec_filling_attempt#1",
+          "startTime": "2026-02-05T13:49:27.105000+00:00",
+          "endTime": "2026-02-05T13:49:55.226000+00:00",
+          "model": "gpt-5-2025-08-07",
+          "modelParameters": {
+            "extra_body": "{}"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.02634125,
+          "latency": 28121.0,
+          "promptTokens": 169,
+          "totalTokens": 2782,
+          "environment": "default",
+          "completionTokens": 2613,
+          "costDetails": {
+            "total": 0.02634125
+          },
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-15-49-55-842457_chatcmpl-D5u20DmbABslmnPuOuFAmepL3N5iJ",
+          "traceId": "94ce6be1",
+          "type": "GENERATION",
+          "name": "94_sg_sketch_code_gen_attempt#1",
+          "startTime": "2026-02-05T13:49:55.842000+00:00",
+          "endTime": "2026-02-05T13:50:45.643000+00:00",
+          "model": "gpt-5-2025-08-07",
+          "modelParameters": {
+            "extra_body": "{}"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.03497125,
+          "latency": 49801.0,
+          "promptTokens": 913,
+          "totalTokens": 4296,
+          "environment": "default",
+          "completionTokens": 3383,
+          "costDetails": {
+            "total": 0.03497125
+          },
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-15-51-12-580516_chatcmpl-D5u3FNaGCH7hNAyt3fuAIvGHZtYEl",
+          "traceId": "94ce6be1",
+          "type": "GENERATION",
+          "name": "94_sg_sketch_code_gen_attempt#2",
+          "startTime": "2026-02-05T13:51:12.580000+00:00",
+          "endTime": "2026-02-05T13:52:14.516000+00:00",
+          "model": "gpt-5-2025-08-07",
+          "modelParameters": {
+            "extra_body": "{}"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.05255125,
+          "latency": 61936.0,
+          "promptTokens": 913,
+          "totalTokens": 6054,
+          "environment": "default",
+          "completionTokens": 5141,
+          "costDetails": {
+            "total": 0.05255125
+          },
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-15-52-42-128239_chatcmpl-D5u4gj5wkxnMrVgxrTx3zAs11nWNg",
+          "traceId": "94ce6be1",
+          "type": "GENERATION",
+          "name": "94_sg_sketch_code_gen_attempt#3",
+          "startTime": "2026-02-05T13:52:42.128000+00:00",
+          "endTime": "2026-02-05T13:53:24.916000+00:00",
+          "model": "gpt-5-2025-08-07",
+          "modelParameters": {
+            "extra_body": "{}"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.04529125,
+          "latency": 42788.0,
+          "promptTokens": 913,
+          "totalTokens": 5328,
+          "environment": "default",
+          "completionTokens": 4415,
+          "costDetails": {
+            "total": 0.04529125
+          },
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-15-53-53-311994_chatcmpl-D5u5p0Uepu11ieze2vKi0QNOsB3jP",
+          "traceId": "94ce6be1",
+          "type": "GENERATION",
+          "name": "94_sg_sketch_code_gen_attempt#4",
+          "startTime": "2026-02-05T13:53:53.311000+00:00",
+          "endTime": "2026-02-05T13:54:47.323000+00:00",
+          "model": "gpt-5-2025-08-07",
+          "modelParameters": {
+            "extra_body": "{}"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.04593125,
+          "latency": 54012.0,
+          "promptTokens": 913,
+          "totalTokens": 5392,
+          "environment": "default",
+          "completionTokens": 4479,
+          "costDetails": {
+            "total": 0.04593125
+          },
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-15-55-14-391281_chatcmpl-D5u78C4BNZW8Efe2gv2T4dFRREtRX",
+          "traceId": "94ce6be1",
+          "type": "GENERATION",
+          "name": "94_sg_sketch_code_gen_attempt#5",
+          "startTime": "2026-02-05T13:55:14.391000+00:00",
+          "endTime": "2026-02-05T13:56:11.487000+00:00",
+          "model": "gpt-5-2025-08-07",
+          "modelParameters": {
+            "extra_body": "{}"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.05583125,
+          "latency": 57096.0,
+          "promptTokens": 913,
+          "totalTokens": 6382,
+          "environment": "default",
+          "completionTokens": 5469,
+          "costDetails": {
+            "total": 0.05583125
+          },
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "8f370a22-dcb0-4a45-890a-4bf4b3695c86",
+          "traceId": "94ce6be1",
+          "type": "SPAN",
+          "name": "error_94_sg_failure_signal_sketch_generator",
+          "startTime": "2026-02-05T13:56:38.866000+00:00",
+          "level": "ERROR",
+          "statusMessage": "Failed. Last error: Max 5 attempts exceeded. Last error from code execution: /home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205155611_gpt-5-2025-08-07/compiling_20260205155611_gpt-5-2025-08-07.ino: In function 'void setup()':\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205155611_gpt-5-2025-08-07/compiling_20260205155611_gpt-5-2025-08-07.ino:86:18: error: 'MicroErrorReporter' in namespace 'tflite' does not name a type\n   static tflite::MicroErrorReporter micro_error_reporter;\n                  ^~~~~~~~~~~~~~~~~~\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205155611_gpt-5-2025-08-07/compiling_20260205155611_gpt-5-2025-08-07.ino:87:21: error: 'micro_error_reporter' was not declared in this scope\n   error_reporter = &micro_error_reporter;\n                     ^~~~~~~~~~~~~~~~~~~~\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205155611_gpt-5-2025-08-07/compiling_20260205155611_gpt-5-2025-08-07.ino:87:21: note: suggested alternative: 'mbed_error_type_t'\n   error_reporter = &micro_error_reporter;\n                     ^~~~~~~~~~~~~~~~~~~~\n                     mbed_error_type_t\n\nError during build: exit status 1\n",
+          "calculatedTotalCost": 0.0,
+          "promptTokens": 0,
+          "totalTokens": 0,
+          "environment": "default",
+          "completionTokens": 0,
+          "costDetails": {},
+          "endTime": null,
+          "model": null,
+          "modelParameters": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null,
+          "latency": null
+        }
+      ],
+      "updatedAt": "2026-02-05T13:56:44.051Z",
+      "environment": "default",
+      "createdAt": "2026-02-05T13:49:27.206Z"
+    }
+  ],
+  "meta": {
+    "total_items": 1
+  }
+}

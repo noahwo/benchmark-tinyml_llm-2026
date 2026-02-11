@@ -1,0 +1,1418 @@
+{
+  "data": [
+    {
+      "id": "18b7b4d9",
+      "timestamp": "2026-02-05T13:26:29.629000+00:00",
+      "name": "18b7_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "failed",
+        "last_code": null,
+        "last_error": "Max 5 attempts exceeded. Last error from code execution: /home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205153348_gpt-5-2025-08-07/compiling_20260205153348_gpt-5-2025-08-07.ino:8:10: fatal error: tensorflow/lite/micro/system_setup.h: No such file or directory\n #include \"tensorflow/lite/micro/system_setup.h\"\n          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\ncompilation terminated.\nError during build: exit status 1\n"
+      },
+      "session_id": "gpt-5-2025-08-07_92de_sg_batch",
+      "metadata": {
+        "num_run": 7
+      },
+      "tags": [
+        "benchmark",
+        "gpt-5-2025-08-07",
+        "sketch_generator"
+      ],
+      "latency": 440.068,
+      "total_cost": 0.27050875,
+      "observations": [
+        {
+          "id": "time-15-26-30-124383_chatcmpl-D5tfLvbI2LDX2zOqfmyNWwI9bvDoU",
+          "traceId": "18b7b4d9",
+          "type": "GENERATION",
+          "name": "18_sg_spec_filling_attempt#1",
+          "startTime": "2026-02-05T13:26:30.124000+00:00",
+          "endTime": "2026-02-05T13:27:18.835000+00:00",
+          "model": "gpt-5-2025-08-07",
+          "modelParameters": {
+            "extra_body": "{}"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.02789125,
+          "latency": 48711.0,
+          "promptTokens": 169,
+          "totalTokens": 2937,
+          "environment": "default",
+          "completionTokens": 2768,
+          "costDetails": {
+            "total": 0.02789125
+          },
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-15-27-19-046404_chatcmpl-D5tg7zxZEjEAeyEeGfCGt1x4aamuw",
+          "traceId": "18b7b4d9",
+          "type": "GENERATION",
+          "name": "18_sg_spec_filling_attempt#2",
+          "startTime": "2026-02-05T13:27:19.046000+00:00",
+          "endTime": "2026-02-05T13:27:56.849000+00:00",
+          "model": "gpt-5-2025-08-07",
+          "modelParameters": {
+            "extra_body": "{}"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.03266125,
+          "latency": 37803.0,
+          "promptTokens": 169,
+          "totalTokens": 3414,
+          "environment": "default",
+          "completionTokens": 3245,
+          "costDetails": {
+            "total": 0.03266125
+          },
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-15-27-57-410331_chatcmpl-D5tgjmSadqwaUwLpSQOtj5T8jD4XV",
+          "traceId": "18b7b4d9",
+          "type": "GENERATION",
+          "name": "18_sg_sketch_code_gen_attempt#1",
+          "startTime": "2026-02-05T13:27:57.410000+00:00",
+          "endTime": "2026-02-05T13:28:40.487000+00:00",
+          "model": "gpt-5-2025-08-07",
+          "modelParameters": {
+            "extra_body": "{}"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.03772125,
+          "latency": 43077.0,
+          "promptTokens": 905,
+          "totalTokens": 4564,
+          "environment": "default",
+          "completionTokens": 3659,
+          "costDetails": {
+            "total": 0.03772125
+          },
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-15-29-09-082161_chatcmpl-D5thtgWtZNsKGLpO8p5rwFyYJgUQa",
+          "traceId": "18b7b4d9",
+          "type": "GENERATION",
+          "name": "18_sg_sketch_code_gen_attempt#2",
+          "startTime": "2026-02-05T13:29:09.082000+00:00",
+          "endTime": "2026-02-05T13:29:52.399000+00:00",
+          "model": "gpt-5-2025-08-07",
+          "modelParameters": {
+            "extra_body": "{}"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.03798125,
+          "latency": 43317.0,
+          "promptTokens": 905,
+          "totalTokens": 4590,
+          "environment": "default",
+          "completionTokens": 3685,
+          "costDetails": {
+            "total": 0.03798125
+          },
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-15-30-21-367045_chatcmpl-D5tj3PeM6TQD8Dra6s5UoxlV5ej6A",
+          "traceId": "18b7b4d9",
+          "type": "GENERATION",
+          "name": "18_sg_sketch_code_gen_attempt#3",
+          "startTime": "2026-02-05T13:30:21.367000+00:00",
+          "endTime": "2026-02-05T13:31:14.356000+00:00",
+          "model": "gpt-5-2025-08-07",
+          "modelParameters": {
+            "extra_body": "{}"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.05124125,
+          "latency": 52989.0,
+          "promptTokens": 905,
+          "totalTokens": 5916,
+          "environment": "default",
+          "completionTokens": 5011,
+          "costDetails": {
+            "total": 0.05124125
+          },
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-15-31-43-729354_chatcmpl-D5tkNEBAiyPqn4gJNwt680nm3EJaq",
+          "traceId": "18b7b4d9",
+          "type": "GENERATION",
+          "name": "18_sg_sketch_code_gen_attempt#4",
+          "startTime": "2026-02-05T13:31:43.729000+00:00",
+          "endTime": "2026-02-05T13:32:20.607000+00:00",
+          "model": "gpt-5-2025-08-07",
+          "modelParameters": {
+            "extra_body": "{}"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.03583125,
+          "latency": 36878.0,
+          "promptTokens": 905,
+          "totalTokens": 4375,
+          "environment": "default",
+          "completionTokens": 3470,
+          "costDetails": {
+            "total": 0.03583125
+          },
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-15-32-48-911945_chatcmpl-D5tlRcj9z78Uzppv06kdE6ihUGall",
+          "traceId": "18b7b4d9",
+          "type": "GENERATION",
+          "name": "18_sg_sketch_code_gen_attempt#5",
+          "startTime": "2026-02-05T13:32:48.911000+00:00",
+          "endTime": "2026-02-05T13:33:48.304000+00:00",
+          "model": "gpt-5-2025-08-07",
+          "modelParameters": {
+            "extra_body": "{}"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.04718125,
+          "latency": 59393.0,
+          "promptTokens": 905,
+          "totalTokens": 5510,
+          "environment": "default",
+          "completionTokens": 4605,
+          "costDetails": {
+            "total": 0.04718125
+          },
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "559358ec-7463-4839-b784-c41507f5dde9",
+          "traceId": "18b7b4d9",
+          "type": "SPAN",
+          "name": "error_18_sg_failure_signal_sketch_generator",
+          "startTime": "2026-02-05T13:33:50.192000+00:00",
+          "level": "ERROR",
+          "statusMessage": "Failed. Last error: Max 5 attempts exceeded. Last error from code execution: /home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205153348_gpt-5-2025-08-07/compiling_20260205153348_gpt-5-2025-08-07.ino:8:10: fatal error: tensorflow/lite/micro/system_setup.h: No such file or directory\n #include \"tensorflow/lite/micro/system_setup.h\"\n          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\ncompilation terminated.\nError during build: exit status 1\n",
+          "calculatedTotalCost": 0.0,
+          "promptTokens": 0,
+          "totalTokens": 0,
+          "environment": "default",
+          "completionTokens": 0,
+          "costDetails": {},
+          "endTime": null,
+          "model": null,
+          "modelParameters": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null,
+          "latency": null
+        }
+      ],
+      "updatedAt": "2026-02-05T13:33:55.564Z",
+      "environment": "default",
+      "createdAt": "2026-02-05T13:26:31.718Z"
+    },
+    {
+      "id": "53a8cdd0",
+      "timestamp": "2026-02-05T13:16:36.623000+00:00",
+      "name": "53a8_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "failed",
+        "last_code": null,
+        "last_error": "Max 5 attempts exceeded. Last error from code execution: /home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205152535_gpt-5-2025-08-07/compiling_20260205152535_gpt-5-2025-08-07.ino:24:16: error: 'MicroErrorReporter' in namespace 'tflite' does not name a type\n static tflite::MicroErrorReporter micro_error_reporter;\n                ^~~~~~~~~~~~~~~~~~\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205152535_gpt-5-2025-08-07/compiling_20260205152535_gpt-5-2025-08-07.ino:25:49: error: 'micro_error_reporter' was not declared in this scope\n static tflite::ErrorReporter* error_reporter = &micro_error_reporter;\n                                                 ^~~~~~~~~~~~~~~~~~~~\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205152535_gpt-5-2025-08-07/compiling_20260205152535_gpt-5-2025-08-07.ino:25:49: note: suggested alternative: 'error_reporter'\n static tflite::ErrorReporter* error_reporter = &micro_error_reporter;\n                                                 ^~~~~~~~~~~~~~~~~~~~\n                                                 error_reporter\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205152535_gpt-5-2025-08-07/compiling_20260205152535_gpt-5-2025-08-07.ino: In function 'void setup()':\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205152535_gpt-5-2025-08-07/compiling_20260205152535_gpt-5-2025-08-07.ino:48:49: error: 'g_model' was not declared in this scope\n   const tflite::Model* model = tflite::GetModel(g_model);\n                                                 ^~~~~~~\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205152535_gpt-5-2025-08-07/compiling_20260205152535_gpt-5-2025-08-07.ino:48:49: note: suggested alternative: 'model'\n   const tflite::Model* model = tflite::GetModel(g_model);\n                                                 ^~~~~~~\n                                                 model\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205152535_gpt-5-2025-08-07/compiling_20260205152535_gpt-5-2025-08-07.ino: In function 'void loop()':\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205152535_gpt-5-2025-08-07/compiling_20260205152535_gpt-5-2025-08-07.ino:90:36: error: cannot bind non-const lvalue reference of type 'int&' to an rvalue of type 'int'\n   APDS.readColor(r16, g16, b16, c16);\n                                    ^\nIn file included from /home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205152535_gpt-5-2025-08-07/compiling_20260205152535_gpt-5-2025-08-07.ino:2:0:\n/home/wuguangh/Arduino/libraries/Arduino_APDS9960/src/Arduino_APDS9960.h:47:8: note:   initializing argument 1 of 'bool APDS9960::readColor(int&, int&, int&, int&)'\n   bool readColor(int& r, int& g, int& b, int& c);\n        ^~~~~~~~~\n\nError during build: exit status 1\n"
+      },
+      "session_id": "gpt-5-2025-08-07_92de_sg_batch",
+      "metadata": {
+        "num_run": 6
+      },
+      "tags": [
+        "benchmark",
+        "gpt-5-2025-08-07",
+        "sketch_generator"
+      ],
+      "latency": 566.192,
+      "total_cost": 0.221776,
+      "observations": [
+        {
+          "id": "time-15-16-37-274380_chatcmpl-D5tVl899FzdoeBwYs3xx7hiXgevnu",
+          "traceId": "53a8cdd0",
+          "type": "GENERATION",
+          "name": "53_sg_spec_filling_attempt#1",
+          "startTime": "2026-02-05T13:16:37.274000+00:00",
+          "endTime": "2026-02-05T13:17:54.109000+00:00",
+          "model": "gpt-5-2025-08-07",
+          "modelParameters": {
+            "extra_body": "{}"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.04684125,
+          "latency": 76835.0,
+          "promptTokens": 169,
+          "totalTokens": 4832,
+          "environment": "default",
+          "completionTokens": 4663,
+          "costDetails": {
+            "total": 0.04684125
+          },
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-15-17-54-662133_chatcmpl-D5tX0MMpjbIRj37HRorDzlB9v3buk",
+          "traceId": "53a8cdd0",
+          "type": "GENERATION",
+          "name": "53_sg_sketch_code_gen_attempt#1",
+          "startTime": "2026-02-05T13:17:54.662000+00:00",
+          "endTime": "2026-02-05T13:18:47.280000+00:00",
+          "model": "gpt-5-2025-08-07",
+          "modelParameters": {
+            "extra_body": "{}"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.04511375,
+          "latency": 52618.0,
+          "promptTokens": 1555,
+          "totalTokens": 5872,
+          "environment": "default",
+          "completionTokens": 4317,
+          "costDetails": {
+            "total": 0.04511375
+          },
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-15-19-16-745952_chatcmpl-D5tYKlq8u30YAa8yD6z8ISrze1tFM",
+          "traceId": "53a8cdd0",
+          "type": "GENERATION",
+          "name": "53_sg_sketch_code_gen_attempt#2",
+          "startTime": "2026-02-05T13:19:16.745000+00:00",
+          "endTime": "2026-02-05T13:19:58.363000+00:00",
+          "model": "gpt-5-2025-08-07",
+          "modelParameters": {
+            "extra_body": "{}"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.03213375,
+          "latency": 41618.0,
+          "promptTokens": 1555,
+          "totalTokens": 4574,
+          "environment": "default",
+          "completionTokens": 3019,
+          "costDetails": {
+            "total": 0.03213375
+          },
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-15-22-36-295378_chatcmpl-D5tbYgbQIcwKN0vfleQB13HbjPbeJ",
+          "traceId": "53a8cdd0",
+          "type": "GENERATION",
+          "name": "53_sg_sketch_code_gen_attempt#3",
+          "startTime": "2026-02-05T13:22:36.295000+00:00",
+          "endTime": "2026-02-05T13:23:17.694000+00:00",
+          "model": "gpt-5-2025-08-07",
+          "modelParameters": {
+            "extra_body": "{}"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.03219575,
+          "latency": 41399.0,
+          "promptTokens": 1555,
+          "totalTokens": 4753,
+          "environment": "default",
+          "completionTokens": 3198,
+          "costDetails": {
+            "total": 0.03219575
+          },
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-15-23-46-591017_chatcmpl-D5tciooTxIp0fAPqcjaQSo6Pmt7WJ",
+          "traceId": "53a8cdd0",
+          "type": "GENERATION",
+          "name": "53_sg_sketch_code_gen_attempt#4",
+          "startTime": "2026-02-05T13:23:46.591000+00:00",
+          "endTime": "2026-02-05T13:24:35.525000+00:00",
+          "model": "gpt-5-2025-08-07",
+          "modelParameters": {
+            "extra_body": "{}"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.03433575,
+          "latency": 48934.0,
+          "promptTokens": 1555,
+          "totalTokens": 4967,
+          "environment": "default",
+          "completionTokens": 3412,
+          "costDetails": {
+            "total": 0.03433575
+          },
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-15-25-04-251874_chatcmpl-D5tdwo7pCpSbvZLrhUKoPg18BaUvw",
+          "traceId": "53a8cdd0",
+          "type": "GENERATION",
+          "name": "53_sg_sketch_code_gen_attempt#5",
+          "startTime": "2026-02-05T13:25:04.251000+00:00",
+          "endTime": "2026-02-05T13:25:35.587000+00:00",
+          "model": "gpt-5-2025-08-07",
+          "modelParameters": {
+            "extra_body": "{}"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.03115575,
+          "latency": 31336.0,
+          "promptTokens": 1555,
+          "totalTokens": 4649,
+          "environment": "default",
+          "completionTokens": 3094,
+          "costDetails": {
+            "total": 0.03115575
+          },
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "7b76112d-ce1d-46b1-a2d9-de735e81176f",
+          "traceId": "53a8cdd0",
+          "type": "SPAN",
+          "name": "error_53_sg_failure_signal_sketch_generator",
+          "startTime": "2026-02-05T13:26:03.466000+00:00",
+          "level": "ERROR",
+          "statusMessage": "Failed. Last error: Max 5 attempts exceeded. Last error from code execution: /home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205152535_gpt-5-2025-08-07/compiling_20260205152535_gpt-5-2025-08-07.ino:24:16: error: 'MicroErrorReporter' in namespace 'tflite' does not name a type\n static tflite::MicroErrorReporter micro_error_reporter;\n                ^~~~~~~~~~~~~~~~~~\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205152535_gpt-5-2025-08-07/compiling_20260205152535_gpt-5-2025-08-07.ino:25:49: error: 'micro_error_reporter' was not declared in this scope\n static tflite::ErrorReporter* error_reporter = &micro_error_reporter;\n                                                 ^~~~~~~~~~~~~~~~~~~~\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205152535_gpt-5-2025-08-07/compiling_20260205152535_gpt-5-2025-08-07.ino:25:49: note: suggested alternative: 'error_reporter'\n static tflite::ErrorReporter* error_reporter = &micro_error_reporter;\n                                                 ^~~~~~~~~~~~~~~~~~~~\n                                                 error_reporter\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205152535_gpt-5-2025-08-07/compiling_20260205152535_gpt-5-2025-08-07.ino: In function 'void setup()':\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205152535_gpt-5-2025-08-07/compiling_20260205152535_gpt-5-2025-08-07.ino:48:49: error: 'g_model' was not declared in this scope\n   const tflite::Model* model = tflite::GetModel(g_model);\n                                                 ^~~~~~~\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205152535_gpt-5-2025-08-07/compiling_20260205152535_gpt-5-2025-08-07.ino:48:49: note: suggested alternative: 'model'\n   const tflite::Model* model = tflite::GetModel(g_model);\n                                                 ^~~~~~~\n                                                 model\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205152535_gpt-5-2025-08-07/compiling_20260205152535_gpt-5-2025-08-07.ino: In function 'void loop()':\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205152535_gpt-5-2025-08-07/compiling_20260205152535_gpt-5-2025-08-07.ino:90:36: error: cannot bind non-const lvalue reference of type 'int&' to an rvalue of type 'int'\n   APDS.readColor(r16, g16, b16, c16);\n                                    ^\nIn file included from /home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205152535_gpt-5-2025-08-07/compiling_20260205152535_gpt-5-2025-08-07.ino:2:0:\n/home/wuguangh/Arduino/libraries/Arduino_APDS9960/src/Arduino_APDS9960.h:47:8: note:   initializing argument 1 of 'bool APDS9960::readColor(int&, int&, int&, int&)'\n   bool readColor(int& r, int& g, int& b, int& c);\n        ^~~~~~~~~\n\nError during build: exit status 1\n",
+          "calculatedTotalCost": 0.0,
+          "promptTokens": 0,
+          "totalTokens": 0,
+          "environment": "default",
+          "completionTokens": 0,
+          "costDetails": {},
+          "endTime": null,
+          "model": null,
+          "modelParameters": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null,
+          "latency": null
+        }
+      ],
+      "updatedAt": "2026-02-05T13:26:09.134Z",
+      "environment": "default",
+      "createdAt": "2026-02-05T13:16:37.177Z"
+    },
+    {
+      "id": "631abec1",
+      "timestamp": "2026-02-05T13:07:14.265000+00:00",
+      "name": "631a_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "failed",
+        "last_code": null,
+        "last_error": "Max 5 attempts exceeded. Last error from code execution: /home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205151543_gpt-5-2025-08-07/compiling_20260205151543_gpt-5-2025-08-07.ino: In function 'void setup()':\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205151543_gpt-5-2025-08-07/compiling_20260205151543_gpt-5-2025-08-07.ino:149:3: error: reference to 'model' is ambiguous\n   model = tflite::GetModel(g_model);\n   ^~~~~\nIn file included from /home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205151543_gpt-5-2025-08-07/compiling_20260205151543_gpt-5-2025-08-07.ino:4:0:\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205151543_gpt-5-2025-08-07/model.h:1:21: note: candidates are: const unsigned char model [2528]\n const unsigned char model[] = {\n                     ^~~~~\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205151543_gpt-5-2025-08-07/compiling_20260205151543_gpt-5-2025-08-07.ino:32:24: note:                 const tflite::Model* {anonymous}::model\n   const tflite::Model* model = nullptr;\n                        ^~~~~\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205151543_gpt-5-2025-08-07/compiling_20260205151543_gpt-5-2025-08-07.ino:149:28: error: 'g_model' was not declared in this scope\n   model = tflite::GetModel(g_model);\n                            ^~~~~~~\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205151543_gpt-5-2025-08-07/compiling_20260205151543_gpt-5-2025-08-07.ino:149:28: note: suggested alternative: 'model'\n   model = tflite::GetModel(g_model);\n                            ^~~~~~~\n                            model\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205151543_gpt-5-2025-08-07/compiling_20260205151543_gpt-5-2025-08-07.ino:150:7: error: reference to 'model' is ambiguous\n   if (model->version() != TFLITE_SCHEMA_VERSION) {\n       ^~~~~\nIn file included from /home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205151543_gpt-5-2025-08-07/compiling_20260205151543_gpt-5-2025-08-07.ino:4:0:\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205151543_gpt-5-2025-08-07/model.h:1:21: note: candidates are: const unsigned char model [2528]\n const unsigned char model[] = {\n                     ^~~~~\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205151543_gpt-5-2025-08-07/compiling_20260205151543_gpt-5-2025-08-07.ino:32:24: note:                 const tflite::Model* {anonymous}::model\n   const tflite::Model* model = nullptr;\n                        ^~~~~\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205151543_gpt-5-2025-08-07/compiling_20260205151543_gpt-5-2025-08-07.ino:153:7: error: reference to 'model' is ambiguous\n       model->version(), TFLITE_SCHEMA_VERSION);\n       ^~~~~\nIn file included from /home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205151543_gpt-5-2025-08-07/compiling_20260205151543_gpt-5-2025-08-07.ino:4:0:\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205151543_gpt-5-2025-08-07/model.h:1:21: note: candidates are: const unsigned char model [2528]\n const unsigned char model[] = {\n                     ^~~~~\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205151543_gpt-5-2025-08-07/compiling_20260205151543_gpt-5-2025-08-07.ino:32:24: note:                 const tflite::Model* {anonymous}::model\n   const tflite::Model* model = nullptr;\n                        ^~~~~\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205151543_gpt-5-2025-08-07/compiling_20260205151543_gpt-5-2025-08-07.ino:158:54: error: reference to 'model' is ambiguous\n   static tflite::MicroInterpreter static_interpreter(model, resolver, tensor_arena, kTensorArenaSize, error_reporter);\n                                                      ^~~~~\nIn file included from /home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205151543_gpt-5-2025-08-07/compiling_20260205151543_gpt-5-2025-08-07.ino:4:0:\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205151543_gpt-5-2025-08-07/model.h:1:21: note: candidates are: const unsigned char model [2528]\n const unsigned char model[] = {\n                     ^~~~~\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205151543_gpt-5-2025-08-07/compiling_20260205151543_gpt-5-2025-08-07.ino:32:24: note:                 const tflite::Model* {anonymous}::model\n   const tflite::Model* model = nullptr;\n                        ^~~~~\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205151543_gpt-5-2025-08-07/compiling_20260205151543_gpt-5-2025-08-07.ino: In function 'void loop()':\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205151543_gpt-5-2025-08-07/compiling_20260205151543_gpt-5-2025-08-07.ino:205:42: error: cannot bind non-const lvalue reference of type 'int&' to an rvalue of type 'int'\n   if (!APDS.readColor(r_raw, g_raw, b_raw)) {\n                                          ^\nIn file included from /home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205151543_gpt-5-2025-08-07/compiling_20260205151543_gpt-5-2025-08-07.ino:2:0:\n/home/wuguangh/Arduino/libraries/Arduino_APDS9960/src/Arduino_APDS9960.h:46:8: note:   initializing argument 1 of 'bool APDS9960::readColor(int&, int&, int&)'\n   bool readColor(int& r, int& g, int& b);\n        ^~~~~~~~~\n\nError during build: exit status 1\n"
+      },
+      "session_id": "gpt-5-2025-08-07_92de_sg_batch",
+      "metadata": {
+        "num_run": 5
+      },
+      "tags": [
+        "benchmark",
+        "gpt-5-2025-08-07",
+        "sketch_generator"
+      ],
+      "latency": 535.739,
+      "total_cost": 0.24164625,
+      "observations": [
+        {
+          "id": "time-15-07-14-895488_chatcmpl-D5tMixdBKPyiTE8JqL7HI2Hlb7eu8",
+          "traceId": "631abec1",
+          "type": "GENERATION",
+          "name": "63_sg_spec_filling_attempt#1",
+          "startTime": "2026-02-05T13:07:14.895000+00:00",
+          "endTime": "2026-02-05T13:08:04.934000+00:00",
+          "model": "gpt-5-2025-08-07",
+          "modelParameters": {
+            "extra_body": "{}"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.03020125,
+          "latency": 50039.0,
+          "promptTokens": 169,
+          "totalTokens": 3168,
+          "environment": "default",
+          "completionTokens": 2999,
+          "costDetails": {
+            "total": 0.03020125
+          },
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-15-08-05-136353_chatcmpl-D5tNVd4PK7JMSFoUxFBeOhOBLd0Qn",
+          "traceId": "631abec1",
+          "type": "GENERATION",
+          "name": "63_sg_sketch_code_gen_attempt#1",
+          "startTime": "2026-02-05T13:08:05.136000+00:00",
+          "endTime": "2026-02-05T13:09:20.552000+00:00",
+          "model": "gpt-5-2025-08-07",
+          "modelParameters": {
+            "extra_body": "{}"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.043785,
+          "latency": 75416.0,
+          "promptTokens": 980,
+          "totalTokens": 5236,
+          "environment": "default",
+          "completionTokens": 4256,
+          "costDetails": {
+            "total": 0.043785
+          },
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-15-09-49-344316_chatcmpl-D5tPBe5vFWpxndy3Seg2fuuP0v7y3",
+          "traceId": "631abec1",
+          "type": "GENERATION",
+          "name": "63_sg_sketch_code_gen_attempt#2",
+          "startTime": "2026-02-05T13:09:49.344000+00:00",
+          "endTime": "2026-02-05T13:11:06.623000+00:00",
+          "model": "gpt-5-2025-08-07",
+          "modelParameters": {
+            "extra_body": "{}"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.043485,
+          "latency": 77279.0,
+          "promptTokens": 980,
+          "totalTokens": 5206,
+          "environment": "default",
+          "completionTokens": 4226,
+          "costDetails": {
+            "total": 0.043485
+          },
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-15-11-36-091559_chatcmpl-D5tQuci7ioZedpOwVsLF6cpKNq4A2",
+          "traceId": "631abec1",
+          "type": "GENERATION",
+          "name": "63_sg_sketch_code_gen_attempt#3",
+          "startTime": "2026-02-05T13:11:36.091000+00:00",
+          "endTime": "2026-02-05T13:12:28.706000+00:00",
+          "model": "gpt-5-2025-08-07",
+          "modelParameters": {
+            "extra_body": "{}"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.034805,
+          "latency": 52615.0,
+          "promptTokens": 980,
+          "totalTokens": 4338,
+          "environment": "default",
+          "completionTokens": 3358,
+          "costDetails": {
+            "total": 0.034805
+          },
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-15-12-57-155211_chatcmpl-D5tSDJTdFmqsdm0HEKYK3vzU613uR",
+          "traceId": "631abec1",
+          "type": "GENERATION",
+          "name": "63_sg_sketch_code_gen_attempt#4",
+          "startTime": "2026-02-05T13:12:57.155000+00:00",
+          "endTime": "2026-02-05T13:14:11.092000+00:00",
+          "model": "gpt-5-2025-08-07",
+          "modelParameters": {
+            "extra_body": "{}"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.040485,
+          "latency": 73937.0,
+          "promptTokens": 980,
+          "totalTokens": 4906,
+          "environment": "default",
+          "completionTokens": 3926,
+          "costDetails": {
+            "total": 0.040485
+          },
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-15-14-39-922029_chatcmpl-D5tTs1TpkFG2cQgi3g8hki8ettumf",
+          "traceId": "631abec1",
+          "type": "GENERATION",
+          "name": "63_sg_sketch_code_gen_attempt#5",
+          "startTime": "2026-02-05T13:14:39.922000+00:00",
+          "endTime": "2026-02-05T13:15:43.489000+00:00",
+          "model": "gpt-5-2025-08-07",
+          "modelParameters": {
+            "extra_body": "{}"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.048885,
+          "latency": 63567.0,
+          "promptTokens": 980,
+          "totalTokens": 5746,
+          "environment": "default",
+          "completionTokens": 4766,
+          "costDetails": {
+            "total": 0.048885
+          },
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "fa687676-2c8f-44f6-9a17-36165fd16fce",
+          "traceId": "631abec1",
+          "type": "SPAN",
+          "name": "error_63_sg_failure_signal_sketch_generator",
+          "startTime": "2026-02-05T13:16:10.634000+00:00",
+          "level": "ERROR",
+          "statusMessage": "Failed. Last error: Max 5 attempts exceeded. Last error from code execution: /home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205151543_gpt-5-2025-08-07/compiling_20260205151543_gpt-5-2025-08-07.ino: In function 'void setup()':\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205151543_gpt-5-2025-08-07/compiling_20260205151543_gpt-5-2025-08-07.ino:149:3: error: reference to 'model' is ambiguous\n   model = tflite::GetModel(g_model);\n   ^~~~~\nIn file included from /home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205151543_gpt-5-2025-08-07/compiling_20260205151543_gpt-5-2025-08-07.ino:4:0:\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205151543_gpt-5-2025-08-07/model.h:1:21: note: candidates are: const unsigned char model [2528]\n const unsigned char model[] = {\n                     ^~~~~\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205151543_gpt-5-2025-08-07/compiling_20260205151543_gpt-5-2025-08-07.ino:32:24: note:                 const tflite::Model* {anonymous}::model\n   const tflite::Model* model = nullptr;\n                        ^~~~~\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205151543_gpt-5-2025-08-07/compiling_20260205151543_gpt-5-2025-08-07.ino:149:28: error: 'g_model' was not declared in this scope\n   model = tflite::GetModel(g_model);\n                            ^~~~~~~\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205151543_gpt-5-2025-08-07/compiling_20260205151543_gpt-5-2025-08-07.ino:149:28: note: suggested alternative: 'model'\n   model = tflite::GetModel(g_model);\n                            ^~~~~~~\n                            model\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205151543_gpt-5-2025-08-07/compiling_20260205151543_gpt-5-2025-08-07.ino:150:7: error: reference to 'model' is ambiguous\n   if (model->version() != TFLITE_SCHEMA_VERSION) {\n       ^~~~~\nIn file included from /home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205151543_gpt-5-2025-08-07/compiling_20260205151543_gpt-5-2025-08-07.ino:4:0:\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205151543_gpt-5-2025-08-07/model.h:1:21: note: candidates are: const unsigned char model [2528]\n const unsigned char model[] = {\n                     ^~~~~\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205151543_gpt-5-2025-08-07/compiling_20260205151543_gpt-5-2025-08-07.ino:32:24: note:                 const tflite::Model* {anonymous}::model\n   const tflite::Model* model = nullptr;\n                        ^~~~~\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205151543_gpt-5-2025-08-07/compiling_20260205151543_gpt-5-2025-08-07.ino:153:7: error: reference to 'model' is ambiguous\n       model->version(), TFLITE_SCHEMA_VERSION);\n       ^~~~~\nIn file included from /home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205151543_gpt-5-2025-08-07/compiling_20260205151543_gpt-5-2025-08-07.ino:4:0:\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205151543_gpt-5-2025-08-07/model.h:1:21: note: candidates are: const unsigned char model [2528]\n const unsigned char model[] = {\n                     ^~~~~\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205151543_gpt-5-2025-08-07/compiling_20260205151543_gpt-5-2025-08-07.ino:32:24: note:                 const tflite::Model* {anonymous}::model\n   const tflite::Model* model = nullptr;\n                        ^~~~~\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205151543_gpt-5-2025-08-07/compiling_20260205151543_gpt-5-2025-08-07.ino:158:54: error: reference to 'model' is ambiguous\n   static tflite::MicroInterpreter static_interpreter(model, resolver, tensor_arena, kTensorArenaSize, error_reporter);\n                                                      ^~~~~\nIn file included from /home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205151543_gpt-5-2025-08-07/compiling_20260205151543_gpt-5-2025-08-07.ino:4:0:\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205151543_gpt-5-2025-08-07/model.h:1:21: note: candidates are: const unsigned char model [2528]\n const unsigned char model[] = {\n                     ^~~~~\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205151543_gpt-5-2025-08-07/compiling_20260205151543_gpt-5-2025-08-07.ino:32:24: note:                 const tflite::Model* {anonymous}::model\n   const tflite::Model* model = nullptr;\n                        ^~~~~\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205151543_gpt-5-2025-08-07/compiling_20260205151543_gpt-5-2025-08-07.ino: In function 'void loop()':\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205151543_gpt-5-2025-08-07/compiling_20260205151543_gpt-5-2025-08-07.ino:205:42: error: cannot bind non-const lvalue reference of type 'int&' to an rvalue of type 'int'\n   if (!APDS.readColor(r_raw, g_raw, b_raw)) {\n                                          ^\nIn file included from /home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205151543_gpt-5-2025-08-07/compiling_20260205151543_gpt-5-2025-08-07.ino:2:0:\n/home/wuguangh/Arduino/libraries/Arduino_APDS9960/src/Arduino_APDS9960.h:46:8: note:   initializing argument 1 of 'bool APDS9960::readColor(int&, int&, int&)'\n   bool readColor(int& r, int& g, int& b);\n        ^~~~~~~~~\n\nError during build: exit status 1\n",
+          "calculatedTotalCost": 0.0,
+          "promptTokens": 0,
+          "totalTokens": 0,
+          "environment": "default",
+          "completionTokens": 0,
+          "costDetails": {},
+          "endTime": null,
+          "model": null,
+          "modelParameters": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null,
+          "latency": null
+        }
+      ],
+      "updatedAt": "2026-02-05T13:16:16.234Z",
+      "environment": "default",
+      "createdAt": "2026-02-05T13:07:14.809Z"
+    },
+    {
+      "id": "a03cc348",
+      "timestamp": "2026-02-05T12:58:10.069000+00:00",
+      "name": "a03c_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "failed",
+        "last_code": null,
+        "last_error": "Max 5 attempts exceeded. Last error from code execution: /home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205150621_gpt-5-2025-08-07/compiling_20260205150621_gpt-5-2025-08-07.ino:26:29: error: conflicting declaration 'const tflite::Model* model'\n static const tflite::Model* model = nullptr;\n                             ^~~~~\nIn file included from /home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205150621_gpt-5-2025-08-07/compiling_20260205150621_gpt-5-2025-08-07.ino:5:0:\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205150621_gpt-5-2025-08-07/model.h:1:21: note: previous declaration as 'const unsigned char model [2528]'\n const unsigned char model[] = {\n                     ^~~~~\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205150621_gpt-5-2025-08-07/compiling_20260205150621_gpt-5-2025-08-07.ino: In function 'void setup()':\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205150621_gpt-5-2025-08-07/compiling_20260205150621_gpt-5-2025-08-07.ino:44:24: error: no matching function for call to 'APDS9960::enableColor(bool)'\n   APDS.enableColor(true);\n                        ^\nIn file included from /home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205150621_gpt-5-2025-08-07/compiling_20260205150621_gpt-5-2025-08-07.ino:2:0:\n/home/wuguangh/Arduino/libraries/Arduino_APDS9960/src/Arduino_APDS9960.h:66:8: note: candidate: bool APDS9960::enableColor()\n   bool enableColor();\n        ^~~~~~~~~~~\n/home/wuguangh/Arduino/libraries/Arduino_APDS9960/src/Arduino_APDS9960.h:66:8: note:   candidate expects 0 arguments, 1 provided\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205150621_gpt-5-2025-08-07/compiling_20260205150621_gpt-5-2025-08-07.ino:48:28: error: 'g_model' was not declared in this scope\n   model = tflite::GetModel(g_model);\n                            ^~~~~~~\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205150621_gpt-5-2025-08-07/compiling_20260205150621_gpt-5-2025-08-07.ino:48:28: note: suggested alternative: 'model'\n   model = tflite::GetModel(g_model);\n                            ^~~~~~~\n                            model\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205150621_gpt-5-2025-08-07/compiling_20260205150621_gpt-5-2025-08-07.ino:49:14: error: request for member 'version' in '*(const unsigned char*)(& model)', which is of non-class type 'const unsigned char'\n   if (model->version() != TFLITE_SCHEMA_VERSION) {\n              ^~~~~~~\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205150621_gpt-5-2025-08-07/compiling_20260205150621_gpt-5-2025-08-07.ino:51:35: error: request for member 'version' in '*(const unsigned char*)(& model)', which is of non-class type 'const unsigned char'\n                            model->version(), TFLITE_SCHEMA_VERSION);\n                                   ^~~~~~~\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205150621_gpt-5-2025-08-07/compiling_20260205150621_gpt-5-2025-08-07.ino:57:70: error: no matching function for call to 'tflite::MicroInterpreter::MicroInterpreter(const unsigned char [2528], tflite::AllOpsResolver&, uint8_t [16384], const int&, tflite::ErrorReporter*&)'\n       model, resolver, tensor_arena, kTensorArenaSize, error_reporter);\n                                                                      ^\nIn file included from /home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205150621_gpt-5-2025-08-07/compiling_20260205150621_gpt-5-2025-08-07.ino:11:0:\n/home/wuguangh/Arduino/libraries/Harvard_TinyMLx/src/tensorflow/lite/micro/micro_interpreter.h:92:3: note: candidate: tflite::MicroInterpreter::MicroInterpreter(const tflite::Model*, const tflite::MicroOpResolver&, tflite::MicroAllocator*, tflite::ErrorReporter*, tflite::Profiler*)\n   MicroInterpreter(const Model* model, const MicroOpResolver& op_resolver,\n   ^~~~~~~~~~~~~~~~\n/home/wuguangh/Arduino/libraries/Harvard_TinyMLx/src/tensorflow/lite/micro/micro_interpreter.h:92:3: note:   no known conversion for argument 1 from 'const unsigned char [2528]' to 'const tflite::Model*'\n/home/wuguangh/Arduino/libraries/Harvard_TinyMLx/src/tensorflow/lite/micro/micro_interpreter.h:82:3: note: candidate: tflite::MicroInterpreter::MicroInterpreter(const tflite::Model*, const tflite::MicroOpResolver&, uint8_t*, size_t, tflite::ErrorReporter*, tflite::Profiler*)\n   MicroInterpreter(const Model* model, const MicroOpResolver& op_resolver,\n   ^~~~~~~~~~~~~~~~\n/home/wuguangh/Arduino/libraries/Harvard_TinyMLx/src/tensorflow/lite/micro/micro_interpreter.h:82:3: note:   no known conversion for argument 1 from 'const unsigned char [2528]' to 'const tflite::Model*'\n/home/wuguangh/Arduino/libraries/Harvard_TinyMLx/src/tensorflow/lite/micro/micro_interpreter.h:73:7: note: candidate: constexpr tflite::MicroInterpreter::MicroInterpreter(const tflite::MicroInterpreter&)\n class MicroInterpreter {\n       ^~~~~~~~~~~~~~~~\n/home/wuguangh/Arduino/libraries/Harvard_TinyMLx/src/tensorflow/lite/micro/micro_interpreter.h:73:7: note:   candidate expects 1 argument, 5 provided\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205150621_gpt-5-2025-08-07/compiling_20260205150621_gpt-5-2025-08-07.ino: In function 'void loop()':\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205150621_gpt-5-2025-08-07/compiling_20260205150621_gpt-5-2025-08-07.ino:91:46: error: cannot bind non-const lvalue reference of type 'int&' to an rvalue of type 'int'\n     APDS.readColor(r_raw, g_raw, b_raw, c_raw);\n                                              ^\nIn file included from /home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205150621_gpt-5-2025-08-07/compiling_20260205150621_gpt-5-2025-08-07.ino:2:0:\n/home/wuguangh/Arduino/libraries/Arduino_APDS9960/src/Arduino_APDS9960.h:47:8: note:   initializing argument 1 of 'bool APDS9960::readColor(int&, int&, int&, int&)'\n   bool readColor(int& r, int& g, int& b, int& c);\n        ^~~~~~~~~\n\nError during build: exit status 1\n"
+      },
+      "session_id": "gpt-5-2025-08-07_92de_sg_batch",
+      "metadata": {
+        "num_run": 4
+      },
+      "tags": [
+        "benchmark",
+        "gpt-5-2025-08-07",
+        "sketch_generator"
+      ],
+      "latency": 518.071,
+      "total_cost": 0.234315,
+      "observations": [
+        {
+          "id": "time-14-58-10-724980_chatcmpl-D5tDuEKuO8G1Hu2vHFcgTEwh8e3u6",
+          "traceId": "a03cc348",
+          "type": "GENERATION",
+          "name": "a0_sg_spec_filling_attempt#1",
+          "startTime": "2026-02-05T12:58:10.724000+00:00",
+          "endTime": "2026-02-05T12:58:58.587000+00:00",
+          "model": "gpt-5-2025-08-07",
+          "modelParameters": {
+            "extra_body": "{}"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.02943125,
+          "latency": 47863.0,
+          "promptTokens": 169,
+          "totalTokens": 3091,
+          "environment": "default",
+          "completionTokens": 2922,
+          "costDetails": {
+            "total": 0.02943125
+          },
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-14-58-58-802015_chatcmpl-D5tEh7z5guBpaybTR5QQtw5mY1V9z",
+          "traceId": "a03cc348",
+          "type": "GENERATION",
+          "name": "a0_sg_sketch_code_gen_attempt#1",
+          "startTime": "2026-02-05T12:58:58.802000+00:00",
+          "endTime": "2026-02-05T13:00:18.566000+00:00",
+          "model": "gpt-5-2025-08-07",
+          "modelParameters": {
+            "extra_body": "{}"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.04341875,
+          "latency": 79764.0,
+          "promptTokens": 967,
+          "totalTokens": 5188,
+          "environment": "default",
+          "completionTokens": 4221,
+          "costDetails": {
+            "total": 0.04341875
+          },
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-15-00-47-039036_chatcmpl-D5tGRBWwGkXR2vWL5iFYhQHSOXk5v",
+          "traceId": "a03cc348",
+          "type": "GENERATION",
+          "name": "a0_sg_sketch_code_gen_attempt#2",
+          "startTime": "2026-02-05T13:00:47.039000+00:00",
+          "endTime": "2026-02-05T13:01:38.021000+00:00",
+          "model": "gpt-5-2025-08-07",
+          "modelParameters": {
+            "extra_body": "{}"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.04379875,
+          "latency": 50982.0,
+          "promptTokens": 967,
+          "totalTokens": 5226,
+          "environment": "default",
+          "completionTokens": 4259,
+          "costDetails": {
+            "total": 0.04379875
+          },
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-15-02-06-748921_chatcmpl-D5tHjPTX6g8H9cJLxH5LDqfS4OoVj",
+          "traceId": "a03cc348",
+          "type": "GENERATION",
+          "name": "a0_sg_sketch_code_gen_attempt#3",
+          "startTime": "2026-02-05T13:02:06.748000+00:00",
+          "endTime": "2026-02-05T13:03:38.359000+00:00",
+          "model": "gpt-5-2025-08-07",
+          "modelParameters": {
+            "extra_body": "{}"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.04537875,
+          "latency": 91611.0,
+          "promptTokens": 967,
+          "totalTokens": 5384,
+          "environment": "default",
+          "completionTokens": 4417,
+          "costDetails": {
+            "total": 0.04537875
+          },
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-15-04-07-253551_chatcmpl-D5tJfOP37LdfIkUWSagT97qVipcYi",
+          "traceId": "a03cc348",
+          "type": "GENERATION",
+          "name": "a0_sg_sketch_code_gen_attempt#4",
+          "startTime": "2026-02-05T13:04:07.253000+00:00",
+          "endTime": "2026-02-05T13:05:05.066000+00:00",
+          "model": "gpt-5-2025-08-07",
+          "modelParameters": {
+            "extra_body": "{}"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.03921875,
+          "latency": 57813.0,
+          "promptTokens": 967,
+          "totalTokens": 4768,
+          "environment": "default",
+          "completionTokens": 3801,
+          "costDetails": {
+            "total": 0.03921875
+          },
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-15-05-34-045694_chatcmpl-D5tL46byozMQZhWRA0zphOLIlIxR2",
+          "traceId": "a03cc348",
+          "type": "GENERATION",
+          "name": "a0_sg_sketch_code_gen_attempt#5",
+          "startTime": "2026-02-05T13:05:34.045000+00:00",
+          "endTime": "2026-02-05T13:06:21.002000+00:00",
+          "model": "gpt-5-2025-08-07",
+          "modelParameters": {
+            "extra_body": "{}"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.03306875,
+          "latency": 46957.0,
+          "promptTokens": 967,
+          "totalTokens": 4153,
+          "environment": "default",
+          "completionTokens": 3186,
+          "costDetails": {
+            "total": 0.03306875
+          },
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "bb6c7660-860a-43af-b386-622d6de763d2",
+          "traceId": "a03cc348",
+          "type": "SPAN",
+          "name": "error_a0_sg_failure_signal_sketch_generator",
+          "startTime": "2026-02-05T13:06:48.795000+00:00",
+          "level": "ERROR",
+          "statusMessage": "Failed. Last error: Max 5 attempts exceeded. Last error from code execution: /home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205150621_gpt-5-2025-08-07/compiling_20260205150621_gpt-5-2025-08-07.ino:26:29: error: conflicting declaration 'const tflite::Model* model'\n static const tflite::Model* model = nullptr;\n                             ^~~~~\nIn file included from /home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205150621_gpt-5-2025-08-07/compiling_20260205150621_gpt-5-2025-08-07.ino:5:0:\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205150621_gpt-5-2025-08-07/model.h:1:21: note: previous declaration as 'const unsigned char model [2528]'\n const unsigned char model[] = {\n                     ^~~~~\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205150621_gpt-5-2025-08-07/compiling_20260205150621_gpt-5-2025-08-07.ino: In function 'void setup()':\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205150621_gpt-5-2025-08-07/compiling_20260205150621_gpt-5-2025-08-07.ino:44:24: error: no matching function for call to 'APDS9960::enableColor(bool)'\n   APDS.enableColor(true);\n                        ^\nIn file included from /home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205150621_gpt-5-2025-08-07/compiling_20260205150621_gpt-5-2025-08-07.ino:2:0:\n/home/wuguangh/Arduino/libraries/Arduino_APDS9960/src/Arduino_APDS9960.h:66:8: note: candidate: bool APDS9960::enableColor()\n   bool enableColor();\n        ^~~~~~~~~~~\n/home/wuguangh/Arduino/libraries/Arduino_APDS9960/src/Arduino_APDS9960.h:66:8: note:   candidate expects 0 arguments, 1 provided\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205150621_gpt-5-2025-08-07/compiling_20260205150621_gpt-5-2025-08-07.ino:48:28: error: 'g_model' was not declared in this scope\n   model = tflite::GetModel(g_model);\n                            ^~~~~~~\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205150621_gpt-5-2025-08-07/compiling_20260205150621_gpt-5-2025-08-07.ino:48:28: note: suggested alternative: 'model'\n   model = tflite::GetModel(g_model);\n                            ^~~~~~~\n                            model\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205150621_gpt-5-2025-08-07/compiling_20260205150621_gpt-5-2025-08-07.ino:49:14: error: request for member 'version' in '*(const unsigned char*)(& model)', which is of non-class type 'const unsigned char'\n   if (model->version() != TFLITE_SCHEMA_VERSION) {\n              ^~~~~~~\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205150621_gpt-5-2025-08-07/compiling_20260205150621_gpt-5-2025-08-07.ino:51:35: error: request for member 'version' in '*(const unsigned char*)(& model)', which is of non-class type 'const unsigned char'\n                            model->version(), TFLITE_SCHEMA_VERSION);\n                                   ^~~~~~~\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205150621_gpt-5-2025-08-07/compiling_20260205150621_gpt-5-2025-08-07.ino:57:70: error: no matching function for call to 'tflite::MicroInterpreter::MicroInterpreter(const unsigned char [2528], tflite::AllOpsResolver&, uint8_t [16384], const int&, tflite::ErrorReporter*&)'\n       model, resolver, tensor_arena, kTensorArenaSize, error_reporter);\n                                                                      ^\nIn file included from /home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205150621_gpt-5-2025-08-07/compiling_20260205150621_gpt-5-2025-08-07.ino:11:0:\n/home/wuguangh/Arduino/libraries/Harvard_TinyMLx/src/tensorflow/lite/micro/micro_interpreter.h:92:3: note: candidate: tflite::MicroInterpreter::MicroInterpreter(const tflite::Model*, const tflite::MicroOpResolver&, tflite::MicroAllocator*, tflite::ErrorReporter*, tflite::Profiler*)\n   MicroInterpreter(const Model* model, const MicroOpResolver& op_resolver,\n   ^~~~~~~~~~~~~~~~\n/home/wuguangh/Arduino/libraries/Harvard_TinyMLx/src/tensorflow/lite/micro/micro_interpreter.h:92:3: note:   no known conversion for argument 1 from 'const unsigned char [2528]' to 'const tflite::Model*'\n/home/wuguangh/Arduino/libraries/Harvard_TinyMLx/src/tensorflow/lite/micro/micro_interpreter.h:82:3: note: candidate: tflite::MicroInterpreter::MicroInterpreter(const tflite::Model*, const tflite::MicroOpResolver&, uint8_t*, size_t, tflite::ErrorReporter*, tflite::Profiler*)\n   MicroInterpreter(const Model* model, const MicroOpResolver& op_resolver,\n   ^~~~~~~~~~~~~~~~\n/home/wuguangh/Arduino/libraries/Harvard_TinyMLx/src/tensorflow/lite/micro/micro_interpreter.h:82:3: note:   no known conversion for argument 1 from 'const unsigned char [2528]' to 'const tflite::Model*'\n/home/wuguangh/Arduino/libraries/Harvard_TinyMLx/src/tensorflow/lite/micro/micro_interpreter.h:73:7: note: candidate: constexpr tflite::MicroInterpreter::MicroInterpreter(const tflite::MicroInterpreter&)\n class MicroInterpreter {\n       ^~~~~~~~~~~~~~~~\n/home/wuguangh/Arduino/libraries/Harvard_TinyMLx/src/tensorflow/lite/micro/micro_interpreter.h:73:7: note:   candidate expects 1 argument, 5 provided\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205150621_gpt-5-2025-08-07/compiling_20260205150621_gpt-5-2025-08-07.ino: In function 'void loop()':\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205150621_gpt-5-2025-08-07/compiling_20260205150621_gpt-5-2025-08-07.ino:91:46: error: cannot bind non-const lvalue reference of type 'int&' to an rvalue of type 'int'\n     APDS.readColor(r_raw, g_raw, b_raw, c_raw);\n                                              ^\nIn file included from /home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205150621_gpt-5-2025-08-07/compiling_20260205150621_gpt-5-2025-08-07.ino:2:0:\n/home/wuguangh/Arduino/libraries/Arduino_APDS9960/src/Arduino_APDS9960.h:47:8: note:   initializing argument 1 of 'bool APDS9960::readColor(int&, int&, int&, int&)'\n   bool readColor(int& r, int& g, int& b, int& c);\n        ^~~~~~~~~\n\nError during build: exit status 1\n",
+          "calculatedTotalCost": 0.0,
+          "promptTokens": 0,
+          "totalTokens": 0,
+          "environment": "default",
+          "completionTokens": 0,
+          "costDetails": {},
+          "endTime": null,
+          "model": null,
+          "modelParameters": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null,
+          "latency": null
+        }
+      ],
+      "updatedAt": "2026-02-05T13:06:53.966Z",
+      "environment": "default",
+      "createdAt": "2026-02-05T12:58:10.616Z"
+    },
+    {
+      "id": "5bd72043",
+      "timestamp": "2026-02-05T12:48:04.967000+00:00",
+      "name": "5bd7_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "failed",
+        "last_code": null,
+        "last_error": "Max 5 attempts exceeded. Last error from code execution: /home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205145716_gpt-5-2025-08-07/compiling_20260205145716_gpt-5-2025-08-07.ino: In function 'void setup()':\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205145716_gpt-5-2025-08-07/compiling_20260205145716_gpt-5-2025-08-07.ino:112:3: error: reference to 'model' is ambiguous\n   model = tflite::GetModel(g_model);\n   ^~~~~\nIn file included from /home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205145716_gpt-5-2025-08-07/compiling_20260205145716_gpt-5-2025-08-07.ino:4:0:\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205145716_gpt-5-2025-08-07/model.h:1:21: note: candidates are: const unsigned char model [2528]\n const unsigned char model[] = {\n                     ^~~~~\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205145716_gpt-5-2025-08-07/compiling_20260205145716_gpt-5-2025-08-07.ino:27:24: note:                 const tflite::Model* {anonymous}::model\n   const tflite::Model* model = nullptr;\n                        ^~~~~\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205145716_gpt-5-2025-08-07/compiling_20260205145716_gpt-5-2025-08-07.ino:112:28: error: 'g_model' was not declared in this scope\n   model = tflite::GetModel(g_model);\n                            ^~~~~~~\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205145716_gpt-5-2025-08-07/compiling_20260205145716_gpt-5-2025-08-07.ino:112:28: note: suggested alternative: 'model'\n   model = tflite::GetModel(g_model);\n                            ^~~~~~~\n                            model\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205145716_gpt-5-2025-08-07/compiling_20260205145716_gpt-5-2025-08-07.ino:113:7: error: reference to 'model' is ambiguous\n   if (model->version() != TFLITE_SCHEMA_VERSION) {\n       ^~~~~\nIn file included from /home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205145716_gpt-5-2025-08-07/compiling_20260205145716_gpt-5-2025-08-07.ino:4:0:\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205145716_gpt-5-2025-08-07/model.h:1:21: note: candidates are: const unsigned char model [2528]\n const unsigned char model[] = {\n                     ^~~~~\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205145716_gpt-5-2025-08-07/compiling_20260205145716_gpt-5-2025-08-07.ino:27:24: note:                 const tflite::Model* {anonymous}::model\n   const tflite::Model* model = nullptr;\n                        ^~~~~\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205145716_gpt-5-2025-08-07/compiling_20260205145716_gpt-5-2025-08-07.ino:115:18: error: reference to 'model' is ambiguous\n     Serial.print(model->version());\n                  ^~~~~\nIn file included from /home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205145716_gpt-5-2025-08-07/compiling_20260205145716_gpt-5-2025-08-07.ino:4:0:\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205145716_gpt-5-2025-08-07/model.h:1:21: note: candidates are: const unsigned char model [2528]\n const unsigned char model[] = {\n                     ^~~~~\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205145716_gpt-5-2025-08-07/compiling_20260205145716_gpt-5-2025-08-07.ino:27:24: note:                 const tflite::Model* {anonymous}::model\n   const tflite::Model* model = nullptr;\n                        ^~~~~\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205145716_gpt-5-2025-08-07/compiling_20260205145716_gpt-5-2025-08-07.ino:122:46: error: reference to 'model' is ambiguous\n   interpreter = new tflite::MicroInterpreter(model, resolver, tensor_arena, kTensorArenaSize, error_reporter);\n                                              ^~~~~\nIn file included from /home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205145716_gpt-5-2025-08-07/compiling_20260205145716_gpt-5-2025-08-07.ino:4:0:\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205145716_gpt-5-2025-08-07/model.h:1:21: note: candidates are: const unsigned char model [2528]\n const unsigned char model[] = {\n                     ^~~~~\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205145716_gpt-5-2025-08-07/compiling_20260205145716_gpt-5-2025-08-07.ino:27:24: note:                 const tflite::Model* {anonymous}::model\n   const tflite::Model* model = nullptr;\n                        ^~~~~\n\nError during build: exit status 1\n"
+      },
+      "session_id": "gpt-5-2025-08-07_92de_sg_batch",
+      "metadata": {
+        "num_run": 3
+      },
+      "tags": [
+        "benchmark",
+        "gpt-5-2025-08-07",
+        "sketch_generator"
+      ],
+      "latency": 578.652,
+      "total_cost": 0.235495,
+      "observations": [
+        {
+          "id": "time-14-48-05-200734_chatcmpl-D5t4Ah0l9YFST7jCQ3TgmDxid4xvV",
+          "traceId": "5bd72043",
+          "type": "GENERATION",
+          "name": "5b_sg_spec_filling_attempt#1",
+          "startTime": "2026-02-05T12:48:05.200000+00:00",
+          "endTime": "2026-02-05T12:48:51.984000+00:00",
+          "model": "gpt-5-2025-08-07",
+          "modelParameters": {
+            "extra_body": "{}"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.02384125,
+          "latency": 46784.0,
+          "promptTokens": 169,
+          "totalTokens": 2532,
+          "environment": "default",
+          "completionTokens": 2363,
+          "costDetails": {
+            "total": 0.02384125
+          },
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-14-48-52-185294_chatcmpl-D5t4vlz4U9UhPhULr0fl0Y8p6Vx78",
+          "traceId": "5bd72043",
+          "type": "GENERATION",
+          "name": "5b_sg_sketch_code_gen_attempt#1",
+          "startTime": "2026-02-05T12:48:52.185000+00:00",
+          "endTime": "2026-02-05T12:50:11.047000+00:00",
+          "model": "gpt-5-2025-08-07",
+          "modelParameters": {
+            "extra_body": "{}"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.04376875,
+          "latency": 78862.0,
+          "promptTokens": 727,
+          "totalTokens": 5013,
+          "environment": "default",
+          "completionTokens": 4286,
+          "costDetails": {
+            "total": 0.04376875
+          },
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-14-50-39-671559_chatcmpl-D5t6dzCqKJ11ocuYOlyban6TZXPJJ",
+          "traceId": "5bd72043",
+          "type": "GENERATION",
+          "name": "5b_sg_sketch_code_gen_attempt#2",
+          "startTime": "2026-02-05T12:50:39.671000+00:00",
+          "endTime": "2026-02-05T12:51:38.751000+00:00",
+          "model": "gpt-5-2025-08-07",
+          "modelParameters": {
+            "extra_body": "{}"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.03967875,
+          "latency": 59080.0,
+          "promptTokens": 727,
+          "totalTokens": 4604,
+          "environment": "default",
+          "completionTokens": 3877,
+          "costDetails": {
+            "total": 0.03967875
+          },
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-14-52-44-940772_chatcmpl-D5t8fxNNOgVhNiJEH1yTqmuQ9ZG7W",
+          "traceId": "5bd72043",
+          "type": "GENERATION",
+          "name": "5b_sg_sketch_code_gen_attempt#3",
+          "startTime": "2026-02-05T12:52:44.940000+00:00",
+          "endTime": "2026-02-05T12:54:09.765000+00:00",
+          "model": "gpt-5-2025-08-07",
+          "modelParameters": {
+            "extra_body": "{}"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.03675875,
+          "latency": 84825.0,
+          "promptTokens": 727,
+          "totalTokens": 4312,
+          "environment": "default",
+          "completionTokens": 3585,
+          "costDetails": {
+            "total": 0.03675875
+          },
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-14-54-38-755503_chatcmpl-D5tAVyvOYTZSMNzzfzM3K7ndsmT1r",
+          "traceId": "5bd72043",
+          "type": "GENERATION",
+          "name": "5b_sg_sketch_code_gen_attempt#4",
+          "startTime": "2026-02-05T12:54:38.755000+00:00",
+          "endTime": "2026-02-05T12:55:34.036000+00:00",
+          "model": "gpt-5-2025-08-07",
+          "modelParameters": {
+            "extra_body": "{}"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.03615875,
+          "latency": 55281.0,
+          "promptTokens": 727,
+          "totalTokens": 4252,
+          "environment": "default",
+          "completionTokens": 3525,
+          "costDetails": {
+            "total": 0.03615875
+          },
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-14-56-02-474126_chatcmpl-D5tBrlebUkDkwOAYUEi7KPp11LOoo",
+          "traceId": "5bd72043",
+          "type": "GENERATION",
+          "name": "5b_sg_sketch_code_gen_attempt#5",
+          "startTime": "2026-02-05T12:56:02.474000+00:00",
+          "endTime": "2026-02-05T12:57:16.426000+00:00",
+          "model": "gpt-5-2025-08-07",
+          "modelParameters": {
+            "extra_body": "{}"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.05528875,
+          "latency": 73952.0,
+          "promptTokens": 727,
+          "totalTokens": 6165,
+          "environment": "default",
+          "completionTokens": 5438,
+          "costDetails": {
+            "total": 0.05528875
+          },
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "03ec064f-0014-45f7-aedf-c7c9cb3ed148",
+          "traceId": "5bd72043",
+          "type": "SPAN",
+          "name": "error_5b_sg_failure_signal_sketch_generator",
+          "startTime": "2026-02-05T12:57:43.852000+00:00",
+          "level": "ERROR",
+          "statusMessage": "Failed. Last error: Max 5 attempts exceeded. Last error from code execution: /home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205145716_gpt-5-2025-08-07/compiling_20260205145716_gpt-5-2025-08-07.ino: In function 'void setup()':\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205145716_gpt-5-2025-08-07/compiling_20260205145716_gpt-5-2025-08-07.ino:112:3: error: reference to 'model' is ambiguous\n   model = tflite::GetModel(g_model);\n   ^~~~~\nIn file included from /home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205145716_gpt-5-2025-08-07/compiling_20260205145716_gpt-5-2025-08-07.ino:4:0:\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205145716_gpt-5-2025-08-07/model.h:1:21: note: candidates are: const unsigned char model [2528]\n const unsigned char model[] = {\n                     ^~~~~\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205145716_gpt-5-2025-08-07/compiling_20260205145716_gpt-5-2025-08-07.ino:27:24: note:                 const tflite::Model* {anonymous}::model\n   const tflite::Model* model = nullptr;\n                        ^~~~~\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205145716_gpt-5-2025-08-07/compiling_20260205145716_gpt-5-2025-08-07.ino:112:28: error: 'g_model' was not declared in this scope\n   model = tflite::GetModel(g_model);\n                            ^~~~~~~\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205145716_gpt-5-2025-08-07/compiling_20260205145716_gpt-5-2025-08-07.ino:112:28: note: suggested alternative: 'model'\n   model = tflite::GetModel(g_model);\n                            ^~~~~~~\n                            model\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205145716_gpt-5-2025-08-07/compiling_20260205145716_gpt-5-2025-08-07.ino:113:7: error: reference to 'model' is ambiguous\n   if (model->version() != TFLITE_SCHEMA_VERSION) {\n       ^~~~~\nIn file included from /home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205145716_gpt-5-2025-08-07/compiling_20260205145716_gpt-5-2025-08-07.ino:4:0:\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205145716_gpt-5-2025-08-07/model.h:1:21: note: candidates are: const unsigned char model [2528]\n const unsigned char model[] = {\n                     ^~~~~\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205145716_gpt-5-2025-08-07/compiling_20260205145716_gpt-5-2025-08-07.ino:27:24: note:                 const tflite::Model* {anonymous}::model\n   const tflite::Model* model = nullptr;\n                        ^~~~~\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205145716_gpt-5-2025-08-07/compiling_20260205145716_gpt-5-2025-08-07.ino:115:18: error: reference to 'model' is ambiguous\n     Serial.print(model->version());\n                  ^~~~~\nIn file included from /home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205145716_gpt-5-2025-08-07/compiling_20260205145716_gpt-5-2025-08-07.ino:4:0:\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205145716_gpt-5-2025-08-07/model.h:1:21: note: candidates are: const unsigned char model [2528]\n const unsigned char model[] = {\n                     ^~~~~\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205145716_gpt-5-2025-08-07/compiling_20260205145716_gpt-5-2025-08-07.ino:27:24: note:                 const tflite::Model* {anonymous}::model\n   const tflite::Model* model = nullptr;\n                        ^~~~~\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205145716_gpt-5-2025-08-07/compiling_20260205145716_gpt-5-2025-08-07.ino:122:46: error: reference to 'model' is ambiguous\n   interpreter = new tflite::MicroInterpreter(model, resolver, tensor_arena, kTensorArenaSize, error_reporter);\n                                              ^~~~~\nIn file included from /home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205145716_gpt-5-2025-08-07/compiling_20260205145716_gpt-5-2025-08-07.ino:4:0:\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205145716_gpt-5-2025-08-07/model.h:1:21: note: candidates are: const unsigned char model [2528]\n const unsigned char model[] = {\n                     ^~~~~\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205145716_gpt-5-2025-08-07/compiling_20260205145716_gpt-5-2025-08-07.ino:27:24: note:                 const tflite::Model* {anonymous}::model\n   const tflite::Model* model = nullptr;\n                        ^~~~~\n\nError during build: exit status 1\n",
+          "calculatedTotalCost": 0.0,
+          "promptTokens": 0,
+          "totalTokens": 0,
+          "environment": "default",
+          "completionTokens": 0,
+          "costDetails": {},
+          "endTime": null,
+          "model": null,
+          "modelParameters": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null,
+          "latency": null
+        }
+      ],
+      "updatedAt": "2026-02-05T12:57:49.454Z",
+      "environment": "default",
+      "createdAt": "2026-02-05T12:48:05.481Z"
+    },
+    {
+      "id": "3fc43628",
+      "timestamp": "2026-02-05T12:38:02.768000+00:00",
+      "name": "3fc4_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "failed",
+        "last_code": null,
+        "last_error": "Max 5 attempts exceeded. Last error from code execution: /home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205144710_gpt-5-2025-08-07/compiling_20260205144710_gpt-5-2025-08-07.ino: In function 'void setup()':\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205144710_gpt-5-2025-08-07/compiling_20260205144710_gpt-5-2025-08-07.ino:88:31: error: 'g_model' was not declared in this scope\n   tflModel = tflite::GetModel(g_model);\n                               ^~~~~~~\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205144710_gpt-5-2025-08-07/compiling_20260205144710_gpt-5-2025-08-07.ino:88:31: note: suggested alternative: 'model'\n   tflModel = tflite::GetModel(g_model);\n                               ^~~~~~~\n                               model\n\nError during build: exit status 1\n"
+      },
+      "session_id": "gpt-5-2025-08-07_92de_sg_batch",
+      "metadata": {
+        "num_run": 2
+      },
+      "tags": [
+        "benchmark",
+        "gpt-5-2025-08-07",
+        "sketch_generator"
+      ],
+      "latency": 553.626,
+      "total_cost": 0.253475,
+      "observations": [
+        {
+          "id": "time-14-38-25-689716_chatcmpl-D5suoQ0EpVpGTHcJpvQnfIb89eern",
+          "traceId": "3fc43628",
+          "type": "GENERATION",
+          "name": "3f_sg_spec_filling_attempt#1",
+          "startTime": "2026-02-05T12:38:25.689000+00:00",
+          "endTime": "2026-02-05T12:40:07.775000+00:00",
+          "model": "gpt-5-2025-08-07",
+          "modelParameters": {
+            "extra_body": "{}"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.05696125,
+          "latency": 102086.0,
+          "promptTokens": 169,
+          "totalTokens": 5844,
+          "environment": "default",
+          "completionTokens": 5675,
+          "costDetails": {
+            "total": 0.05696125
+          },
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-14-40-08-304821_chatcmpl-D5swS42rQ5OzLHJxeT0BJURpiBj08",
+          "traceId": "3fc43628",
+          "type": "GENERATION",
+          "name": "3f_sg_sketch_code_gen_attempt#1",
+          "startTime": "2026-02-05T12:40:08.304000+00:00",
+          "endTime": "2026-02-05T12:41:34.878000+00:00",
+          "model": "gpt-5-2025-08-07",
+          "modelParameters": {
+            "extra_body": "{}"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.05574875,
+          "latency": 86574.0,
+          "promptTokens": 2055,
+          "totalTokens": 7373,
+          "environment": "default",
+          "completionTokens": 5318,
+          "costDetails": {
+            "total": 0.05574875
+          },
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-14-42-04-066983_chatcmpl-D5syK7SLfOZbe9SaatVbBpLINjJ6F",
+          "traceId": "3fc43628",
+          "type": "GENERATION",
+          "name": "3f_sg_sketch_code_gen_attempt#2",
+          "startTime": "2026-02-05T12:42:04.066000+00:00",
+          "endTime": "2026-02-05T12:43:07.505000+00:00",
+          "model": "gpt-5-2025-08-07",
+          "modelParameters": {
+            "extra_body": "{}"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.03888875,
+          "latency": 63439.0,
+          "promptTokens": 2055,
+          "totalTokens": 5687,
+          "environment": "default",
+          "completionTokens": 3632,
+          "costDetails": {
+            "total": 0.03888875
+          },
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-14-43-36-149982_chatcmpl-D5szrbR2j0HqHCEVvCaZYeaGyeE0i",
+          "traceId": "3fc43628",
+          "type": "GENERATION",
+          "name": "3f_sg_sketch_code_gen_attempt#3",
+          "startTime": "2026-02-05T12:43:36.149000+00:00",
+          "endTime": "2026-02-05T12:44:30.559000+00:00",
+          "model": "gpt-5-2025-08-07",
+          "modelParameters": {
+            "extra_body": "{}"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.03322875,
+          "latency": 54410.0,
+          "promptTokens": 2055,
+          "totalTokens": 5121,
+          "environment": "default",
+          "completionTokens": 3066,
+          "costDetails": {
+            "total": 0.03322875
+          },
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-14-44-58-138996_chatcmpl-D5t180TsLYFZEp5Itfy9GFbZ7hrF3",
+          "traceId": "3fc43628",
+          "type": "GENERATION",
+          "name": "3f_sg_sketch_code_gen_attempt#4",
+          "startTime": "2026-02-05T12:44:58.138000+00:00",
+          "endTime": "2026-02-05T12:45:54.092000+00:00",
+          "model": "gpt-5-2025-08-07",
+          "modelParameters": {
+            "extra_body": "{}"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.03505875,
+          "latency": 55954.0,
+          "promptTokens": 2055,
+          "totalTokens": 5304,
+          "environment": "default",
+          "completionTokens": 3249,
+          "costDetails": {
+            "total": 0.03505875
+          },
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-14-46-22-915575_chatcmpl-D5t2VWErgGj8L5JpG6o5dMFvXfUV6",
+          "traceId": "3fc43628",
+          "type": "GENERATION",
+          "name": "3f_sg_sketch_code_gen_attempt#5",
+          "startTime": "2026-02-05T12:46:22.915000+00:00",
+          "endTime": "2026-02-05T12:47:10.915000+00:00",
+          "model": "gpt-5-2025-08-07",
+          "modelParameters": {
+            "extra_body": "{}"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.03358875,
+          "latency": 48000.0,
+          "promptTokens": 2055,
+          "totalTokens": 5373,
+          "environment": "default",
+          "completionTokens": 3318,
+          "costDetails": {
+            "total": 0.03358875
+          },
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "95ede9a2-e5e3-4b05-bae3-5c90989af9ed",
+          "traceId": "3fc43628",
+          "type": "SPAN",
+          "name": "error_3f_sg_failure_signal_sketch_generator",
+          "startTime": "2026-02-05T12:47:39.315000+00:00",
+          "level": "ERROR",
+          "statusMessage": "Failed. Last error: Max 5 attempts exceeded. Last error from code execution: /home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205144710_gpt-5-2025-08-07/compiling_20260205144710_gpt-5-2025-08-07.ino: In function 'void setup()':\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205144710_gpt-5-2025-08-07/compiling_20260205144710_gpt-5-2025-08-07.ino:88:31: error: 'g_model' was not declared in this scope\n   tflModel = tflite::GetModel(g_model);\n                               ^~~~~~~\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205144710_gpt-5-2025-08-07/compiling_20260205144710_gpt-5-2025-08-07.ino:88:31: note: suggested alternative: 'model'\n   tflModel = tflite::GetModel(g_model);\n                               ^~~~~~~\n                               model\n\nError during build: exit status 1\n",
+          "calculatedTotalCost": 0.0,
+          "promptTokens": 0,
+          "totalTokens": 0,
+          "environment": "default",
+          "completionTokens": 0,
+          "costDetails": {},
+          "endTime": null,
+          "model": null,
+          "modelParameters": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null,
+          "latency": null
+        }
+      ],
+      "updatedAt": "2026-02-05T12:47:44.897Z",
+      "environment": "default",
+      "createdAt": "2026-02-05T12:38:03.336Z"
+    },
+    {
+      "id": "9a6cf16f",
+      "timestamp": "2026-02-05T12:28:30.642000+00:00",
+      "name": "9a6c_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "failed",
+        "last_code": null,
+        "last_error": "Max 5 attempts exceeded. Last error from code execution: /home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205143707_gpt-5-2025-08-07/compiling_20260205143707_gpt-5-2025-08-07.ino: In function 'void setup()':\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205143707_gpt-5-2025-08-07/compiling_20260205143707_gpt-5-2025-08-07.ino:67:3: error: reference to 'model' is ambiguous\n   model = tflite::GetModel(g_model);\n   ^~~~~\nIn file included from /home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205143707_gpt-5-2025-08-07/compiling_20260205143707_gpt-5-2025-08-07.ino:4:0:\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205143707_gpt-5-2025-08-07/model.h:1:21: note: candidates are: const unsigned char model [2528]\n const unsigned char model[] = {\n                     ^~~~~\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205143707_gpt-5-2025-08-07/compiling_20260205143707_gpt-5-2025-08-07.ino:25:22: note:                 const tflite::Model* {anonymous}::model\n const tflite::Model* model = nullptr;\n                      ^~~~~\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205143707_gpt-5-2025-08-07/compiling_20260205143707_gpt-5-2025-08-07.ino:67:28: error: 'g_model' was not declared in this scope\n   model = tflite::GetModel(g_model);\n                            ^~~~~~~\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205143707_gpt-5-2025-08-07/compiling_20260205143707_gpt-5-2025-08-07.ino:67:28: note: suggested alternative: 'model'\n   model = tflite::GetModel(g_model);\n                            ^~~~~~~\n                            model\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205143707_gpt-5-2025-08-07/compiling_20260205143707_gpt-5-2025-08-07.ino:68:7: error: reference to 'model' is ambiguous\n   if (model->version() != TFLITE_SCHEMA_VERSION) {\n       ^~~~~\nIn file included from /home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205143707_gpt-5-2025-08-07/compiling_20260205143707_gpt-5-2025-08-07.ino:4:0:\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205143707_gpt-5-2025-08-07/model.h:1:21: note: candidates are: const unsigned char model [2528]\n const unsigned char model[] = {\n                     ^~~~~\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205143707_gpt-5-2025-08-07/compiling_20260205143707_gpt-5-2025-08-07.ino:25:22: note:                 const tflite::Model* {anonymous}::model\n const tflite::Model* model = nullptr;\n                      ^~~~~\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205143707_gpt-5-2025-08-07/compiling_20260205143707_gpt-5-2025-08-07.ino:70:18: error: reference to 'model' is ambiguous\n     Serial.print(model->version());\n                  ^~~~~\nIn file included from /home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205143707_gpt-5-2025-08-07/compiling_20260205143707_gpt-5-2025-08-07.ino:4:0:\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205143707_gpt-5-2025-08-07/model.h:1:21: note: candidates are: const unsigned char model [2528]\n const unsigned char model[] = {\n                     ^~~~~\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205143707_gpt-5-2025-08-07/compiling_20260205143707_gpt-5-2025-08-07.ino:25:22: note:                 const tflite::Model* {anonymous}::model\n const tflite::Model* model = nullptr;\n                      ^~~~~\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205143707_gpt-5-2025-08-07/compiling_20260205143707_gpt-5-2025-08-07.ino:80:7: error: reference to 'model' is ambiguous\n       model, resolver, tensor_arena, kTensorArenaSize, error_reporter);\n       ^~~~~\nIn file included from /home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205143707_gpt-5-2025-08-07/compiling_20260205143707_gpt-5-2025-08-07.ino:4:0:\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205143707_gpt-5-2025-08-07/model.h:1:21: note: candidates are: const unsigned char model [2528]\n const unsigned char model[] = {\n                     ^~~~~\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205143707_gpt-5-2025-08-07/compiling_20260205143707_gpt-5-2025-08-07.ino:25:22: note:                 const tflite::Model* {anonymous}::model\n const tflite::Model* model = nullptr;\n                      ^~~~~\n\nError during build: exit status 1\n"
+      },
+      "session_id": "gpt-5-2025-08-07_92de_sg_batch",
+      "metadata": {
+        "num_run": 1
+      },
+      "tags": [
+        "benchmark",
+        "gpt-5-2025-08-07",
+        "sketch_generator"
+      ],
+      "latency": 545.65,
+      "total_cost": 0.21780875,
+      "observations": [
+        {
+          "id": "time-14-28-30-873933_chatcmpl-D5slEwdUn0vz2BbO3sVpD0jXleppF",
+          "traceId": "9a6cf16f",
+          "type": "GENERATION",
+          "name": "9a_sg_spec_filling_attempt#1",
+          "startTime": "2026-02-05T12:28:30.873000+00:00",
+          "endTime": "2026-02-05T12:29:43.013000+00:00",
+          "model": "gpt-5-2025-08-07",
+          "modelParameters": {
+            "extra_body": "{}"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.02919125,
+          "latency": 72140.0,
+          "promptTokens": 169,
+          "totalTokens": 3067,
+          "environment": "default",
+          "completionTokens": 2898,
+          "costDetails": {
+            "total": 0.02919125
+          },
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-14-29-43-375553_chatcmpl-D5smOknSOFVx2q1NQRJW6klhNEfat",
+          "traceId": "9a6cf16f",
+          "type": "GENERATION",
+          "name": "9a_sg_sketch_code_gen_attempt#1",
+          "startTime": "2026-02-05T12:29:43.375000+00:00",
+          "endTime": "2026-02-05T12:30:31.382000+00:00",
+          "model": "gpt-5-2025-08-07",
+          "modelParameters": {
+            "extra_body": "{}"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0375075,
+          "latency": 48007.0,
+          "promptTokens": 878,
+          "totalTokens": 4519,
+          "environment": "default",
+          "completionTokens": 3641,
+          "costDetails": {
+            "total": 0.0375075
+          },
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-14-31-00-854950_chatcmpl-D5sne4dnylse3h3wcIOjUjzLfn72J",
+          "traceId": "9a6cf16f",
+          "type": "GENERATION",
+          "name": "9a_sg_sketch_code_gen_attempt#2",
+          "startTime": "2026-02-05T12:31:00.854000+00:00",
+          "endTime": "2026-02-05T12:32:04.197000+00:00",
+          "model": "gpt-5-2025-08-07",
+          "modelParameters": {
+            "extra_body": "{}"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0380075,
+          "latency": 63343.0,
+          "promptTokens": 878,
+          "totalTokens": 4569,
+          "environment": "default",
+          "completionTokens": 3691,
+          "costDetails": {
+            "total": 0.0380075
+          },
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-14-32-33-116934_chatcmpl-D5sp8R61yXk0lpS4XrqE58cLLLHfU",
+          "traceId": "9a6cf16f",
+          "type": "GENERATION",
+          "name": "9a_sg_sketch_code_gen_attempt#3",
+          "startTime": "2026-02-05T12:32:33.116000+00:00",
+          "endTime": "2026-02-05T12:33:34.022000+00:00",
+          "model": "gpt-5-2025-08-07",
+          "modelParameters": {
+            "extra_body": "{}"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0348975,
+          "latency": 60906.0,
+          "promptTokens": 878,
+          "totalTokens": 4258,
+          "environment": "default",
+          "completionTokens": 3380,
+          "costDetails": {
+            "total": 0.0348975
+          },
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-14-34-03-294050_chatcmpl-D5sqZ5pPpYZKfSrFIb309HdgOHrL5",
+          "traceId": "9a6cf16f",
+          "type": "GENERATION",
+          "name": "9a_sg_sketch_code_gen_attempt#4",
+          "startTime": "2026-02-05T12:34:03.294000+00:00",
+          "endTime": "2026-02-05T12:35:33.931000+00:00",
+          "model": "gpt-5-2025-08-07",
+          "modelParameters": {
+            "extra_body": "{}"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0440675,
+          "latency": 90637.0,
+          "promptTokens": 878,
+          "totalTokens": 5175,
+          "environment": "default",
+          "completionTokens": 4297,
+          "costDetails": {
+            "total": 0.0440675
+          },
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-14-36-02-678236_chatcmpl-D5ssV4faZTDcXlllUrOZVQkciBLYO",
+          "traceId": "9a6cf16f",
+          "type": "GENERATION",
+          "name": "9a_sg_sketch_code_gen_attempt#5",
+          "startTime": "2026-02-05T12:36:02.678000+00:00",
+          "endTime": "2026-02-05T12:37:07.722000+00:00",
+          "model": "gpt-5-2025-08-07",
+          "modelParameters": {
+            "extra_body": "{}"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0341375,
+          "latency": 65044.0,
+          "promptTokens": 878,
+          "totalTokens": 4182,
+          "environment": "default",
+          "completionTokens": 3304,
+          "costDetails": {
+            "total": 0.0341375
+          },
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "28301a25-f78d-4c97-9fe8-9dae135bba20",
+          "traceId": "9a6cf16f",
+          "type": "SPAN",
+          "name": "error_9a_sg_failure_signal_sketch_generator",
+          "startTime": "2026-02-05T12:37:36.523000+00:00",
+          "level": "ERROR",
+          "statusMessage": "Failed. Last error: Max 5 attempts exceeded. Last error from code execution: /home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205143707_gpt-5-2025-08-07/compiling_20260205143707_gpt-5-2025-08-07.ino: In function 'void setup()':\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205143707_gpt-5-2025-08-07/compiling_20260205143707_gpt-5-2025-08-07.ino:67:3: error: reference to 'model' is ambiguous\n   model = tflite::GetModel(g_model);\n   ^~~~~\nIn file included from /home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205143707_gpt-5-2025-08-07/compiling_20260205143707_gpt-5-2025-08-07.ino:4:0:\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205143707_gpt-5-2025-08-07/model.h:1:21: note: candidates are: const unsigned char model [2528]\n const unsigned char model[] = {\n                     ^~~~~\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205143707_gpt-5-2025-08-07/compiling_20260205143707_gpt-5-2025-08-07.ino:25:22: note:                 const tflite::Model* {anonymous}::model\n const tflite::Model* model = nullptr;\n                      ^~~~~\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205143707_gpt-5-2025-08-07/compiling_20260205143707_gpt-5-2025-08-07.ino:67:28: error: 'g_model' was not declared in this scope\n   model = tflite::GetModel(g_model);\n                            ^~~~~~~\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205143707_gpt-5-2025-08-07/compiling_20260205143707_gpt-5-2025-08-07.ino:67:28: note: suggested alternative: 'model'\n   model = tflite::GetModel(g_model);\n                            ^~~~~~~\n                            model\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205143707_gpt-5-2025-08-07/compiling_20260205143707_gpt-5-2025-08-07.ino:68:7: error: reference to 'model' is ambiguous\n   if (model->version() != TFLITE_SCHEMA_VERSION) {\n       ^~~~~\nIn file included from /home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205143707_gpt-5-2025-08-07/compiling_20260205143707_gpt-5-2025-08-07.ino:4:0:\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205143707_gpt-5-2025-08-07/model.h:1:21: note: candidates are: const unsigned char model [2528]\n const unsigned char model[] = {\n                     ^~~~~\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205143707_gpt-5-2025-08-07/compiling_20260205143707_gpt-5-2025-08-07.ino:25:22: note:                 const tflite::Model* {anonymous}::model\n const tflite::Model* model = nullptr;\n                      ^~~~~\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205143707_gpt-5-2025-08-07/compiling_20260205143707_gpt-5-2025-08-07.ino:70:18: error: reference to 'model' is ambiguous\n     Serial.print(model->version());\n                  ^~~~~\nIn file included from /home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205143707_gpt-5-2025-08-07/compiling_20260205143707_gpt-5-2025-08-07.ino:4:0:\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205143707_gpt-5-2025-08-07/model.h:1:21: note: candidates are: const unsigned char model [2528]\n const unsigned char model[] = {\n                     ^~~~~\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205143707_gpt-5-2025-08-07/compiling_20260205143707_gpt-5-2025-08-07.ino:25:22: note:                 const tflite::Model* {anonymous}::model\n const tflite::Model* model = nullptr;\n                      ^~~~~\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205143707_gpt-5-2025-08-07/compiling_20260205143707_gpt-5-2025-08-07.ino:80:7: error: reference to 'model' is ambiguous\n       model, resolver, tensor_arena, kTensorArenaSize, error_reporter);\n       ^~~~~\nIn file included from /home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205143707_gpt-5-2025-08-07/compiling_20260205143707_gpt-5-2025-08-07.ino:4:0:\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205143707_gpt-5-2025-08-07/model.h:1:21: note: candidates are: const unsigned char model [2528]\n const unsigned char model[] = {\n                     ^~~~~\n/home/wuguangh/Projects/tinyml-autopilot/compiling/compiling_20260205143707_gpt-5-2025-08-07/compiling_20260205143707_gpt-5-2025-08-07.ino:25:22: note:                 const tflite::Model* {anonymous}::model\n const tflite::Model* model = nullptr;\n                      ^~~~~\n\nError during build: exit status 1\n",
+          "calculatedTotalCost": 0.0,
+          "promptTokens": 0,
+          "totalTokens": 0,
+          "environment": "default",
+          "completionTokens": 0,
+          "costDetails": {},
+          "endTime": null,
+          "model": null,
+          "modelParameters": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null,
+          "latency": null
+        }
+      ],
+      "updatedAt": "2026-02-05T12:37:42.070Z",
+      "environment": "default",
+      "createdAt": "2026-02-05T12:28:31.225Z"
+    }
+  ],
+  "meta": {
+    "total_items": 7
+  }
+}

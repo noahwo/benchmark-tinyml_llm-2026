@@ -1,0 +1,631 @@
+_source_file,batch_id,completion_cost,completion_tokens,latency,name,parameters,prompt_cost,prompt_tokens,status,total_cost,total_tokens,trace_id,processor,model
+c_b4ca_sg.csv ,codestral_b4ca_sg ,0.0,4356,137.52,1d97_sg ,F,0.0,16059,failure ,0.0,20415,1d973d52,sg,codestral
+c_b4ca_sg.csv ,codestral_b4ca_sg ,0.0,3969,81.61,153a_sg ,F,0.0,14011,failure ,0.0,17980,153a2e07,sg,codestral
+c_b4ca_sg.csv ,codestral_b4ca_sg ,0.0,6496,130.25,5e61_sg ,F,0.0,18107,failure ,0.0,24603,5e61d468,sg,codestral
+c_b4ca_sg.csv ,codestral_b4ca_sg ,0.0,5605,111.41,e495_sg ,F,0.0,14010,failure ,0.0,19615,e4956b2d,sg,codestral
+c_b4ca_sg.csv ,codestral_b4ca_sg ,0.0,5426,110.61,cf1e_sg ,F,0.0,13869,failure ,0.0,19295,cf1e3f92,sg,codestral
+c_b4ca_sg.csv ,codestral_b4ca_sg ,0.0,7099,141.5,ae57_sg ,F,0.0,18108,failure ,0.0,25207,ae577ce9,sg,codestral
+c_b4ca_sg.csv ,codestral_b4ca_sg ,0.0,5058,101.5,eabb_sg ,F,0.0,13975,failure ,0.0,19033,eabb8b62,sg,codestral
+c_b4ca_sg.csv ,codestral_b4ca_sg ,0.0,6624,129.99,0651_sg ,F,0.0,14012,failure ,0.0,20636,065138c2,sg,codestral
+c_b4ca_sg.csv ,codestral_b4ca_sg ,0.0,6678,131.25,ef39_sg ,F,0.0,14012,failure ,0.0,20690,ef3962d9,sg,codestral
+c_b4ca_sg.csv ,codestral_b4ca_sg ,0.0,5579,111.04,3ee0_sg ,F,0.0,13996,failure ,0.0,19575,3ee0ec3e,sg,codestral
+c_b4ca_sg.csv ,codestral_b4ca_sg ,0.0,7310,146.61,2bba_sg ,F,0.0,20156,failure ,0.0,27466,2bba679d,sg,codestral
+c_b4ca_sg.csv ,codestral_b4ca_sg ,0.0,5714,113.64,6658_sg ,F,0.0,13960,failure ,0.0,19674,6658710a,sg,codestral
+c_b4ca_sg.csv ,codestral_b4ca_sg ,0.0,5549,110.41,9c36_sg ,F,0.0,14012,failure ,0.0,19561,9c36a77f,sg,codestral
+c_b4ca_sg.csv ,codestral_b4ca_sg ,0.0,4176,84.4,9ed8_sg ,F,0.0,11812,failure ,0.0,15988,9ed82e25,sg,codestral
+c_b4ca_sg.csv ,codestral_b4ca_sg ,0.0,5252,105.02,4fdc_sg ,F,0.0,13888,failure ,0.0,19140,4fdcdeef,sg,codestral
+c_b4ca_sg.csv ,codestral_b4ca_sg ,0.0,5784,114.75,23d7_sg ,F,0.0,14012,failure ,0.0,19796,23d7176a,sg,codestral
+c_b4ca_sg.csv ,codestral_b4ca_sg ,0.0,5945,117.9,5ee5_sg ,F,0.0,13993,failure ,0.0,19938,5ee5973d,sg,codestral
+c_b4ca_sg.csv ,codestral_b4ca_sg ,0.0,6961,138.78,36c9_sg ,F,0.0,18067,failure ,0.0,25028,36c93b71,sg,codestral
+c_b4ca_sg.csv ,codestral_b4ca_sg ,0.0,6126,121.14,dcb4_sg ,F,0.0,14012,failure ,0.0,20138,dcb4f9d1,sg,codestral
+c_b4ca_sg.csv ,codestral_b4ca_sg ,0.0,5205,104.21,4f07_sg ,F,0.0,13990,failure ,0.0,19195,4f07f0c5,sg,codestral
+c_b4ca_sg.csv ,codestral_b4ca_sg ,0.0,6542,129.77,71cb_sg ,F,0.0,16060,failure ,0.0,22602,71cbe7f4,sg,codestral
+c_b4ca_sg.csv ,codestral_b4ca_sg ,0.0,5464,108.92,642b_sg ,F,0.0,14008,failure ,0.0,19472,642b65cc,sg,codestral
+c_b4ca_sg.csv ,codestral_b4ca_sg ,0.0,5643,112.32,0507_sg ,F,0.0,14012,failure ,0.0,19655,05074a11,sg,codestral
+c_b4ca_sg.csv ,codestral_b4ca_sg ,0.0,4823,97.21,bb8b_sg ,F,0.0,14009,failure ,0.0,18832,bb8b6bb7,sg,codestral
+c_b4ca_sg.csv ,codestral_b4ca_sg ,0.0,5112,102.49,789c_sg ,F,0.0,14012,failure ,0.0,19124,789c0a27,sg,codestral
+c_b4ca_sg.csv ,codestral_b4ca_sg ,0.0,6758,132.54,0fe4_sg ,F,0.0,14012,failure ,0.0,20770,0fe4256b,sg,codestral
+c_b4ca_sg.csv ,codestral_b4ca_sg ,0.0,4952,99.47,b69d_sg ,F,0.0,13988,failure ,0.0,18940,b69d1335,sg,codestral
+c_b4ca_sg.csv ,codestral_b4ca_sg ,0.0,6452,127.02,b90c_sg ,F,0.0,14012,failure ,0.0,20464,b90cc92e,sg,codestral
+c_b4ca_sg.csv ,codestral_b4ca_sg ,0.0,7212,142.06,3c21_sg ,F,0.0,16060,failure ,0.0,23272,3c21a8a0,sg,codestral
+c_b4ca_sg.csv ,codestral_b4ca_sg ,0.0,5824,115.38,62d2_sg ,F,0.0,14004,failure ,0.0,19828,62d2135c,sg,codestral
+c_b4ca_mc.csv ,codestral_b4ca_mc ,0.0,554,11.33,b208_mc ,F,0.0,2532,success ,0.0,3086,b20881e7,mc,codestral
+c_b4ca_mc.csv ,codestral_b4ca_mc ,0.0,1508,29.49,416b_mc ,F,0.0,4864,success ,0.0,6372,416b3495,mc,codestral
+c_b4ca_mc.csv ,codestral_b4ca_mc ,0.0,1190,22.78,d078_mc ,F,0.0,3472,success ,0.0,4662,d07855cc,mc,codestral
+c_b4ca_mc.csv ,codestral_b4ca_mc ,0.0,2369,44.9,468d_mc ,F,0.0,6105,failure ,0.0,8474,468d1436,mc,codestral
+c_b4ca_mc.csv ,codestral_b4ca_mc ,0.0,1608,32.73,35e6_mc ,F,0.0,6047,success ,0.0,7655,35e667f3,mc,codestral
+c_b4ca_mc.csv ,codestral_b4ca_mc ,0.0,455,8.14,6539_mc ,F,0.0,484,success ,0.0,939,65395cac,mc,codestral
+c_b4ca_mc.csv ,codestral_b4ca_mc ,0.0,2248,44.42,29e6_mc ,F,0.0,7272,failure ,0.0,9520,29e66861,mc,codestral
+c_b4ca_mc.csv ,codestral_b4ca_mc ,0.0,2005,40.01,3de9_mc ,F,0.0,7380,success ,0.0,9385,3de95194,mc,codestral
+c_b4ca_mc.csv ,codestral_b4ca_mc ,0.0,933,18.0,be9e_mc ,F,0.0,2532,success ,0.0,3465,be9ee5e6,mc,codestral
+c_b4ca_mc.csv ,codestral_b4ca_mc ,0.0,1299,24.88,0b60_mc ,F,0.0,3434,success ,0.0,4733,0b60284f,mc,codestral
+c_b4ca_mc.csv ,codestral_b4ca_mc ,0.0,2059,40.24,27b8_mc ,F,0.0,6500,success ,0.0,8559,27b8649e,mc,codestral
+c_b4ca_mc.csv ,codestral_b4ca_mc ,0.0,1680,33.06,20c9_mc ,F,0.0,6334,failure ,0.0,8014,20c91143,mc,codestral
+c_b4ca_mc.csv ,codestral_b4ca_mc ,0.0,1486,29.85,c7e2_mc ,F,0.0,6235,failure ,0.0,7721,c7e292a1,mc,codestral
+c_b4ca_mc.csv ,codestral_b4ca_mc ,0.0,2155,42.39,a4b1_mc ,F,0.0,7104,failure ,0.0,9259,a4b18ea5,mc,codestral
+c_b4ca_mc.csv ,codestral_b4ca_mc ,0.0,1315,24.84,7f1b_mc ,F,0.0,3277,success ,0.0,4592,7f1b983c,mc,codestral
+c_b4ca_mc.csv ,codestral_b4ca_mc ,0.0,653,12.99,af33_mc ,F,0.0,2532,success ,0.0,3185,af33eb4c,mc,codestral
+c_b4ca_mc.csv ,codestral_b4ca_mc ,0.0,698,12.8,6a40_mc ,F,0.0,1445,success ,0.0,2143,6a40d2a4,mc,codestral
+c_b4ca_mc.csv ,codestral_b4ca_mc ,0.0,1586,31.22,92bd_mc ,F,0.0,6385,failure ,0.0,7971,92bd8c76,mc,codestral
+c_b4ca_mc.csv ,codestral_b4ca_mc ,0.0,1832,36.89,3a51_mc ,F,0.0,7153,failure ,0.0,8985,3a51fda2,mc,codestral
+c_b4ca_mc.csv ,codestral_b4ca_mc ,0.0,1580,31.55,731b_mc ,F,0.0,6406,failure ,0.0,7986,731b0a21,mc,codestral
+c_b4ca_mc.csv ,codestral_b4ca_mc ,0.0,1855,35.23,ef57_mc ,F,0.0,5889,failure ,0.0,7744,ef576d6a,mc,codestral
+c_b4ca_mc.csv ,codestral_b4ca_mc ,0.0,1612,32.68,4ae7_mc ,F,0.0,6962,failure ,0.0,8574,4ae78960,mc,codestral
+c_b4ca_mc.csv ,codestral_b4ca_mc ,0.0,1838,36.12,26d7_mc ,F,0.0,6312,failure ,0.0,8150,26d714bf,mc,codestral
+c_b4ca_mc.csv ,codestral_b4ca_mc ,0.0,1852,36.4,afef_mc ,F,0.0,6510,failure ,0.0,8362,afef976a,mc,codestral
+c_b4ca_mc.csv ,codestral_b4ca_mc ,0.0,1801,35.34,0c5e_mc ,F,0.0,6218,failure ,0.0,8019,0c5efbd0,mc,codestral
+c_b4ca_mc.csv ,codestral_b4ca_mc ,0.0,1830,34.87,bcf4_mc ,F,0.0,5602,failure ,0.0,7432,bcf4eaef,mc,codestral
+c_b4ca_mc.csv ,codestral_b4ca_mc ,0.0,1793,34.61,9f36_mc ,F,0.0,5126,success ,0.0,6919,9f364ed8,mc,codestral
+c_b4ca_mc.csv ,codestral_b4ca_mc ,0.0,2036,41.34,e5a9_mc ,F,0.0,7782,success ,0.0,9818,e5a90e66,mc,codestral
+c_b4ca_mc.csv ,codestral_b4ca_mc ,0.0,996,19.26,0184_mc ,F,0.0,3232,success ,0.0,4228,01841132,mc,codestral
+c_b4ca_mc.csv ,codestral_b4ca_mc ,0.0,903,16.13,9dc5_mc ,F,0.0,1513,success ,0.0,2416,9dc56bab,mc,codestral
+c_b4ca_dp.csv ,codestral_b4ca_dp ,0.0,6021,123.76,fba2_dp ,F,0.0,28198,success ,0.0,34219,fba2d7d6,dp,codestral
+c_b4ca_dp.csv ,codestral_b4ca_dp ,0.0,2897,56.62,fd98_dp ,F,0.0,11498,success ,0.0,14395,fd989a6b,dp,codestral
+c_b4ca_dp.csv ,codestral_b4ca_dp ,0.0,4824,98.28,663f_dp ,F,0.0,21448,failure ,0.0,26272,663fa7c4,dp,codestral
+c_b4ca_dp.csv ,codestral_b4ca_dp ,0.0,6326,124.71,e5f6_dp ,F,0.0,20557,failure ,0.0,26883,e5f69ca4,dp,codestral
+c_b4ca_dp.csv ,codestral_b4ca_dp ,0.0,4715,91.94,af40_dp ,F,0.0,15413,success ,0.0,20128,af40f791,dp,codestral
+c_b4ca_dp.csv ,codestral_b4ca_dp ,0.0,5951,118.42,3d7d_dp ,F,0.0,21128,success ,0.0,27079,3d7d292a,dp,codestral
+c_b4ca_dp.csv ,codestral_b4ca_dp ,0.0,3656,74.16,4e84_dp ,F,0.0,15171,failure ,0.0,18827,4e84d5fb,dp,codestral
+c_b4ca_dp.csv ,codestral_b4ca_dp ,0.0,4829,93.93,e0ac_dp ,F,0.0,15092,success ,0.0,19921,e0acfa1a,dp,codestral
+c_b4ca_dp.csv ,codestral_b4ca_dp ,0.0,5662,112.16,da42_dp ,F,0.0,18115,failure ,0.0,23777,da428519,dp,codestral
+c_b4ca_dp.csv ,codestral_b4ca_dp ,0.0,4206,83.26,7c67_dp ,F,0.0,14371,failure ,0.0,18577,7c67954e,dp,codestral
+c_b4ca_dp.csv ,codestral_b4ca_dp ,0.0,5929,120.92,1386_dp ,F,0.0,25053,failure ,0.0,30982,1386a462,dp,codestral
+c_b4ca_dp.csv ,codestral_b4ca_dp ,0.0,1354,27.48,4fe3_dp ,F,0.0,6823,failure ,0.0,8177,4fe392a1,dp,codestral
+c_b4ca_dp.csv ,codestral_b4ca_dp ,0.0,5503,108.33,bea2_dp ,F,0.0,18636,success ,0.0,24139,bea277b7,dp,codestral
+c_b4ca_dp.csv ,codestral_b4ca_dp ,0.0,5450,108.34,c609_dp ,F,0.0,19627,success ,0.0,25077,c609e5aa,dp,codestral
+c_b4ca_dp.csv ,codestral_b4ca_dp ,0.0,5982,122.51,bccb_dp ,F,0.0,26428,failure ,0.0,32410,bccb74ab,dp,codestral
+c_b4ca_dp.csv ,codestral_b4ca_dp ,0.0,4037,80.51,891c_dp ,F,0.0,16429,success ,0.0,20466,891c1870,dp,codestral
+c_b4ca_dp.csv ,codestral_b4ca_dp ,0.0,5048,98.09,8b71_dp ,F,0.0,15458,success ,0.0,20506,8b715501,dp,codestral
+c_b4ca_dp.csv ,codestral_b4ca_dp ,0.0,5132,100.55,e610_dp ,F,0.0,15008,failure ,0.0,20140,e6107bee,dp,codestral
+c_b4ca_dp.csv ,codestral_b4ca_dp ,0.0,5011,101.58,15b1_dp ,F,0.0,21596,failure ,0.0,26607,15b13424,dp,codestral
+c_b4ca_dp.csv ,codestral_b4ca_dp ,0.0,5172,104.6,c9b8_dp ,F,0.0,22491,failure ,0.0,27663,c9b8b4be,dp,codestral
+c_b4ca_dp.csv ,codestral_b4ca_dp ,0.0,4003,78.15,ee23_dp ,F,0.0,14489,success ,0.0,18492,ee23d647,dp,codestral
+c_b4ca_dp.csv ,codestral_b4ca_dp ,0.0,4718,93.44,4fc8_dp ,F,0.0,15852,failure ,0.0,20570,4fc806e6,dp,codestral
+c_b4ca_dp.csv ,codestral_b4ca_dp ,0.0,3328,66.26,f808_dp ,F,0.0,11693,failure ,0.0,15021,f8084957,dp,codestral
+c_b4ca_dp.csv ,codestral_b4ca_dp ,0.0,4748,98.22,9915_dp ,F,0.0,23287,failure ,0.0,28035,991567e9,dp,codestral
+c_b4ca_dp.csv ,codestral_b4ca_dp ,0.0,3531,72.0,a990_dp ,F,0.0,14876,failure ,0.0,18407,a99011f2,dp,codestral
+c_b4ca_dp.csv ,codestral_b4ca_dp ,0.0,5111,104.0,469a_dp ,F,0.0,21596,failure ,0.0,26707,469a8555,dp,codestral
+c_b4ca_dp.csv ,codestral_b4ca_dp ,0.0,5393,105.6,5824_dp ,F,0.0,16803,failure ,0.0,22196,5824ace7,dp,codestral
+c_b4ca_dp.csv ,codestral_b4ca_dp ,0.0,5147,105.78,b16e_dp ,F,0.0,24591,success ,0.0,29738,b16ecfa9,dp,codestral
+c_b4ca_dp.csv ,codestral_b4ca_dp ,0.0,4688,95.23,640e_dp ,F,0.0,19811,failure ,0.0,24499,640ecd16,dp,codestral
+c_b4ca_dp.csv ,codestral_b4ca_dp ,0.0,6041,118.52,ebe3_dp ,F,0.0,21302,failure ,0.0,27343,ebe339ef,dp,codestral
+g4o_mc_7121.csv ,7121,0.004575,305,4.9030436044311525,f5_mc        ,F,0.001495,299,success ,0.00607,604,f56464f9,mc,gpt-4o
+g4o_mc_7121.csv ,7121,0.00471,314,4.719018008636475,0f_mc        ,F,0.001495,299,success ,0.006205,613,0f28a10a,mc,gpt-4o
+g4o_mc_7121.csv ,7121,0.00408,272,4.709442402618408,07_mc        ,F,0.001495,299,success ,0.005575,571,075d390d,mc,gpt-4o
+g4o_mc_7121.csv ,7121,0.003735,249,3.65172467980957,81_mc        ,F,0.001495,299,success ,0.00523,548,81fcfa5b,mc,gpt-4o
+g4o_mc_7121.csv ,7121,0.00369,246,6.49102264767456,f9_mc        ,F,0.001495,299,success ,0.005185,545,f9db7936,mc,gpt-4o
+g4o_mc_7121.csv ,7121,0.00423,282,6.903663328979492,df_mc        ,F,0.001495,299,success ,0.005725,581,df6b046a,mc,gpt-4o
+g4o_mc_7121.csv ,7121,0.004605,307,7.1282159993591305,be_mc        ,F,0.001495,299,success ,0.0061,606,bef7fd15,mc,gpt-4o
+g4o_mc_7121.csv ,7121,0.00399,266,5.245444335235596,6b_mc        ,F,0.001495,299,success ,0.005485,565,6bdee8fe,mc,gpt-4o
+g4o_mc_7121.csv ,7121,0.0039,260,4.048330252349854,6c_mc        ,F,0.001495,299,success ,0.005395,559,6ce14bcf,mc,gpt-4o
+g4o_mc_7121.csv ,7121,0.004395,293,5.138309217712402,6a_mc        ,F,0.001495,299,success ,0.00589,592,6acc5ae6,mc,gpt-4o
+g4o_mc_7121.csv ,7121,0.00774,516,8.742768294128417,0c_mc        ,F,0.017165,3433,success ,0.024905,3949,0c0bf152,mc,gpt-4o
+g4o_mc_7121.csv ,7121,0.003975,265,10.21236815625,f0_mc        ,F,0.001495,299,success ,0.00547,564,f073942d,mc,gpt-4o
+g4o_mc_7121.csv ,7121,0.004425,295,6.0407116493225095,5e_mc        ,F,0.001495,299,success ,0.00592,594,5ef4951b,mc,gpt-4o
+g4o_mc_7121.csv ,7121,0.004275,285,4.575785527984619,28_mc        ,F,0.001495,299,success ,0.00577,584,288d9f29,mc,gpt-4o
+g4o_mc_7121.csv ,7121,0.003975,265,7.664649759765625,3d_mc        ,F,0.001495,299,success ,0.00547,564,3db64ce8,mc,gpt-4o
+g4o_mc_7121.csv ,7121,0.00408,272,5.345459002746582,29_mc        ,F,0.001495,299,success ,0.005575,571,29f621d0,mc,gpt-4o
+g4o_mc_7121.csv ,7121,0.00378,252,5.797906509094238,25_mc        ,F,0.001495,299,success ,0.005275,551,25c13392,mc,gpt-4o
+g4o_mc_7121.csv ,7121,0.00432,288,6.165386154296875,d9_mc        ,F,0.001495,299,success ,0.005815,587,d945a143,mc,gpt-4o
+g4o_mc_7121.csv ,7121,0.003855,257,5.5840123673706055,18_mc        ,F,0.001495,299,success ,0.00535,556,18071451,mc,gpt-4o
+g4o_mc_7121.csv ,7121,0.00405,270,7.1750324617004395,7e_mc        ,F,0.001495,299,success ,0.005545,569,7e48dfe6,mc,gpt-4o
+g4o_mc_7121.csv ,7121,0.004365,291,6.549876478912354,5b_mc        ,F,0.001495,299,success ,0.00586,590,5b3c7ea7,mc,gpt-4o
+g4o_mc_7121.csv ,7121,0.004605,307,5.668741026062012,a5_mc        ,F,0.001495,299,success ,0.0061,606,a548c1f2,mc,gpt-4o
+g4o_mc_7121.csv ,7121,0.003975,265,6.908070066833496,8a_mc        ,F,0.001495,299,success ,0.00547,564,8a0332e4,mc,gpt-4o
+g4o_mc_7121.csv ,7121,0.003915,261,6.291970506622315,49_mc        ,F,0.001495,299,success ,0.00541,560,49ae9567,mc,gpt-4o
+g4o_mc_7121.csv ,7121,0.004515,301,6.729789530487061,70_mc        ,F,0.001495,299,success ,0.00601,600,70af3961,mc,gpt-4o
+g4o_mc_7121.csv ,7121,0.003975,265,4.581627128051758,7e_mc        ,F,0.001495,299,success ,0.00547,564,7ee01614,mc,gpt-4o
+g4o_mc_7121.csv ,7121,0.00414,276,8.751745727539063,44_mc        ,F,0.001495,299,success ,0.005635,575,447b62ec,mc,gpt-4o
+g4o_mc_7121.csv ,7121,0.00402,268,4.392583285644531,fe_mc        ,F,0.001495,299,success ,0.005515,567,fe05af47,mc,gpt-4o
+g4o_mc_7121.csv ,7121,0.00414,276,4.515454382476807,e5_mc        ,F,0.001495,299,success ,0.005635,575,e5f3cd88,mc,gpt-4o
+g4o_mc_7121.csv ,7121,0.00444,296,8.116725063415528,3f_mc        ,F,0.001495,299,success ,0.005935,595,3f2ed1e4,mc,gpt-4o
+g4o_dp_2117.csv ,2117,0.0447,2980,48.27920368225097,d3_dp        ,F,0.045575,9115,success ,0.090275,12095,d3fcb51a,dp,gpt-4o
+g4o_dp_2117.csv ,2117,0.040995,2733,44.26379259234619,b3_dp        ,F,0.035665,7133,success ,0.0766599999999999,9866,b378e170,dp,gpt-4o
+g4o_dp_2117.csv ,2117,0.03606,2404,38.004623788665775,5a_dp        ,F,0.04351,8702,success ,0.07957,11106,5a473f8e,dp,gpt-4o
+g4o_dp_2117.csv ,2117,0.052965,3531,57.39259021554565,db_dp        ,F,0.06626,13252,failure ,0.119225,16783,db4ece9f,dp,gpt-4o
+g4o_dp_2117.csv ,2117,0.03669,2446,34.23037281729126,95_dp        ,F,0.0349399999999999,6988,success ,0.07163,9434,95b97723,dp,gpt-4o
+g4o_dp_2117.csv ,2117,0.033375,2225,37.28404789752197,64_dp        ,F,0.03455,6910,success ,0.067925,9135,64f03fe2,dp,gpt-4o
+g4o_dp_2117.csv ,2117,0.04191,2794,46.3824152385254,5f_dp        ,F,0.050785,10157,success ,0.092695,12951,5fb0222f,dp,gpt-4o
+g4o_dp_2117.csv ,2117,0.034095,2273,38.711491094512944,c8_dp        ,F,0.035115,7023,success ,0.06921,9296,c8504d34,dp,gpt-4o
+g4o_dp_2117.csv ,2117,0.037215,2481,51.7234850451355,49_dp        ,F,0.0347499999999999,6950,success ,0.071965,9431,49c2b79d,dp,gpt-4o
+g4o_dp_2117.csv ,2117,0.09201,6134,99.73810345849608,2b_dp        ,F,0.09476,18952,failure ,0.18677,25086,2bdb844a,dp,gpt-4o
+g4o_dp_2117.csv ,2117,0.03504,2336,38.02345526040649,07_dp        ,F,0.04215,8430,success ,0.07719,10766,07529acb,dp,gpt-4o
+g4o_dp_2117.csv ,2117,0.03687,2458,35.304368298522945,0e_dp        ,F,0.03487,6974,success ,0.07174,9432,0e3c243d,dp,gpt-4o
+g4o_dp_2117.csv ,2117,0.03609,2406,40.973478656249995,32_dp        ,F,0.035185,7037,success ,0.0712749999999999,9443,32b428e1,dp,gpt-4o
+g4o_dp_2117.csv ,2117,0.03093,2062,36.72420898513794,cf_dp        ,F,0.04086,8172,success ,0.07179,10234,cfeeca5e,dp,gpt-4o
+g4o_dp_2117.csv ,2117,0.02982,1988,155.92570077206423,6f_dp        ,F,0.035095,7019,success ,0.064915,9007,6f529b61,dp,gpt-4o
+g4o_dp_2117.csv ,2117,0.03357,2238,37.75733726904297,a4_dp        ,F,0.035275,7055,success ,0.068845,9293,a4eceee3,dp,gpt-4o
+g4o_dp_2117.csv ,2117,0.03393,2262,37.25117387164306,ac_dp        ,F,0.043225,8645,success ,0.077155,10907,acc70e38,dp,gpt-4o
+g4o_dp_2117.csv ,2117,0.033345,2223,33.498056226684575,90_dp        ,F,0.033535,6707,success ,0.06688,8930,90542937,dp,gpt-4o
+g4o_dp_2117.csv ,2117,0.038565,2571,32.579207692596434,7c_dp        ,F,0.035515,7103,success ,0.07408,9674,7cf1c582,dp,gpt-4o
+g4o_dp_2117.csv ,2117,0.066375,4425,67.33163140768433,data_failure ,F,0.0797,15940,failure ,0.1460749999999999,20365,d9f7d017,dp,gpt-4o
+g4o_dp_2117.csv ,2117,0.033495,2233,41.06016542626953,4a_dp        ,F,0.03378,6756,success ,0.067275,8989,4a3e2008,dp,gpt-4o
+g4o_dp_2117.csv ,2117,0.031395,2093,35.685015053710934,0a_dp        ,F,0.03394,6788,success ,0.065335,8881,0aecc406,dp,gpt-4o
+g4o_dp_2117.csv ,2117,0.032595,2173,35.35378749615479,65_dp        ,F,0.03351,6702,success ,0.066105,8875,65f3a69c,dp,gpt-4o
+g4o_dp_2117.csv ,2117,0.030975,2065,52.936901937347415,49_dp        ,F,0.034425,6885,success ,0.0654,8950,494251dd,dp,gpt-4o
+g4o_dp_2117.csv ,2117,0.02997,1998,40.38877197140503,1d_dp        ,F,0.03281,6562,success ,0.06278,8560,1dd00784,dp,gpt-4o
+g4o_dp_2117.csv ,2117,0.034545,2303,52.98887287814331,95_dp        ,F,0.03442,6884,success ,0.068965,9187,95b4a937,dp,gpt-4o
+g4o_dp_2117.csv ,2117,0.03159,2106,38.724857005523674,db_dp        ,F,0.04224,8448,success ,0.0738299999999999,10554,dbdab234,dp,gpt-4o
+g4o_dp_2117.csv ,2117,0.0354,2360,39.00023630462646,51_dp        ,F,0.0347,6940,success ,0.0701,9300,517e9b66,dp,gpt-4o
+g4o_dp_2117.csv ,2117,0.037515,2501,43.71643800527954,71_dp        ,F,0.035355,7071,success ,0.07287,9572,719f4dd0,dp,gpt-4o
+g4o_dp_2117.csv ,2117,0.0292949999999999,1953,41.481400521698,ae_dp        ,F,0.03458,6916,success ,0.0638749999999999,8869,aec55b16,dp,gpt-4o
+g4o_sg_2172.csv ,2172,0.06414,4276,67.71191998175048,38_sg        ,F,0.04549,9098,success ,0.1096299999999999,13374,3856dbb2,sg,gpt-4o
+g4o_sg_2172.csv ,2172,0.064635,4309,66.0346349316101,8a_sg        ,F,0.055485,11097,success ,0.12012,15406,8a37c78d,sg,gpt-4o
+g4o_sg_2172.csv ,2172,0.065625,4375,74.32868467633057,ad_sg        ,F,0.05461,10922,failure ,0.120235,15297,ad3ad388,sg,gpt-4o
+g4o_sg_2172.csv ,2172,0.05607,3738,85.6119302466736,76_sg        ,F,0.050495,10099,failure ,0.106565,13837,7616819c,sg,gpt-4o
+g4o_sg_2172.csv ,2172,0.0624,4160,87.92194316223146,6a_sg        ,F,0.065105,13021,failure ,0.127505,17181,6a883845,sg,gpt-4o
+g4o_sg_2172.csv ,2172,0.06111,4074,65.25940492678833,ea_sg        ,F,0.06285,12570,failure ,0.12396,16644,ead1ba5a,sg,gpt-4o
+g4o_sg_2172.csv ,2172,0.057165,3811,64.2874832263794,51_sg        ,F,0.05377,10754,success ,0.110935,14565,511f2a5c,sg,gpt-4o
+g4o_sg_2172.csv ,2172,0.069675,4645,63.73261174288941,dc_sg        ,F,0.05064,10128,failure ,0.120315,14773,dc248bab,sg,gpt-4o
+g4o_sg_2172.csv ,2172,0.06819,4546,76.16813728082276,03_sg        ,F,0.04715,9430,failure ,0.11534,13976,03d8fc6a,sg,gpt-4o
+g4o_sg_2172.csv ,2172,0.03381,2254,30.204875426177978,de_sg        ,F,0.034495,6899,success ,0.068305,9153,de2a3ae0,sg,gpt-4o
+g4o_sg_2172.csv ,2172,0.062565,4171,55.88748239050293,f7_sg        ,F,0.062555,12511,failure ,0.12512,16682,f7063316,sg,gpt-4o
+g4o_sg_2172.csv ,2172,0.06804,4536,75.44666173315429,5a_sg        ,F,0.050595,10119,failure ,0.118635,14655,5a3d5009,sg,gpt-4o
+g4o_sg_2172.csv ,2172,0.066795,4453,70.7839084944458,66_sg        ,F,0.0555849999999999,11117,failure ,0.12238,15570,66f4bda5,sg,gpt-4o
+g4o_sg_2172.csv ,2172,0.049995,3333,65.30629204226685,15_sg        ,F,0.04476,8952,failure ,0.094755,12285,150e54b9,sg,gpt-4o
+g4o_sg_2172.csv ,2172,0.03849,2566,38.420559729736325,23_sg        ,F,0.03572,7144,success ,0.07421,9710,23ba3d3f,sg,gpt-4o
+g4o_sg_2172.csv ,2172,0.051045,3403,47.876585537902834,13_sg        ,F,0.04385,8770,success ,0.094895,12173,13b548f2,sg,gpt-4o
+g4o_sg_2172.csv ,2172,0.007185,479,7.733686385498046,b6_sg        ,F,0.006805,1361,success ,0.01399,1840,b64f98d2,sg,gpt-4o
+g4o_sg_2172.csv ,2172,0.06606,4404,61.81950876361084,91_sg        ,F,0.04519,9038,failure ,0.1112499999999999,13442,91ec8372,sg,gpt-4o
+g4o_sg_2172.csv ,2172,0.04896,3264,45.38672440460205,d2_sg        ,F,0.049875,9975,failure ,0.098835,13239,d2203b99,sg,gpt-4o
+g4o_sg_2172.csv ,2172,0.05928,3952,72.77571108737183,8f_sg        ,F,0.043035,8607,success ,0.102315,12559,8fc5e89e,sg,gpt-4o
+g4o_sg_2172.csv ,2172,0.0582,3880,72.53782065875244,bc_sg        ,F,0.0467599999999999,9352,failure ,0.10496,13232,bcc7f532,sg,gpt-4o
+g4o_sg_2172.csv ,2172,0.057705,3847,63.05647420855713,5e_sg        ,F,0.05122,10244,success ,0.108925,14091,5e6ed40c,sg,gpt-4o
+g4o_sg_2172.csv ,2172,0.063945,4263,84.21858700814819,15_sg        ,F,0.050235,10047,failure ,0.11418,14310,15cb08f4,sg,gpt-4o
+g4o_sg_2172.csv ,2172,0.05091,3394,48.411748505645754,ff_sg        ,F,0.04466,8932,success ,0.09557,12326,ff5f327c,sg,gpt-4o
+g4o_sg_2172.csv ,2172,0.057405,3827,65.18909836614989,54_sg        ,F,0.0391699999999999,7834,failure ,0.096575,11661,54b2f9c1,sg,gpt-4o
+g4o_sg_2172.csv ,2172,0.055665,3711,54.59960183886718,5c_sg        ,F,0.05999,11998,failure ,0.115655,15709,5c613e9b,sg,gpt-4o
+g4o_sg_2172.csv ,2172,0.064605,4307,68.54468020135498,dc_sg        ,F,0.0469,9380,failure ,0.1115049999999999,13687,dcc6a56d,sg,gpt-4o
+g4o_sg_2172.csv ,2172,0.06105,4070,57.87804504638671,25_sg        ,F,0.0613149999999999,12263,failure ,0.122365,16333,253593fb,sg,gpt-4o
+g4o_sg_2172.csv ,2172,0.052635,3509,49.57345085961914,61_sg        ,F,0.0557799999999999,11156,failure ,0.108415,14665,61fb3a8a,sg,gpt-4o
+g4o_sg_2172.csv ,2172,0.028185,1879,29.724434893005373,84_sg        ,F,0.026875,5375,success ,0.05506,7254,84c640b6,sg,gpt-4o
+g4o-m_mc_11282.csv ,1128_mc  ,0.0007008,1168,20.26034702319336,0c_mc ,F,0.0011849999999999,7900,failure ,0.0018858,9068,0cda415f,mc,gpt-4o-mini
+g4o-m_mc_11282.csv ,1128_mc  ,0.000693,1155,14.01117447290039,2e_mc ,F,0.0015109499999999,10073,success ,0.00220395,11228,2e36eabc,mc,gpt-4o-mini
+g4o-m_mc_11282.csv ,1128_mc  ,0.000303,505,8.425782573669434,87_mc ,F,0.0005163,3442,success ,0.0008193,3947,8772aab0,mc,gpt-4o-mini
+g4o-m_mc_11282.csv ,1128_mc  ,0.000267,445,6.395492321075439,ef_mc ,F,0.0003255,2170,success ,0.0005925,2615,ef88b426,mc,gpt-4o-mini
+g4o-m_mc_11282.csv ,1128_mc  ,0.000132,220,3.0881626898498533,b4_mc ,F,4.485e-05,299,success ,0.00017685,519,b4da759c,mc,gpt-4o-mini
+g4o-m_mc_11282.csv ,1128_mc  ,0.0002454,409,9.0531938888855,b2_mc ,F,0.0005121,3414,success ,0.0007574999999999,3823,b2accd73,mc,gpt-4o-mini
+g4o-m_mc_11282.csv ,1128_mc  ,0.0002448,408,4.962651286193848,66_mc ,F,0.00032205,2147,success ,0.00056685,2555,66ee9921,mc,gpt-4o-mini
+g4o-m_mc_11282.csv ,1128_mc  ,0.0008472,1412,34.664507687683106,66_mc ,F,0.0012112499999999,8075,failure ,0.00205845,9487,663a6462,mc,gpt-4o-mini
+g4o-m_mc_11282.csv ,1128_mc  ,0.000309,515,8.730250643554687,36_mc ,F,0.0005154,3436,success ,0.0008244,3951,368d2a3f,mc,gpt-4o-mini
+g4o-m_mc_11282.csv ,1128_mc  ,0.0005322,887,12.839235083343508,b0_mc ,F,0.00081615,5441,success ,0.00134835,6328,b09483a7,mc,gpt-4o-mini
+g4o-m_mc_11282.csv ,1128_mc  ,0.0001404,234,3.0206099649047853,c3_mc ,F,4.485e-05,299,success ,0.00018525,533,c3d2d929,mc,gpt-4o-mini
+g4o-m_mc_11282.csv ,1128_mc  ,0.0007949999999999,1325,17.931787210754393,2a_mc ,F,0.0011995499999999,7997,failure ,0.00199455,9322,2aeb5359,mc,gpt-4o-mini
+g4o-m_mc_11282.csv ,1128_mc  ,0.0009684,1614,22.265292884887696,37_mc ,F,0.0012279,8186,success ,0.0021963,9800,376100b6,mc,gpt-4o-mini
+g4o-m_mc_11282.csv ,1128_mc  ,0.0009906,1651,18.555740223663328,91_mc ,F,0.0012441,8294,success ,0.0022347,9945,913c0209,mc,gpt-4o-mini
+g4o-m_mc_11282.csv ,1128_mc  ,0.0001404,234,4.4974993395385745,0d_mc ,F,4.485e-05,299,success ,0.00018525,533,0d492976,mc,gpt-4o-mini
+g4o-m_mc_11282.csv ,1128_mc  ,0.000768,1280,18.35904758544922,09_mc ,F,0.00172815,11521,failure ,0.00249615,12801,0909b7ef,mc,gpt-4o-mini
+g4o-m_mc_11282.csv ,1128_mc  ,0.0003,500,7.401046801849365,fe_mc ,F,0.0005139,3426,success ,0.0008139,3926,fe030253,mc,gpt-4o-mini
+g4o-m_mc_11282.csv ,1128_mc  ,0.0002742,457,5.960560640838622,67_mc ,F,0.00050955,3397,success ,0.00078375,3854,6700fe59,mc,gpt-4o-mini
+g4o-m_mc_11282.csv ,1128_mc  ,0.000276,460,6.979644398712158,20_mc ,F,0.0003287999999999,2192,success ,0.0006048,2652,20e1a021,mc,gpt-4o-mini
+g4o-m_mc_11282.csv ,1128_mc  ,0.0010146,1691,23.94450998626709,98_mc ,F,0.0012435,8290,failure ,0.0022581,9981,9836a0cb,mc,gpt-4o-mini
+g4o-m_dp_11281.csv ,1128_dp  ,0.0027276,4546,74.5552726531372,5c_dp ,F,0.002106,14040,success ,0.0048336,18586,5c77850d,dp,gpt-4o-mini
+g4o-m_dp_11281.csv ,1128_dp  ,0.0038556,6426,113.37714802807618,a2_dp ,F,0.0032172,21448,success ,0.0070728,27874,a2e9e5f1,dp,gpt-4o-mini
+g4o-m_dp_11281.csv ,1128_dp  ,0.0028176,4696,92.43358177996826,3d_dp ,F,0.0021918,14612,success ,0.0050094,19308,3d57e52c,dp,gpt-4o-mini
+g4o-m_dp_11281.csv ,1128_dp  ,0.0029808,4968,82.86460775051879,8c_dp ,F,0.0021021,14014,success ,0.0050829,18982,8cbdc248,dp,gpt-4o-mini
+g4o-m_dp_11281.csv ,1128_dp  ,0.0028812,4802,75.9299351743164,79_dp ,F,0.0021485999999999,14324,success ,0.0050298,19126,79547eb9,dp,gpt-4o-mini
+g4o-m_dp_11281.csv ,1128_dp  ,0.003042,5070,102.54309350601196,4e_dp ,F,0.0021501,14334,success ,0.0051921,19404,4e205516,dp,gpt-4o-mini
+g4o-m_dp_11281.csv ,1128_dp  ,0.0022259999999999,3710,70.6807896602478,dd_dp ,F,0.0020529,13686,success ,0.0042789,17396,ddcbf17c,dp,gpt-4o-mini
+g4o-m_dp_11281.csv ,1128_dp  ,0.0022692,3782,63.56793870516968,fb_dp ,F,0.0020604,13736,success ,0.0043295999999999,17518,fb7f34f4,dp,gpt-4o-mini
+g4o-m_dp_11281.csv ,1128_dp  ,0.0028296,4716,100.16890295129394,05_dp ,F,0.0021003,14002,success ,0.0049299,18718,054627b5,dp,gpt-4o-mini
+g4o-m_dp_11281.csv ,1128_dp  ,0.0041519999999999,6920,126.2889164917908,25_dp ,F,0.0042,28000,failure ,0.0083519999999999,34920,25f05669,dp,gpt-4o-mini
+g4o-m_dp_11281.csv ,1128_dp  ,0.003132,5220,102.2866728916626,d9_dp ,F,0.0027015,18010,success ,0.0058335,23230,d930534f,dp,gpt-4o-mini
+g4o-m_dp_11281.csv ,1128_dp  ,0.002814,4690,85.22794291302489,cf_dp ,F,0.0021483,14322,success ,0.0049622999999999,19012,cff03552,dp,gpt-4o-mini
+g4o-m_dp_11281.csv ,1128_dp  ,0.004104,6840,129.09543573846435,19_dp ,F,0.0031137,20758,success ,0.0072177,27598,193fc55a,dp,gpt-4o-mini
+g4o-m_dp_11281.csv ,1128_dp  ,0.0030456,5076,86.41674368334961,69_dp ,F,0.0021159,14106,success ,0.0051615,19182,694d3197,dp,gpt-4o-mini
+g4o-m_dp_11281.csv ,1128_dp  ,0.0023484,3914,65.3797488979187,93_dp ,F,0.0020487,13658,success ,0.0043971,17572,93b8bfd0,dp,gpt-4o-mini
+g4o-m_dp_11281.csv ,1128_dp  ,0.0022716,3786,78.46950532855223,b9_dp ,F,0.0020406,13604,success ,0.0043122,17390,b961301a,dp,gpt-4o-mini
+g4o-m_dp_11281.csv ,1128_dp  ,0.002934,4890,93.99390522052002,1d_dp ,F,0.0026268,17512,success ,0.0055608,22402,1d62cb84,dp,gpt-4o-mini
+g4o-m_dp_11281.csv ,1128_dp  ,0.0023016,3836,60.04380911651611,46_dp ,F,0.0025035,16690,failure ,0.0048051,20526,46f13a7a,dp,gpt-4o-mini
+g4o-m_dp_11281.csv ,1128_dp  ,0.0054611999999999,9102,149.0391780149231,38_dp ,F,0.0041214,27476,success ,0.0095826,36578,3800b88f,dp,gpt-4o-mini
+g4o-m_dp_11281.csv ,1128_dp  ,0.0027888,4648,72.47796235485839,cc_dp ,F,0.0020856,13904,success ,0.0048744,18552,cccb137a,dp,gpt-4o-mini
+g4o-m_sg_11283.csv ,1128_sg  ,0.0043788,7298,90.873636765625,64_sg ,F,0.0037026,24684,failure ,0.0080813999999999,31982,6489146f,sg,gpt-4o-mini
+g4o-m_sg_11283.csv ,1128_sg  ,0.0035291999999999,5882,69.27012369494629,95_sg ,F,0.0035292,23528,failure ,0.0070583999999999,29410,95368318,sg,gpt-4o-mini
+g4o-m_sg_11283.csv ,1128_sg  ,0.0034932,5822,71.3822935206604,f1_sg ,F,0.003537,23580,failure ,0.0070302,29402,f10bd938,sg,gpt-4o-mini
+g4o-m_sg_11283.csv ,1128_sg  ,0.0046992,7832,95.160281588562,68_sg ,F,0.0037899,25266,failure ,0.0084891,33098,68e4fae8,sg,gpt-4o-mini
+g4o-m_sg_11283.csv ,1128_sg  ,0.0042144,7024,102.36040336825562,eb_sg ,F,0.0036642,24428,failure ,0.0078786,31452,eb706d82,sg,gpt-4o-mini
+g4o-m_sg_11283.csv ,1128_sg  ,0.00408,6800,76.54030180410766,2b_sg ,F,0.0036579,24386,failure ,0.0077379,31186,2b7d8b5d,sg,gpt-4o-mini
+g4o-m_sg_11283.csv ,1128_sg  ,0.0039888,6648,78.02802867382812,af_sg ,F,0.0036507,24338,failure ,0.0076395,30986,af7e46a7,sg,gpt-4o-mini
+g4o-m_sg_11283.csv ,1128_sg  ,0.0038196,6366,70.27715338119506,21_sg ,F,0.0035847,23898,failure ,0.0074043,30264,218dfdd9,sg,gpt-4o-mini
+g4o-m_sg_11283.csv ,1128_sg  ,0.0039444,6574,76.00431544653321,8e_sg ,F,0.0036284999999999,24190,failure ,0.0075729,30764,8efbbcec,sg,gpt-4o-mini
+g4o-m_sg_11283.csv ,1128_sg  ,0.0034656,5776,67.50490620687867,ae_sg ,F,0.003522,23480,failure ,0.0069876,29256,ae0380e0,sg,gpt-4o-mini
+g4o-m_sg_11283.csv ,1128_sg  ,0.0037416,6236,77.04862934472658,a0_sg ,F,0.0036162,24108,failure ,0.0073578,30344,a0a8a28a,sg,gpt-4o-mini
+g4o-m_sg_11283.csv ,1128_sg  ,0.0034656,5776,70.48208430419922,80_sg ,F,0.0035265,23510,failure ,0.0069920999999999,29286,8068db4d,sg,gpt-4o-mini
+g4o-m_sg_11283.csv ,1128_sg  ,0.0040728,6788,90.1294641616516,81_sg ,F,0.0036489,24326,failure ,0.0077217,31114,81b5b9bb,sg,gpt-4o-mini
+g4o-m_sg_11283.csv ,1128_sg  ,0.0007428,1238,15.251895996368408,e8_sg ,F,0.0005901,3934,success ,0.0013329,5172,e88fe979,sg,gpt-4o-mini
+g4o-m_sg_11283.csv ,1128_sg  ,0.000792,1320,16.2443262852478,77_sg ,F,0.0005901,3934,success ,0.0013821,5254,7746c408,sg,gpt-4o-mini
+g4o-m_sg_11283.csv ,1128_sg  ,0.0026328,4388,114.92987786102296,e9_sg ,F,0.0020073,13382,failure ,0.0046400999999999,17770,e97f285f,sg,gpt-4o-mini
+g4o-m_sg_11283.csv ,1128_sg  ,0.0038016,6336,70.05745819659424,6d_sg ,F,0.0035795999999999,23864,failure ,0.0073812,30200,6da13815,sg,gpt-4o-mini
+g4o-m_sg_11283.csv ,1128_sg  ,0.0037116,6186,67.62538916439819,0f_sg ,F,0.0035724,23816,failure ,0.0072839999999999,30002,0f3641b8,sg,gpt-4o-mini
+g4o-m_sg_11283.csv ,1128_sg  ,0.0039432,6572,82.27926236499023,b1_sg ,F,0.0036117,24078,failure ,0.0075549,30650,b17e1fed,sg,gpt-4o-mini
+g4o-m_sg_11283.csv ,1128_sg  ,0.0038843999999999,6474,77.1011599911499,04_sg ,F,0.0036093,24062,failure ,0.0074937,30536,04bad66f,sg,gpt-4o-mini
+phi4_da0a_dp.csv ,da0a_dp      ,0.0,3922,59.2,21a7_dp ,F,0.0,14463,failure ,0.0,18385,21a71240,dp,phi4
+phi4_da0a_dp.csv ,da0a_dp      ,0.0,4253,64.04,0022_dp ,F,0.0,15859,failure ,0.0,20112,00220b8a,dp,phi4
+phi4_da0a_dp.csv ,da0a_dp      ,0.0,6446,98.57,421b_dp ,F,0.0,22110,failure ,0.0,28556,421b575f,dp,phi4
+phi4_da0a_dp.csv ,da0a_dp      ,0.0,2454,36.88,c865_dp ,F,0.0,9869,success ,0.0,12323,c86526c0,dp,phi4
+phi4_da0a_dp.csv ,da0a_dp      ,0.0,2131,32.09,60a0_dp ,F,0.0,9273,failure ,0.0,11404,60a0aeb6,dp,phi4
+phi4_da0a_dp.csv ,da0a_dp      ,0.0,2533,38.45,fc75_dp ,F,0.0,12163,success ,0.0,14696,fc751c33,dp,phi4
+phi4_da0a_dp.csv ,da0a_dp      ,0.0,3799,57.61,732d_dp ,F,0.0,14252,failure ,0.0,18051,732d8792,dp,phi4
+phi4_da0a_dp.csv ,da0a_dp      ,0.0,2918,43.52,d0a4_dp ,F,0.0,10899,success ,0.0,13817,d0a4bc0d,dp,phi4
+phi4_da0a_dp.csv ,da0a_dp      ,0.0,4171,63.49,19da_dp ,F,0.0,15593,failure ,0.0,19764,19da2fcd,dp,phi4
+phi4_da0a_dp.csv ,da0a_dp      ,0.0,4017,59.91,4a6d_dp ,F,0.0,10824,failure ,0.0,14841,4a6dea11,dp,phi4
+phi4_da0a_dp.csv ,da0a_dp      ,0.0,2370,35.88,8298_dp ,F,0.0,10547,success ,0.0,12917,829859d3,dp,phi4
+phi4_da0a_dp.csv ,da0a_dp      ,0.0,3443,52.98,aaf6_dp ,F,0.0,15136,failure ,0.0,18579,aaf6fed3,dp,phi4
+phi4_da0a_dp.csv ,da0a_dp      ,0.0,2939,44.19,f29a_dp ,F,0.0,10022,failure ,0.0,12961,f29a4202,dp,phi4
+phi4_da0a_dp.csv ,da0a_dp      ,0.0,2438,36.03,faf5_dp ,F,0.0,9047,success ,0.0,11485,faf54ebe,dp,phi4
+phi4_da0a_dp.csv ,da0a_dp      ,0.0,2861,42.85,870a_dp ,F,0.0,12210,success ,0.0,15071,870a2401,dp,phi4
+phi4_da0a_dp.csv ,da0a_dp      ,0.0,2942,44.1,8d3a_dp ,F,0.0,11801,failure ,0.0,14743,8d3a6ffd,dp,phi4
+phi4_da0a_dp.csv ,da0a_dp      ,0.0,2336,34.49,803d_dp ,F,0.0,9025,success ,0.0,11361,803d2635,dp,phi4
+phi4_da0a_dp.csv ,da0a_dp      ,0.0,3069,47.23,bb00_dp ,F,0.0,12749,failure ,0.0,15818,bb0045ef,dp,phi4
+phi4_da0a_dp.csv ,da0a_dp      ,0.0,4630,69.41,b57e_dp ,F,0.0,13333,failure ,0.0,17963,b57ecccf,dp,phi4
+phi4_da0a_dp.csv ,da0a_dp      ,0.0,2342,34.67,1728_dp ,F,0.0,8967,success ,0.0,11309,1728277d,dp,phi4
+phi4_da0a_dp.csv ,da0a_dp      ,0.0,2149,32.06,fb53_dp ,F,0.0,9318,success ,0.0,11467,fb5317d5,dp,phi4
+phi4_da0a_dp.csv ,da0a_dp      ,0.0,2439,36.49,30c5_dp ,F,0.0,10479,success ,0.0,12918,30c53cfd,dp,phi4
+phi4_da0a_dp.csv ,da0a_dp      ,0.0,4315,63.26,27bf_dp ,F,0.0,12545,success ,0.0,16860,27bf65de,dp,phi4
+phi4_da0a_dp.csv ,da0a_dp      ,0.0,2508,37.26,49f5_dp ,F,0.0,9675,success ,0.0,12183,49f5dc63,dp,phi4
+phi4_da0a_dp.csv ,da0a_dp      ,0.0,2504,37.92,ce44_dp ,F,0.0,10675,success ,0.0,13179,ce44a697,dp,phi4
+phi4_da0a_dp.csv ,da0a_dp      ,0.0,3415,51.57,114a_dp ,F,0.0,14624,failure ,0.0,18039,114a3cab,dp,phi4
+phi4_da0a_dp.csv ,da0a_dp      ,0.0,2412,35.53,fd74_dp ,F,0.0,9001,success ,0.0,11413,fd74d669,dp,phi4
+phi4_da0a_dp.csv ,da0a_dp      ,0.0,3844,57.81,138b_dp ,F,0.0,13107,failure ,0.0,16951,138b5c3c,dp,phi4
+phi4_da0a_dp.csv ,da0a_dp      ,0.0,3355,51.39,049d_dp ,F,0.0,14086,failure ,0.0,17441,049dfc1b,dp,phi4
+phi4_da0a_dp.csv ,da0a_dp      ,0.0,2734,40.12,1a7d_dp ,F,0.0,9280,success ,0.0,12014,1a7de615,dp,phi4
+phi4_6886_sg.csv ,phi4_6886_sg ,0.0,6051,154.62,27b2_sg ,F,0.0,11046,failure ,0.0,17097,27b28cf9,sg,phi4
+phi4_6886_sg.csv ,phi4_6886_sg ,0.0,6166,93.55,98f7_sg ,F,0.0,14162,failure ,0.0,20328,98f72762,sg,phi4
+phi4_6886_sg.csv ,phi4_6886_sg ,0.0,5034,85.47,5e02_sg ,F,0.0,11048,failure ,0.0,16082,5e0277ad,sg,phi4
+phi4_6886_sg.csv ,phi4_6886_sg ,0.0,4931,79.66,f240_sg ,F,0.0,12411,failure ,0.0,17342,f2404e3c,sg,phi4
+phi4_6886_sg.csv ,phi4_6886_sg ,0.0,5742,111.19,3ab5_sg ,F,0.0,11017,failure ,0.0,16759,3ab5a23d,sg,phi4
+phi4_6886_sg.csv ,phi4_6886_sg ,0.0,5330,93.09,574d_sg ,F,0.0,11048,failure ,0.0,16378,574d643a,sg,phi4
+phi4_6886_sg.csv ,phi4_6886_sg ,0.0,1928,30.36,a5d4_sg ,F,0.0,4902,success ,0.0,6830,a5d48321,sg,phi4
+phi4_6886_sg.csv ,phi4_6886_sg ,0.0,5292,86.03,e26e_sg ,F,0.0,11036,failure ,0.0,16328,e26e9d89,sg,phi4
+phi4_6886_sg.csv ,phi4_6886_sg ,0.0,5421,87.41,af83_sg ,F,0.0,11018,failure ,0.0,16439,af83a94a,sg,phi4
+phi4_6886_sg.csv ,phi4_6886_sg ,0.0,5563,91.63,78f6_sg ,F,0.0,12628,failure ,0.0,18191,78f67c73,sg,phi4
+phi4_6886_sg.csv ,phi4_6886_sg ,0.0,5054,87.66,772d_sg ,F,0.0,11044,failure ,0.0,16098,772d5c04,sg,phi4
+phi4_6886_sg.csv ,phi4_6886_sg ,0.0,5020,82.06,576e_sg ,F,0.0,12615,failure ,0.0,17635,576e7a0d,sg,phi4
+phi4_6886_sg.csv ,phi4_6886_sg ,0.0,5242,92.46,0da5_sg ,F,0.0,11029,failure ,0.0,16271,0da5dfbe,sg,phi4
+phi4_6886_sg.csv ,phi4_6886_sg ,0.0,4687,79.61,ad66_sg ,F,0.0,12457,failure ,0.0,17144,ad66fb92,sg,phi4
+phi4_6886_sg.csv ,phi4_6886_sg ,0.0,4869,90.35,e229_sg ,F,0.0,11047,failure ,0.0,15916,e229c965,sg,phi4
+phi4_6886_sg.csv ,phi4_6886_sg ,0.0,4928,76.67,08ea_sg ,F,0.0,11039,failure ,0.0,15967,08ea9a89,sg,phi4
+phi4_6886_sg.csv ,phi4_6886_sg ,0.0,4793,80.25,4122_sg ,F,0.0,10836,failure ,0.0,15629,4122f00b,sg,phi4
+phi4_6886_sg.csv ,phi4_6886_sg ,0.0,5939,95.58,49be_sg ,F,0.0,12590,failure ,0.0,18529,49be46f8,sg,phi4
+phi4_6886_sg.csv ,phi4_6886_sg ,0.0,5309,91.1,ece9_sg ,F,0.0,11034,failure ,0.0,16343,ece944a2,sg,phi4
+phi4_6886_sg.csv ,phi4_6886_sg ,0.0,6075,103.79,8187_sg ,F,0.0,11034,failure ,0.0,17109,8187d6b4,sg,phi4
+phi4_6886_sg.csv ,phi4_6886_sg ,0.0,5284,88.9,5bbe_sg ,F,0.0,10823,failure ,0.0,16107,5bbec586,sg,phi4
+phi4_6886_sg.csv ,phi4_6886_sg ,0.0,4992,85.57,21a1_sg ,F,0.0,10992,failure ,0.0,15984,21a1ae0a,sg,phi4
+phi4_6886_sg.csv ,phi4_6886_sg ,0.0,5158,85.47,564c_sg ,F,0.0,11108,failure ,0.0,16266,564c65c2,sg,phi4
+phi4_6886_sg.csv ,phi4_6886_sg ,0.0,4929,260.94,2144_sg ,F,0.0,11103,failure ,0.0,16032,21444a0a,sg,phi4
+phi4_6886_sg.csv ,phi4_6fca_sg ,0.0,5926,155.49,2dda_sg ,F,0.0,11076,failure ,0.0,17002,2dda8814,sg,phi4
+phi4_6886_sg.csv ,phi4_6fca_sg ,0.0,5142,95.22,58a0_sg ,F,0.0,11074,failure ,0.0,16216,58a09e78,sg,phi4
+phi4_6886_sg.csv ,phi4_6fca_sg ,0.0,5562,89.28,2a9c_sg ,F,0.0,11094,failure ,0.0,16656,2a9cf03e,sg,phi4
+phi4_6886_sg.csv ,phi4_6fca_sg ,0.0,5637,94.36,18ab_sg ,F,0.0,11093,failure ,0.0,16730,18ab14b9,sg,phi4
+phi4_6886_sg.csv ,phi4_6fca_sg ,0.0,5284,87.54,8b09_sg ,F,0.0,10862,failure ,0.0,16146,8b09f3f1,sg,phi4
+phi4_6886_sg.csv ,phi4_6fca_sg ,0.0,5322,92.74,1093_sg ,F,0.0,11033,failure ,0.0,16355,10938e15,sg,phi4
+phi4_da0a_mc.csv ,da0a_mc      ,0.0,1202,41.03,6b45_mc ,F,0.0,3042,success ,0.0,4244,6b45d579,mc,phi4
+phi4_da0a_mc.csv ,da0a_mc      ,0.0,961,13.53,2f94_mc ,F,0.0,1744,success ,0.0,2705,2f9442e1,mc,phi4
+phi4_da0a_mc.csv ,da0a_mc      ,0.0,287,3.83,205b_mc ,F,0.0,389,success ,0.0,676,205b46a9,mc,phi4
+phi4_da0a_mc.csv ,da0a_mc      ,0.0,335,4.44,9902_mc ,F,0.0,389,success ,0.0,724,99022409,mc,phi4
+phi4_da0a_mc.csv ,da0a_mc      ,0.0,395,5.18,587f_mc ,F,0.0,389,success ,0.0,784,587fb2d7,mc,phi4
+phi4_da0a_mc.csv ,da0a_mc      ,0.0,331,4.35,d175_mc ,F,0.0,389,success ,0.0,720,d17539e7,mc,phi4
+phi4_da0a_mc.csv ,da0a_mc      ,0.0,369,4.87,50ad_mc ,F,0.0,389,success ,0.0,758,50ad74bd,mc,phi4
+phi4_da0a_mc.csv ,da0a_mc      ,0.0,1218,17.78,946d_mc ,F,0.0,3185,success ,0.0,4403,946dadfc,mc,phi4
+phi4_da0a_mc.csv ,da0a_mc      ,0.0,2170,32.57,2274_mc ,F,0.0,6561,failure ,0.0,8731,22746f2e,mc,phi4
+phi4_da0a_mc.csv ,da0a_mc      ,0.0,392,5.22,5fbd_mc ,F,0.0,389,success ,0.0,781,5fbd12ea,mc,phi4
+phi4_da0a_mc.csv ,da0a_mc      ,0.0,387,5.08,6e70_mc ,F,0.0,389,success ,0.0,776,6e706969,mc,phi4
+phi4_da0a_mc.csv ,da0a_mc      ,0.0,305,4.04,5d5c_mc ,F,0.0,389,success ,0.0,694,5d5c56ad,mc,phi4
+phi4_da0a_mc.csv ,da0a_mc      ,0.0,346,4.54,04a2_mc ,F,0.0,389,success ,0.0,735,04a2c735,mc,phi4
+phi4_da0a_mc.csv ,da0a_mc      ,0.0,825,12.21,361d_mc ,F,0.0,2437,success ,0.0,3262,361dd059,mc,phi4
+phi4_da0a_mc.csv ,da0a_mc      ,0.0,344,4.7,8551_mc ,F,0.0,389,success ,0.0,733,8551bdcd,mc,phi4
+phi4_da0a_mc.csv ,da0a_mc      ,0.0,327,4.3,cc52_mc ,F,0.0,389,success ,0.0,716,cc52a19a,mc,phi4
+phi4_da0a_mc.csv ,da0a_mc      ,0.0,1271,18.84,207e_mc ,F,0.0,3607,success ,0.0,4878,207e87e3,mc,phi4
+phi4_da0a_mc.csv ,da0a_mc      ,0.0,847,12.59,94f4_mc ,F,0.0,2437,success ,0.0,3284,94f4180a,mc,phi4
+phi4_da0a_mc.csv ,da0a_mc      ,0.0,1124,15.94,0c13_mc ,F,0.0,1806,success ,0.0,2930,0c135c97,mc,phi4
+phi4_da0a_mc.csv ,da0a_mc      ,0.0,1898,27.62,e857_mc ,F,0.0,4755,success ,0.0,6653,e857a090,mc,phi4
+phi4_da0a_mc.csv ,da0a_mc      ,0.0,1230,18.41,a90c_mc ,F,0.0,3558,success ,0.0,4788,a90c2499,mc,phi4
+phi4_da0a_mc.csv ,da0a_mc      ,0.0,318,4.24,0c57_mc ,F,0.0,389,success ,0.0,707,0c57db49,mc,phi4
+phi4_da0a_mc.csv ,da0a_mc      ,0.0,321,4.22,453a_mc ,F,0.0,389,success ,0.0,710,453a8ac1,mc,phi4
+phi4_da0a_mc.csv ,da0a_mc      ,0.0,766,11.02,fc44_mc ,F,0.0,1997,success ,0.0,2763,fc44f7aa,mc,phi4
+phi4_da0a_mc.csv ,da0a_mc      ,0.0,328,4.36,8525_mc ,F,0.0,389,success ,0.0,717,8525750c,mc,phi4
+phi4_da0a_mc.csv ,da0a_mc      ,0.0,365,4.79,dd11_mc ,F,0.0,389,success ,0.0,754,dd116c9e,mc,phi4
+phi4_da0a_mc.csv ,da0a_mc      ,0.0,335,4.4,f1b5_mc ,F,0.0,389,success ,0.0,724,f1b59ea3,mc,phi4
+phi4_da0a_mc.csv ,da0a_mc      ,0.0,294,40.01,bce2_mc ,F,0.0,389,success ,0.0,683,bce2c629,mc,phi4
+phi4_da0a_mc.csv ,da0a_mc      ,0.0,285,3.85,f118_mc ,F,0.0,389,success ,0.0,674,f1189779,mc,phi4
+phi4_da0a_mc.csv ,da0a_mc      ,0.0,1024,18.28,5730_mc ,F,0.0,1765,success ,0.0,2789,573033a7,mc,phi4
+c-p_a190_sg.csv ,codestral_a190_sg ,0.0,2669,85.38,42d6_sg ,T,0.0,9889,success ,0.0,12558,42d67a18,sg,codestral-p
+c-p_a190_sg.csv ,codestral_a190_sg ,0.0,3507,73.1,e1d7_sg ,T,0.0,14011,failure ,0.0,17518,e1d7574d,sg,codestral-p
+c-p_a190_sg.csv ,codestral_a190_sg ,0.0,3516,73.22,d30d_sg ,T,0.0,14011,failure ,0.0,17527,d30dc3a7,sg,codestral-p
+c-p_a190_sg.csv ,codestral_a190_sg ,0.0,4318,87.84,9a0f_sg ,T,0.0,14011,failure ,0.0,18329,9a0f7956,sg,codestral-p
+c-p_a190_sg.csv ,codestral_a190_sg ,0.0,4788,99.04,081f_sg ,T,0.0,18080,failure ,0.0,22868,081fd0e4,sg,codestral-p
+c-p_a190_sg.csv ,codestral_a190_sg ,0.0,3654,75.93,0c45_sg ,T,0.0,14011,failure ,0.0,17665,0c4525ea,sg,codestral-p
+c-p_a190_sg.csv ,codestral_a190_sg ,0.0,3510,73.13,609b_sg ,T,0.0,14011,failure ,0.0,17521,609b91ba,sg,codestral-p
+c-p_a190_sg.csv ,codestral_a190_sg ,0.0,4244,86.53,3150_sg ,T,0.0,14011,failure ,0.0,18255,3150ef6e,sg,codestral-p
+c-p_a190_sg.csv ,codestral_a190_sg ,0.0,4034,82.71,bf99_sg ,T,0.0,14011,failure ,0.0,18045,bf99f842,sg,codestral-p
+c-p_a190_sg.csv ,codestral_a190_sg ,0.0,4584,92.76,a0c6_sg ,T,0.0,14011,failure ,0.0,18595,a0c68fe9,sg,codestral-p
+c-p_a190_sg.csv ,codestral_a190_sg ,0.0,4333,88.4,c1ea_sg ,T,0.0,14011,failure ,0.0,18344,c1ea1ca0,sg,codestral-p
+c-p_a190_sg.csv ,codestral_a190_sg ,0.0,3679,76.3,682c_sg ,T,0.0,14011,failure ,0.0,17690,682c15fc,sg,codestral-p
+c-p_a190_sg.csv ,codestral_a190_sg ,0.0,3448,71.97,0b30_sg ,T,0.0,14011,failure ,0.0,17459,0b30f556,sg,codestral-p
+c-p_a190_sg.csv ,codestral_a190_sg ,0.0,4428,89.78,0b1b_sg ,T,0.0,14011,failure ,0.0,18439,0b1b3c6b,sg,codestral-p
+c-p_a190_sg.csv ,codestral_a190_sg ,0.0,4416,89.71,d960_sg ,T,0.0,14011,failure ,0.0,18427,d960bce1,sg,codestral-p
+c-p_a190_sg.csv ,codestral_a190_sg ,0.0,4234,86.54,ca24_sg ,T,0.0,14011,failure ,0.0,18245,ca249fc8,sg,codestral-p
+c-p_a190_sg.csv ,codestral_a190_sg ,0.0,3561,74.04,2ecb_sg ,T,0.0,14011,failure ,0.0,17572,2ecb63c8,sg,codestral-p
+c-p_a190_sg.csv ,codestral_a190_sg ,0.0,3525,73.43,5476_sg ,T,0.0,14011,failure ,0.0,17536,5476d253,sg,codestral-p
+c-p_a190_sg.csv ,codestral_a190_sg ,0.0,3568,74.12,06f2_sg ,T,0.0,14011,failure ,0.0,17579,06f2b6e5,sg,codestral-p
+c-p_a190_sg.csv ,codestral_a190_sg ,0.0,3550,73.83,7e84_sg ,T,0.0,14011,failure ,0.0,17561,7e84f6e2,sg,codestral-p
+c-p_a190_sg.csv ,codestral_a190_sg ,0.0,3575,74.26,6cc6_sg ,T,0.0,14011,failure ,0.0,17586,6cc639eb,sg,codestral-p
+c-p_a190_sg.csv ,codestral_a190_sg ,0.0,4288,87.59,f6d9_sg ,T,0.0,14011,failure ,0.0,18299,f6d9a31b,sg,codestral-p
+c-p_a190_sg.csv ,codestral_a190_sg ,0.0,3571,74.38,6fe1_sg ,T,0.0,14011,failure ,0.0,17582,6fe15b2b,sg,codestral-p
+c-p_a190_sg.csv ,codestral_a190_sg ,0.0,3916,80.67,8315_sg ,T,0.0,14011,failure ,0.0,17927,8315e08e,sg,codestral-p
+c-p_a190_sg.csv ,codestral_a190_sg ,0.0,4143,84.62,f72a_sg ,T,0.0,14011,failure ,0.0,18154,f72a5281,sg,codestral-p
+c-p_a190_sg.csv ,codestral_a190_sg ,0.0,4096,83.79,e09b_sg ,T,0.0,14011,failure ,0.0,18107,e09bc820,sg,codestral-p
+c-p_a190_sg.csv ,codestral_a190_sg ,0.0,3584,74.52,d2b3_sg ,T,0.0,14011,failure ,0.0,17595,d2b3b9c3,sg,codestral-p
+c-p_a190_sg.csv ,codestral_a190_sg ,0.0,4009,82.27,5baf_sg ,T,0.0,14011,failure ,0.0,18020,5baf6a74,sg,codestral-p
+c-p_a190_sg.csv ,codestral_a190_sg ,0.0,3555,73.9,2b14_sg ,T,0.0,14011,failure ,0.0,17566,2b14ec54,sg,codestral-p
+c-p_a190_sg.csv ,codestral_a190_sg ,0.0,3554,73.91,8ec1_sg ,T,0.0,14011,failure ,0.0,17565,8ec1a733,sg,codestral-p
+c-p_a190_mc.csv ,codestral_a190_mc ,0.0,1503,28.82,dc2a_mc ,T,0.0,4406,success ,0.0,5909,dc2a339e,mc,codestral-p
+c-p_a190_mc.csv ,codestral_a190_mc ,0.0,1568,31.1,f305_mc ,T,0.0,6442,failure ,0.0,8010,f3053246,mc,codestral-p
+c-p_a190_mc.csv ,codestral_a190_mc ,0.0,1473,28.09,afe1_mc ,T,0.0,4406,success ,0.0,5879,afe1ef28,mc,codestral-p
+c-p_a190_mc.csv ,codestral_a190_mc ,0.0,1476,27.94,b3f4_mc ,T,0.0,4406,success ,0.0,5882,b3f4ac8b,mc,codestral-p
+c-p_a190_mc.csv ,codestral_a190_mc ,0.0,1465,27.73,3f91_mc ,T,0.0,4406,success ,0.0,5871,3f91f25b,mc,codestral-p
+c-p_a190_mc.csv ,codestral_a190_mc ,0.0,1484,28.11,d94b_mc ,T,0.0,4406,success ,0.0,5890,d94bbd29,mc,codestral-p
+c-p_a190_mc.csv ,codestral_a190_mc ,0.0,1529,30.31,28c7_mc ,T,0.0,6433,failure ,0.0,7962,28c7c5fa,mc,codestral-p
+c-p_a190_mc.csv ,codestral_a190_mc ,0.0,1474,28.05,ab2b_mc ,T,0.0,4406,success ,0.0,5880,ab2bc88f,mc,codestral-p
+c-p_a190_mc.csv ,codestral_a190_mc ,0.0,1496,28.32,10da_mc ,T,0.0,4406,success ,0.0,5902,10da14de,mc,codestral-p
+c-p_a190_mc.csv ,codestral_a190_mc ,0.0,1458,27.64,cc73_mc ,T,0.0,4406,success ,0.0,5864,cc734dc1,mc,codestral-p
+c-p_a190_mc.csv ,codestral_a190_mc ,0.0,1472,27.85,c24f_mc ,T,0.0,4406,success ,0.0,5878,c24f8582,mc,codestral-p
+c-p_a190_mc.csv ,codestral_a190_mc ,0.0,1459,27.63,9d69_mc ,T,0.0,4406,success ,0.0,5865,9d6953bd,mc,codestral-p
+c-p_a190_mc.csv ,codestral_a190_mc ,0.0,1423,27.01,b8c4_mc ,T,0.0,4389,success ,0.0,5812,b8c4d8ea,mc,codestral-p
+c-p_a190_mc.csv ,codestral_a190_mc ,0.0,1458,27.69,2911_mc ,T,0.0,4406,success ,0.0,5864,29110f90,mc,codestral-p
+c-p_a190_mc.csv ,codestral_a190_mc ,0.0,1458,27.6,a46b_mc ,T,0.0,4406,success ,0.0,5864,a46b8191,mc,codestral-p
+c-p_a190_mc.csv ,codestral_a190_mc ,0.0,1478,28.0,25ed_mc ,T,0.0,4416,success ,0.0,5894,25ed62bc,mc,codestral-p
+c-p_a190_mc.csv ,codestral_a190_mc ,0.0,1662,32.33,cdba_mc ,T,0.0,5201,success ,0.0,6863,cdba3ac0,mc,codestral-p
+c-p_a190_mc.csv ,codestral_a190_mc ,0.0,1630,32.48,c909_mc ,T,0.0,6437,failure ,0.0,8067,c9091374,mc,codestral-p
+c-p_a190_mc.csv ,codestral_a190_mc ,0.0,1404,26.9,feac_mc ,T,0.0,4406,success ,0.0,5810,feac97d4,mc,codestral-p
+c-p_a190_mc.csv ,codestral_a190_mc ,0.0,1428,27.11,d74f_mc ,T,0.0,4396,success ,0.0,5824,d74f32d6,mc,codestral-p
+c-p_a190_mc.csv ,codestral_a190_mc ,0.0,1621,31.95,375e_mc ,T,0.0,6438,failure ,0.0,8059,375e3567,mc,codestral-p
+c-p_a190_mc.csv ,codestral_a190_mc ,0.0,1564,30.87,16a1_mc ,T,0.0,6263,success ,0.0,7827,16a13bdd,mc,codestral-p
+c-p_a190_mc.csv ,codestral_a190_mc ,0.0,1445,28.71,fe50_mc ,T,0.0,6271,failure ,0.0,7716,fe50ab21,mc,codestral-p
+c-p_a190_mc.csv ,codestral_a190_mc ,0.0,1535,30.59,b243_mc ,T,0.0,6441,failure ,0.0,7976,b24303f9,mc,codestral-p
+c-p_a190_mc.csv ,codestral_a190_mc ,0.0,1474,28.04,2ad4_mc ,T,0.0,4396,success ,0.0,5870,2ad47fe2,mc,codestral-p
+c-p_a190_mc.csv ,codestral_a190_mc ,0.0,1421,26.92,715c_mc ,T,0.0,4388,success ,0.0,5809,715c9d09,mc,codestral-p
+c-p_a190_mc.csv ,codestral_a190_mc ,0.0,1438,27.27,6594_mc ,T,0.0,4396,success ,0.0,5834,6594b766,mc,codestral-p
+c-p_a190_mc.csv ,codestral_a190_mc ,0.0,1424,27.01,2448_mc ,T,0.0,4396,success ,0.0,5820,2448a66b,mc,codestral-p
+c-p_a190_mc.csv ,codestral_a190_mc ,0.0,1494,28.26,1abb_mc ,T,0.0,4406,success ,0.0,5900,1abb2890,mc,codestral-p
+c-p_a190_mc.csv ,codestral_a190_mc ,0.0,1393,26.51,b58a_mc ,T,0.0,4406,success ,0.0,5799,b58a5b96,mc,codestral-p
+c-p_a190_dp.csv ,codestral_a190_dp ,0.0,5011,99.43,8136_dp ,T,0.0,17744,success ,0.0,22755,81368fba,dp,codestral-p
+c-p_a190_dp.csv ,codestral_a190_dp ,0.0,3982,80.28,d505_dp ,T,0.0,17448,success ,0.0,21430,d505f5df,dp,codestral-p
+c-p_a190_dp.csv ,codestral_a190_dp ,0.0,2781,54.74,0f32_dp ,T,0.0,11654,success ,0.0,14435,0f32ffc5,dp,codestral-p
+c-p_a190_dp.csv ,codestral_a190_dp ,0.0,2780,54.37,43e4_dp ,T,0.0,11381,success ,0.0,14161,43e45cd7,dp,codestral-p
+c-p_a190_dp.csv ,codestral_a190_dp ,0.0,5653,114.59,3b2e_dp ,T,0.0,23298,failure ,0.0,28951,3b2e9eb6,dp,codestral-p
+c-p_a190_dp.csv ,codestral_a190_dp ,0.0,4469,89.96,eb86_dp ,T,0.0,19131,success ,0.0,23600,eb866750,dp,codestral-p
+c-p_a190_dp.csv ,codestral_a190_dp ,0.0,4179,82.73,af2f_dp ,T,0.0,15756,success ,0.0,19935,af2f366a,dp,codestral-p
+c-p_a190_dp.csv ,codestral_a190_dp ,0.0,6002,120.87,deab_dp ,T,0.0,23336,failure ,0.0,29338,deab84ad,dp,codestral-p
+c-p_a190_dp.csv ,codestral_a190_dp ,0.0,4581,91.41,7d33_dp ,T,0.0,17816,success ,0.0,22397,7d3393e1,dp,codestral-p
+c-p_a190_dp.csv ,codestral_a190_dp ,0.0,4428,93.05,7ffd_dp ,T,0.0,22836,failure ,0.0,27264,7ffdf3db,dp,codestral-p
+c-p_a190_dp.csv ,codestral_a190_dp ,0.0,3396,66.66,0123_dp ,T,0.0,13387,success ,0.0,16783,01239cc8,dp,codestral-p
+c-p_a190_dp.csv ,codestral_a190_dp ,0.0,3266,64.64,445a_dp ,T,0.0,13340,success ,0.0,16606,445a8361,dp,codestral-p
+c-p_a190_dp.csv ,codestral_a190_dp ,0.0,3653,70.06,3f17_dp ,T,0.0,11295,success ,0.0,14948,3f17af47,dp,codestral-p
+c-p_a190_dp.csv ,codestral_a190_dp ,0.0,3543,68.03,8e36_dp ,T,0.0,11295,success ,0.0,14838,8e36801d,dp,codestral-p
+c-p_a190_dp.csv ,codestral_a190_dp ,0.0,5863,118.0,412c_dp ,T,0.0,23159,failure ,0.0,29022,412cc322,dp,codestral-p
+c-p_a190_dp.csv ,codestral_a190_dp ,0.0,3939,77.31,cd36_dp ,T,0.0,13705,success ,0.0,17644,cd3675da,dp,codestral-p
+c-p_a190_dp.csv ,codestral_a190_dp ,0.0,4982,102.23,8432_dp ,T,0.0,22342,failure ,0.0,27324,8432f3f6,dp,codestral-p
+c-p_a190_dp.csv ,codestral_a190_dp ,0.0,5226,107.35,78f5_dp ,T,0.0,23440,failure ,0.0,28666,78f539fb,dp,codestral-p
+c-p_a190_dp.csv ,codestral_a190_dp ,0.0,2830,55.57,4eec_dp ,T,0.0,11659,success ,0.0,14489,4eec97dc,dp,codestral-p
+c-p_a190_dp.csv ,codestral_a190_dp ,0.0,6670,132.89,3df7_dp ,T,0.0,23517,failure ,0.0,30187,3df700af,dp,codestral-p
+c-p_a190_dp.csv ,codestral_a190_dp ,0.0,4762,98.06,e75b_dp ,T,0.0,21332,failure ,0.0,26094,e75bb178,dp,codestral-p
+c-p_a190_dp.csv ,codestral_a190_dp ,0.0,3955,81.46,506b_dp ,T,0.0,18439,failure ,0.0,22394,506b22f2,dp,codestral-p
+c-p_a190_dp.csv ,codestral_a190_dp ,0.0,3874,77.07,b90a_dp ,T,0.0,14289,failure ,0.0,18163,b90af3b9,dp,codestral-p
+c-p_a190_dp.csv ,codestral_a190_dp ,0.0,2781,54.74,1c60_dp ,T,0.0,11654,success ,0.0,14435,1c60b854,dp,codestral-p
+c-p_a190_dp.csv ,codestral_a190_dp ,0.0,2794,54.54,87e9_dp ,T,0.0,11375,success ,0.0,14169,87e9da22,dp,codestral-p
+c-p_a190_dp.csv ,codestral_a190_dp ,0.0,2777,54.22,8186_dp ,T,0.0,11388,success ,0.0,14165,8186b640,dp,codestral-p
+c-p_a190_dp.csv ,codestral_a190_dp ,0.0,5460,108.52,d94e_dp ,T,0.0,19487,failure ,0.0,24947,d94e5635,dp,codestral-p
+c-p_a190_dp.csv ,codestral_a190_dp ,0.0,4199,82.92,d48c_dp ,T,0.0,14261,failure ,0.0,18460,d48c159f,dp,codestral-p
+c-p_a190_dp.csv ,codestral_a190_dp ,0.0,3017,59.0,c5f8_dp ,T,0.0,11678,success ,0.0,14695,c5f80212,dp,codestral-p
+c-p_a190_dp.csv ,codestral_a190_dp ,0.0,2777,54.14,c302_dp ,T,0.0,11388,success ,0.0,14165,c3022b23,dp,codestral-p
+qw14_1bb2_dp.csv ,qw14_1bb2_dp ,0.0,5745,138.04,3c44_dp ,F,0.0,22220,success ,0.0,27965,3c44aca5,dp,qw14
+qw14_1bb2_dp.csv ,qw14_1bb2_dp ,0.0,2410,41.48,fcf9_dp ,F,0.0,11698,success ,0.0,14108,fcf94d3b,dp,qw14
+qw14_1bb2_dp.csv ,qw14_1bb2_dp ,0.0,2381,40.39,cc4a_dp ,F,0.0,10098,success ,0.0,12479,cc4a6501,dp,qw14
+qw14_1bb2_dp.csv ,qw14_1bb2_dp ,0.0,2711,48.02,6a3e_dp ,F,0.0,13843,failure ,0.0,16554,6a3e41df,dp,qw14
+qw14_1bb2_dp.csv ,qw14_1bb2_dp ,0.0,2294,40.66,9cdb_dp ,F,0.0,14157,failure ,0.0,16451,9cdbc1e8,dp,qw14
+qw14_1bb2_dp.csv ,qw14_1bb2_dp ,0.0,1817,32.36,1f91_dp ,F,0.0,12187,failure ,0.0,14004,1f917c06,dp,qw14
+qw14_1bb2_dp.csv ,qw14_1bb2_dp ,0.0,2620,46.62,a978_dp ,F,0.0,13942,failure ,0.0,16562,a978ef92,dp,qw14
+qw14_1bb2_dp.csv ,qw14_1bb2_dp ,0.0,2834,48.79,8126_dp ,F,0.0,14012,failure ,0.0,16846,81265a69,dp,qw14
+qw14_1bb2_dp.csv ,qw14_1bb2_dp ,0.0,4289,75.37,0e9d_dp ,F,0.0,22244,failure ,0.0,26533,0e9d6e51,dp,qw14
+qw14_1bb2_dp.csv ,qw14_1bb2_dp ,0.0,4036,70.65,84db_dp ,F,0.0,18284,failure ,0.0,22320,84db0954,dp,qw14
+qw14_1bb2_dp.csv ,qw14_1bb2_dp ,0.0,4099,71.22,4dbe_dp ,F,0.0,16868,failure ,0.0,20967,4dbef5de,dp,qw14
+qw14_1bb2_dp.csv ,qw14_1bb2_dp ,0.0,2279,39.38,3a0e_dp ,F,0.0,11472,success ,0.0,13751,3a0ee165,dp,qw14
+qw14_1bb2_dp.csv ,qw14_1bb2_dp ,0.0,2611,45.39,fcab_dp ,F,0.0,12169,failure ,0.0,14780,fcab4afe,dp,qw14
+qw14_1bb2_dp.csv ,qw14_1bb2_dp ,0.0,1434,26.02,bc9e_dp ,F,0.0,10800,failure ,0.0,12234,bc9e890b,dp,qw14
+qw14_1bb2_dp.csv ,qw14_1bb2_dp ,0.0,2930,51.9,ff60_dp ,F,0.0,15049,failure ,0.0,17979,ff609449,dp,qw14
+qw14_1bb2_dp.csv ,qw14_1bb2_dp ,0.0,2685,46.58,710f_dp ,F,0.0,11983,failure ,0.0,14668,710f0e20,dp,qw14
+qw14_1bb2_dp.csv ,qw14_1bb2_dp ,0.0,3565,62.78,1425_dp ,F,0.0,18796,failure ,0.0,22361,1425de2a,dp,qw14
+qw14_1bb2_dp.csv ,qw14_1bb2_dp ,0.0,3581,62.99,c0ff_dp ,F,0.0,17688,failure ,0.0,21269,c0ff47fa,dp,qw14
+qw14_1bb2_dp.csv ,qw14_1bb2_dp ,0.0,2008,35.36,d8b2_dp ,F,0.0,10068,failure ,0.0,12076,d8b2f09b,dp,qw14
+qw14_1bb2_dp.csv ,qw14_1bb2_dp ,0.0,5219,89.56,ee62_dp ,F,0.0,18341,failure ,0.0,23560,ee62a0dc,dp,qw14
+qw14_1bb2_dp.csv ,qw14_1bb2_dp ,0.0,4322,74.93,6e2a_dp ,F,0.0,17873,failure ,0.0,22195,6e2a6a17,dp,qw14
+qw14_1bb2_dp.csv ,qw14_1bb2_dp ,0.0,2173,37.22,8e14_dp ,F,0.0,10123,success ,0.0,12296,8e1460a3,dp,qw14
+qw14_1bb2_dp.csv ,qw14_1bb2_dp ,0.0,3103,55.53,f439_dp ,F,0.0,15467,failure ,0.0,18570,f4395734,dp,qw14
+qw14_1bb2_dp.csv ,qw14_1bb2_dp ,0.0,2438,41.88,8fca_dp ,F,0.0,10170,success ,0.0,12608,8fcab72e,dp,qw14
+qw14_1bb2_dp.csv ,qw14_1bb2_dp ,0.0,2131,36.6,0ea4_dp ,F,0.0,10256,success ,0.0,12387,0ea4d802,dp,qw14
+qw14_1bb2_dp.csv ,qw14_1bb2_dp ,0.0,3016,51.88,df24_dp ,F,0.0,14214,failure ,0.0,17230,df24f1c9,dp,qw14
+qw14_1bb2_dp.csv ,qw14_1bb2_dp ,0.0,2702,45.64,04f9_dp ,F,0.0,10313,success ,0.0,13015,04f951d4,dp,qw14
+qw14_1bb2_dp.csv ,qw14_1bb2_dp ,0.0,2452,41.61,2cec_dp ,F,0.0,10181,success ,0.0,12633,2cecf5a5,dp,qw14
+qw14_1bb2_dp.csv ,qw14_1bb2_dp ,0.0,1634,29.39,c18a_dp ,F,0.0,12125,failure ,0.0,13759,c18a8812,dp,qw14
+qw14_1bb2_dp.csv ,qw14_1bb2_dp ,0.0,2612,45.49,8684_dp ,F,0.0,13114,failure ,0.0,15726,86844871,dp,qw14
+qw14_1bb2_mc.csv ,qw14_1bb2_mc ,0.0,1943,34.24,2005_mc ,F,0.0,7545,failure ,0.0,9488,20054660,mc,qw14
+qw14_1bb2_mc.csv ,qw14_1bb2_mc ,0.0,1581,28.26,a475_mc ,F,0.0,7239,failure ,0.0,8820,a475e0b8,mc,qw14
+qw14_1bb2_mc.csv ,qw14_1bb2_mc ,0.0,491,8.71,92e8_mc ,F,0.0,2455,success ,0.0,2946,92e8e063,mc,qw14
+qw14_1bb2_mc.csv ,qw14_1bb2_mc ,0.0,1430,25.61,cbf4_mc ,F,0.0,6819,failure ,0.0,8249,cbf48a24,mc,qw14
+qw14_1bb2_mc.csv ,qw14_1bb2_mc ,0.0,1438,25.49,3f24_mc ,F,0.0,6056,success ,0.0,7494,3f24c0e4,mc,qw14
+qw14_1bb2_mc.csv ,qw14_1bb2_mc ,0.0,391,7.23,90d6_mc ,F,0.0,2455,success ,0.0,2846,90d65079,mc,qw14
+qw14_1bb2_mc.csv ,qw14_1bb2_mc ,0.0,1631,27.73,2918_mc ,F,0.0,4746,success ,0.0,6377,2918a434,mc,qw14
+qw14_1bb2_mc.csv ,qw14_1bb2_mc ,0.0,1826,31.59,2684_mc ,F,0.0,6251,failure ,0.0,8077,2684775e,mc,qw14
+qw14_1bb2_mc.csv ,qw14_1bb2_mc ,0.0,1791,31.08,4fa9_mc ,F,0.0,6302,failure ,0.0,8093,4fa9be9e,mc,qw14
+qw14_1bb2_mc.csv ,qw14_1bb2_mc ,0.0,1605,27.51,967c_mc ,F,0.0,5225,success ,0.0,6830,967c5373,mc,qw14
+qw14_1bb2_mc.csv ,qw14_1bb2_mc ,0.0,592,10.18,96d8_mc ,F,0.0,1942,success ,0.0,2534,96d8654c,mc,qw14
+qw14_1bb2_mc.csv ,qw14_1bb2_mc ,0.0,1678,36.77,d897_mc ,F,0.0,6591,success ,0.0,8269,d89776b8,mc,qw14
+qw14_1bb2_mc.csv ,qw14_1bb2_mc ,0.0,1204,21.68,7ecf_mc ,F,0.0,6635,failure ,0.0,7839,7ecfc4fd,mc,qw14
+qw14_1bb2_mc.csv ,qw14_1bb2_mc ,0.0,493,8.84,6101_mc ,F,0.0,2455,success ,0.0,2948,610100aa,mc,qw14
+qw14_1bb2_mc.csv ,qw14_1bb2_mc ,0.0,1636,29.09,06f4_mc ,F,0.0,7442,failure ,0.0,9078,06f4aaa1,mc,qw14
+qw14_1bb2_mc.csv ,qw14_1bb2_mc ,0.0,1977,33.89,9ebb_mc ,F,0.0,6526,failure ,0.0,8503,9ebb52c7,mc,qw14
+qw14_1bb2_mc.csv ,qw14_1bb2_mc ,0.0,983,17.21,f12a_mc ,F,0.0,3620,success ,0.0,4603,f12a8549,mc,qw14
+qw14_1bb2_mc.csv ,qw14_1bb2_mc ,0.0,1672,29.53,aef2_mc ,F,0.0,6927,failure ,0.0,8599,aef253f3,mc,qw14
+qw14_1bb2_mc.csv ,qw14_1bb2_mc ,0.0,501,9.09,e9e1_mc ,F,0.0,2455,success ,0.0,2956,e9e1a476,mc,qw14
+qw14_1bb2_mc.csv ,qw14_1bb2_mc ,0.0,635,11.18,493a_mc ,F,0.0,2455,success ,0.0,3090,493a6185,mc,qw14
+qw14_1bb2_mc.csv ,qw14_1bb2_mc ,0.0,1170,19.78,4fb7_mc ,F,0.0,2455,success ,0.0,3625,4fb717e0,mc,qw14
+qw14_1bb2_mc.csv ,qw14_1bb2_mc ,0.0,839,15.02,5964_mc ,F,0.0,4038,success ,0.0,4877,59644a2a,mc,qw14
+qw14_1bb2_mc.csv ,qw14_1bb2_mc ,0.0,1572,27.56,59e6_mc ,F,0.0,6669,failure ,0.0,8241,59e66f30,mc,qw14
+qw14_1bb2_mc.csv ,qw14_1bb2_mc ,0.0,1602,25.37,c62e_mc ,F,0.0,3823,failure ,0.0,5425,c62e38ba,mc,qw14
+qw14_1bb2_mc.csv ,qw14_1bb2_mc ,0.0,631,10.68,329c_mc ,F,0.0,2025,success ,0.0,2656,329c0a80,mc,qw14
+qw14_1bb2_mc.csv ,qw14_1bb2_mc ,0.0,464,8.29,abb8_mc ,F,0.0,2455,success ,0.0,2919,abb883ad,mc,qw14
+qw14_1bb2_mc.csv ,qw14_1bb2_mc ,0.0,1823,31.79,b42c_mc ,F,0.0,6645,success ,0.0,8468,b42c158a,mc,qw14
+qw14_1bb2_mc.csv ,qw14_1bb2_mc ,0.0,2058,34.97,9620_mc ,F,0.0,6251,failure ,0.0,8309,9620199e,mc,qw14
+qw14_1bb2_mc.csv ,qw14_1bb2_mc ,0.0,461,7.94,e695_mc ,F,0.0,1959,success ,0.0,2420,e695f14d,mc,qw14
+qw14_1bb2_mc.csv ,qw14_1bb2_mc ,0.0,1627,28.56,f056_mc ,F,0.0,6998,failure ,0.0,8625,f05600aa,mc,qw14
+qw14_b154_sg.csv ,qw14_b154_sg ,0.0,5946,148.85,7f4f_sg ,F,0.0,11407,failure ,0.0,17353,7f4f4cd8,sg,qw14
+qw14_b154_sg.csv ,qw14_b154_sg ,0.0,5654,98.23,6826_sg ,F,0.0,11378,failure ,0.0,17032,6826f7b4,sg,qw14
+qw14_b154_sg.csv ,qw14_b154_sg ,0.0,6575,119.19,ef97_sg ,F,0.0,11413,failure ,0.0,17988,ef978a23,sg,qw14
+qw14_b154_sg.csv ,qw14_b154_sg ,0.0,6107,125.19,3dba_sg ,F,0.0,11392,failure ,0.0,17499,3dba8847,sg,qw14
+qw14_b154_sg.csv ,qw14_b154_sg ,0.0,5604,102.85,c75b_sg ,F,0.0,11389,failure ,0.0,16993,c75b602f,sg,qw14
+qw14_b154_sg.csv ,qw14_b154_sg ,0.0,6175,109.47,9ed7_sg ,F,0.0,11388,failure ,0.0,17563,9ed7bcdc,sg,qw14
+qw14_b154_sg.csv ,qw14_b154_sg ,0.0,5496,99.97,fefc_sg ,F,0.0,11398,failure ,0.0,16894,fefc7f6e,sg,qw14
+qw14_b154_sg.csv ,qw14_b154_sg ,0.0,6412,117.33,b862_sg ,F,0.0,11411,failure ,0.0,17823,b8627466,sg,qw14
+qw14_b154_sg.csv ,qw14_b154_sg ,0.0,6404,115.78,eb8a_sg ,F,0.0,11416,failure ,0.0,17820,eb8aaccc,sg,qw14
+qw14_b154_sg.csv ,qw14_b154_sg ,0.0,5499,104.81,97e7_sg ,F,0.0,11411,failure ,0.0,16910,97e7d109,sg,qw14
+qw14_b154_sg.csv ,qw14_b154_sg ,0.0,6777,121.25,f680_sg ,F,0.0,11417,failure ,0.0,18194,f6802dfa,sg,qw14
+qw14_b154_sg.csv ,qw14_b154_sg ,0.0,5832,120.39,c10a_sg ,F,0.0,11411,failure ,0.0,17243,c10a3813,sg,qw14
+qw14_b154_sg.csv ,qw14_b154_sg ,0.0,7141,130.71,6542_sg ,F,0.0,11415,failure ,0.0,18556,6542c997,sg,qw14
+qw14_b154_sg.csv ,qw14_b154_sg ,0.0,5816,106.11,88f9_sg ,F,0.0,11413,failure ,0.0,17229,88f9bcca,sg,qw14
+qw14_b154_sg.csv ,qw14_b154_sg ,0.0,6445,122.87,f4e4_sg ,F,0.0,11389,failure ,0.0,17834,f4e4c56c,sg,qw14
+qw14_b154_sg.csv ,qw14_b154_sg ,0.0,4639,88.49,35fe_sg ,F,0.0,11411,failure ,0.0,16050,35fe18e6,sg,qw14
+qw14_b154_sg.csv ,qw14_b154_sg ,0.0,5569,108.42,7d5b_sg ,F,0.0,11413,failure ,0.0,16982,7d5b64d5,sg,qw14
+qw14_b154_sg.csv ,qw14_b154_sg ,0.0,5762,100.86,ccf0_sg ,F,0.0,11413,failure ,0.0,17175,ccf0f64c,sg,qw14
+qw14_b154_sg.csv ,qw14_b154_sg ,0.0,6051,112.6,d645_sg ,F,0.0,11388,failure ,0.0,17439,d6456c4e,sg,qw14
+qw14_b154_sg.csv ,qw14_b154_sg ,0.0,5796,122.92,d277_sg ,F,0.0,11414,failure ,0.0,17210,d27797eb,sg,qw14
+qw14_b154_sg.csv ,qw14_b154_sg ,0.0,7127,122.72,0e1c_sg ,F,0.0,11395,failure ,0.0,18522,0e1cd24b,sg,qw14
+qw14_b154_sg.csv ,qw14_b154_sg ,0.0,6493,132.83,975d_sg ,F,0.0,11351,failure ,0.0,17844,975dc967,sg,qw14
+qw14_b154_sg.csv ,qw14_b154_sg ,0.0,6130,105.7,4ea9_sg ,F,0.0,11376,failure ,0.0,17506,4ea9a4ea,sg,qw14
+qw14_b154_sg.csv ,qw14_b154_sg ,0.0,5682,109.7,c8ad_sg ,F,0.0,11389,failure ,0.0,17071,c8adfaee,sg,qw14
+qw14_b154_sg.csv ,qw14_b154_sg ,0.0,6594,117.06,67d3_sg ,F,0.0,11378,failure ,0.0,17972,67d3c1f6,sg,qw14
+qw14_b154_sg.csv ,qw14_da7d_sg ,0.0,6920,299.85,ba69_sg ,F,0.0,11413,failure ,0.0,18333,ba6939ce,sg,qw14
+qw14_b154_sg.csv ,qw14_da7d_sg ,0.0,5288,107.82,3b3e_sg ,F,0.0,11413,failure ,0.0,16701,3b3ec5b7,sg,qw14
+qw14_b154_sg.csv ,qw14_da7d_sg ,0.0,6402,133.47,3264_sg ,F,0.0,11388,failure ,0.0,17790,32641341,sg,qw14
+qw14_b154_sg.csv ,qw14_da7d_sg ,0.0,6215,117.8,c135_sg ,F,0.0,11388,failure ,0.0,17603,c135e8a6,sg,qw14
+qw14_b154_sg.csv ,qw14_da7d_sg ,0.0,6029,117.04,f507_sg ,F,0.0,11412,failure ,0.0,17441,f507d0dc,sg,qw14
+none,g4o-m_358e_sg,0,3471,76.23,9cbd_sg,F,0,19100,failure,0.004947599998,22571,9cbdb6b3,sg,gpt-4o-mini
+none,g4o-m_358e_sg,0,2998,65.11,9e93_sg,F,0,22942,failure,0.005163299998,25940,9e93aa40,sg,gpt-4o-mini
+none,g4o-m_358e_sg,0,2955,87.72,1ec2_sg,F,0,20625,failure,0.004789949998,23580,1ec2c3d3,sg,gpt-4o-mini
+none,g4o-m_358e_sg,0,3038,74.47,0090_sg,F,0,19146,failure,0.004617899999,22184,0090c547,sg,gpt-4o-mini
+none,g4o-m_358e_sg,0,3197,72.66,ea38_sg,F,0,13987,failure,0.00393945,17184,ea38c361,sg,gpt-4o-mini
+none,g4o-m_358e_sg,0,2947,88.94,3326_sg,F,0,19024,failure,0.004544999997,21971,33262a18,sg,gpt-4o-mini
+none,g4o-m_358e_sg,0,2937,48.97,3711_sg,F,0,19177,failure,0.004561949997,22114,3711d1aa,sg,gpt-4o-mini
+none,g4o-m_358e_sg,0,2853,54.46,734b_sg,F,0,18866,failure,0.0045417,21719,734b923e,sg,gpt-4o-mini
+none,g4o-m_358e_sg,0,3244,52.13,1bba_sg,F,0,21515,failure,0.005096849998,24759,1bba852a,sg,gpt-4o-mini
+none,g4o-m_358e_sg,0,2466,31.09,c32c_sg,F,0,11800,failure,0.003249599998,14266,c32c995d,sg,gpt-4o-mini
+none,g4o-m_358e_dp,0,2177,46.3,a95f_dp,F,0,12063,success,0.003115649996,14240,a95faba9,dp,gpt-4o-mini
+none,g4o-m_358e_dp,0,2288,50.36,87f4_dp,F,0,15841,failure,0.003748949997,18129,87f4011d,dp,gpt-4o-mini
+none,g4o-m_358e_dp,0,1677,41.87,66c3_dp,F,0,10229,success,0.002540549998,11906,66c39760,dp,gpt-4o-mini
+none,g4o-m_358e_dp,0,1841,42.45,28aa_dp,F,0,10258,success,0.002566499997,12099,28aa310e,dp,gpt-4o-mini
+none,g4o-m_358e_dp,0,3401,79.72,1dde_dp,F,0,17002,failure,0.004590899995,20403,1dde1b9c,dp,gpt-4o-mini
+none,g4o-m_358e_dp,0,2943,68.32,4002_dp,F,0,15140,failure,0.004036799995,18083,4002186d,dp,gpt-4o-mini
+none,g4o-m_358e_dp,0,2805,70.93,381e_dp,F,0,16739,success,0.004193849999,19544,381ec8f0,dp,gpt-4o-mini
+none,g4o-m_358e_dp,0,2269,50.62,fb6a_dp,F,0,12516,success,0.003238799997,14785,fb6ae706,dp,gpt-4o-mini
+none,g4o-m_358e_dp,0,1862,39.78,91c1_dp,F,0,10232,success,0.002651999999,12094,91c1d0a9,dp,gpt-4o-mini
+none,g4o-m_358e_dp,0,1737,38.62,bef8_dp,F,0,10147,success,0.00256425,11884,bef8ce81,dp,gpt-4o-mini
+none,g4o-m_358e_mc,0,393,7.99,4186_mc,F,0,3055,success,0.000694049999,3448,4186eb61,mc,gpt-4o-mini
+none,g4o-m_358e_mc,0,487,9.65,3012_mc,F,0,1193,success,0.000471149999,1680,3012b42d,mc,gpt-4o-mini
+none,g4o-m_358e_mc,0,185,4.42,caab_mc,F,0,410,success,0.0001725,595,caabba17,mc,gpt-4o-mini
+none,g4o-m_358e_mc,0,451,14.26,919c_mc,F,0,2974,success,0.0007167,3425,919c7562,mc,gpt-4o-mini
+none,g4o-m_358e_mc,0,1197,23.15,3f46_mc,F,0,6093,failure,0.001632149999,7290,3f46c9e4,mc,gpt-4o-mini
+none,g4o-m_358e_mc,0,471,8.51,cdb8_mc,F,0,2983,success,0.00073005,3454,cdb834fd,mc,gpt-4o-mini
+none,g4o-m_358e_mc,0,501,9.11,4caf_mc,F,0,3747,success,0.000862649999,4248,4cafb5bb,mc,gpt-4o-mini
+none,g4o-m_358e_mc,0,236,5.84,e105_mc,F,0,410,success,0.0002031,646,e10549a8,mc,gpt-4o-mini
+none,g4o-m_358e_mc,0,214,4.54,9f9a_mc,F,0,410,success,0.0001899,624,9f9a39c7,mc,gpt-4o-mini
+none,g4o-m_358e_mc,0,423,9.99,544a_mc,F,0,2949,success,0.000696149999,3372,544ab789,mc,gpt-4o-mini
+none,qwen2.5-coder:32b_7cb7_dp_batch,0,2806,125.37,8a7c_dp,,0,13669,success,0.0,16475,8a7ca691,dp,qw32
+none,qwen2.5-coder:32b_7cb7_dp_batch,0,2884,124.9,1707_dp,,0,11864,success,0.0,14748,17071824,dp,qw32
+none,qwen2.5-coder:32b_7cb7_dp_batch,0,2401,105.78,cd2b_dp,,0,11521,success,0.0,13922,cd2b1cf6,dp,qw32
+none,qwen2.5-coder:32b_7cb7_dp_batch,0,2468,108.51,9cdc_dp,,0,11429,success,0.0,13897,9cdc5906,dp,qw32
+none,qwen2.5-coder:32b_7cb7_dp_batch,0,2574,115.17,a498_dp,,0,13085,success,0.0,15659,a498655d,dp,qw32
+none,qwen2.5-coder:32b_7cb7_dp_batch,0,2481,109.02,a2e9_dp,,0,11463,success,0.0,13944,a2e9dbe3,dp,qw32
+none,qwen2.5-coder:32b_7cb7_dp_batch,0,2033,91.4,db40_dp,,0,11447,success,0.0,13480,db403f8d,dp,qw32
+none,qwen2.5-coder:32b_7cb7_dp_batch,0,2683,116.89,18ea_dp,,0,11568,success,0.0,14251,18ea30f7,dp,qw32
+none,qwen2.5-coder:32b_7cb7_dp_batch,0,2811,122.25,37e7_dp,,0,11848,success,0.0,14659,37e7794e,dp,qw32
+none,qwen2.5-coder:32b_7cb7_dp_batch,0,2476,108.64,6e87_dp,,0,11640,success,0.0,14116,6e87bac5,dp,qw32
+none,qwen2.5-coder:32b_7cb7_dp_batch,0,2519,112.92,b719_dp,,0,13269,success,0.0,15788,b71951b5,dp,qw32
+none,qwen2.5-coder:32b_7cb7_dp_batch,0,2245,103.54,18ed_dp,,0,13414,success,0.0,15659,18ed39d7,dp,qw32
+none,qwen2.5-coder:32b_7cb7_dp_batch,0,3257,146.91,61a0_dp,,0,15465,failure,0.0,18722,61a0eb6d,dp,qw32
+none,qwen2.5-coder:32b_7cb7_dp_batch,0,3501,160.72,1e1e_dp,,0,18167,failure,0.0,21668,1e1e6300,dp,qw32
+none,qwen2.5-coder:32b_7cb7_dp_batch,0,2598,121.59,5e9e_dp,,0,16205,failure,0.0,18803,5e9ea1dd,dp,qw32
+none,qwen2.5-coder:32b_7cb7_dp_batch,0,2681,120.07,db43_dp,,0,13367,success,0.0,16048,db43c167,dp,qw32
+none,qwen2.5-coder:32b_7cb7_dp_batch,0,2917,130.98,3159_dp,,0,13248,failure,0.0,16165,31590626,dp,qw32
+none,qwen2.5-coder:32b_7cb7_dp_batch,0,2041,97.34,fb53_dp,,0,14278,failure,0.0,16319,fb532d63,dp,qw32
+none,qwen2.5-coder:32b_7cb7_dp_batch,0,2117,94.71,e1c2_dp,,0,11315,success,0.0,13432,e1c2fcca,dp,qw32
+none,qwen2.5-coder:32b_7cb7_dp_batch,0,4763,210.98,9697_dp,,0,20981,success,0.0,25744,9697537e,dp,qw32
+none,qwen2.5-coder:32b_7cb7_dp_batch,0,2572,113.46,9ac9_dp,,0,11470,success,0.0,14042,9ac91512,dp,qw32
+none,qwen2.5-coder:32b_7cb7_dp_batch,0,2573,112.47,114d_dp,,0,11565,success,0.0,14138,114d7a3d,dp,qw32
+none,qwen2.5-coder:32b_7cb7_dp_batch,0,2637,121.07,3641_dp,,0,13480,failure,0.0,16117,36412f01,dp,qw32
+none,qwen2.5-coder:32b_7cb7_dp_batch,0,2049,92.37,a2df_dp,,0,11712,success,0.0,13761,a2dfa2cb,dp,qw32
+none,qwen2.5-coder:32b_7cb7_dp_batch,0,2220,98.51,2ceb_dp,,0,11579,success,0.0,13799,2cebda6c,dp,qw32
+none,qwen2.5-coder:32b_7cb7_dp_batch,0,2323,102.58,3f39_dp,,0,11557,success,0.0,13880,3f394190,dp,qw32
+none,qwen2.5-coder:32b_7cb7_dp_batch,0,2413,106.75,9507_dp,,0,11752,success,0.0,14165,9507034c,dp,qw32
+none,qwen2.5-coder:32b_7cb7_dp_batch,0,4140,186.73,f0ad_dp,,0,19393,success,0.0,23533,f0ad5265,dp,qw32
+none,qwen2.5-coder:32b_7cb7_dp_batch,0,3707,165.4,0f62_dp,,0,16178,failure,0.0,19885,0f624f51,dp,qw32
+none,qwen2.5-coder:32b_7cb7_dp_batch,0,3949,176.81,c7a1_dp,,0,16799,failure,0.0,20748,c7a1365b,dp,qw32
+none,qwen2.5-coder:32b_7cb7_mc_batch,0,739,54.16,4e99_mc,,0,2291,success,0.0,3030,4e99b483,mc,qw32
+none,qwen2.5-coder:32b_7cb7_mc_batch,0,327,13.08,5e01_mc,,0,432,success,0.0,759,5e01f79c,mc,qw32
+none,qwen2.5-coder:32b_7cb7_mc_batch,0,2335,100.76,1c40_mc,,0,7434,failure,0.0,9769,1c40dd3e,mc,qw32
+none,qwen2.5-coder:32b_7cb7_mc_batch,0,1208,54.47,6bd6_mc,,0,5493,success,0.0,6701,6bd6c539,mc,qw32
+none,qwen2.5-coder:32b_7cb7_mc_batch,0,1115,49.67,f0bd_mc,,0,4161,success,0.0,5276,f0bdd67b,mc,qw32
+none,qwen2.5-coder:32b_7cb7_mc_batch,0,2094,93.93,23e1_mc,,0,7735,success,0.0,9829,23e13c14,mc,qw32
+none,qwen2.5-coder:32b_7cb7_mc_batch,0,365,14.5,37c8_mc,,0,432,success,0.0,797,37c8f786,mc,qw32
+none,qwen2.5-coder:32b_7cb7_mc_batch,0,1404,63.63,f33c_mc,,0,5645,success,0.0,7049,f33c7691,mc,qw32
+none,qwen2.5-coder:32b_7cb7_mc_batch,0,319,12.7,b43e_mc,,0,432,success,0.0,751,b43e84dc,mc,qw32
+none,qwen2.5-coder:32b_7cb7_mc_batch,0,1360,59.54,0d3b_mc,,0,4293,success,0.0,5653,0d3b5398,mc,qw32
+none,qwen2.5-coder:32b_7cb7_mc_batch,0,1507,66.17,6134_mc,,0,5483,success,0.0,6990,6134020d,mc,qw32
+none,qwen2.5-coder:32b_7cb7_mc_batch,0,1306,59.45,2981_mc,,0,5840,success,0.0,7146,2981e3f9,mc,qw32
+none,qwen2.5-coder:32b_7cb7_mc_batch,0,1528,67.88,554a_mc,,0,5678,success,0.0,7206,554a8e3d,mc,qw32
+none,qwen2.5-coder:32b_7cb7_mc_batch,0,341,13.47,eac2_mc,,0,432,success,0.0,773,eac29909,mc,qw32
+none,qwen2.5-coder:32b_7cb7_mc_batch,0,2101,93.32,cbb0_mc,,0,7749,failure,0.0,9850,cbb0ebee,mc,qw32
+none,qwen2.5-coder:32b_7cb7_mc_batch,0,319,12.77,de71_mc,,0,432,success,0.0,751,de71e729,mc,qw32
+none,qwen2.5-coder:32b_7cb7_mc_batch,0,1441,64.02,6b9f_mc,,0,5655,success,0.0,7096,6b9f2285,mc,qw32
+none,qwen2.5-coder:32b_7cb7_mc_batch,0,1204,53.22,4679_mc,,0,4186,success,0.0,5390,4679f179,mc,qw32
+none,qwen2.5-coder:32b_7cb7_mc_batch,0,1359,60.97,c965_mc,,0,5603,success,0.0,6962,c9654c0e,mc,qw32
+none,qwen2.5-coder:32b_7cb7_mc_batch,0,1622,72.0,429c_mc,,0,5664,success,0.0,7286,429c195f,mc,qw32
+none,qwen2.5-coder:32b_7cb7_mc_batch,0,1561,68.13,d1e2_mc,,0,5455,success,0.0,7016,d1e279d7,mc,qw32
+none,qwen2.5-coder:32b_7cb7_mc_batch,0,1432,64.89,731f_mc,,0,5652,success,0.0,7084,731f3457,mc,qw32
+none,qwen2.5-coder:32b_7cb7_mc_batch,0,2035,91.16,3998_mc,,0,7684,failure,0.0,9719,39980f24,mc,qw32
+none,qwen2.5-coder:32b_7cb7_mc_batch,0,1260,56.22,6e0b_mc,,0,5234,success,0.0,6494,6e0b728f,mc,qw32
+none,qwen2.5-coder:32b_7cb7_mc_batch,0,348,13.8,0ab5_mc,,0,432,success,0.0,780,0ab55d4c,mc,qw32
+none,qwen2.5-coder:32b_7cb7_mc_batch,0,1719,75.71,00f1_mc,,0,6104,failure,0.0,7823,00f1a6e8,mc,qw32
+none,qwen2.5-coder:32b_7cb7_mc_batch,0,298,11.9,218f_mc,,0,432,success,0.0,730,218f8fc9,mc,qw32
+none,qwen2.5-coder:32b_7cb7_mc_batch,0,2146,95.16,de1b_mc,,0,7744,failure,0.0,9890,de1bca1e,mc,qw32
+none,qwen2.5-coder:32b_7cb7_mc_batch,0,1487,66.53,234a_mc,,0,5650,success,0.0,7137,234aea1d,mc,qw32
+none,qwen2.5-coder:32b_7cb7_mc_batch,0,1102,51.02,ddd7_mc,,0,5716,success,0.0,6818,ddd7470e,mc,qw32
+none,qwen2.5-coder:32b_7cb7_sg_batch,0,5945,250.67,db76_sg,,0,11502,failure,0.0,17447,db76d9db,sg,qw32
+none,qwen2.5-coder:32b_7cb7_sg_batch,0,6129,257.38,4966_sg,,0,11503,failure,0.0,17632,4966aadb,sg,qw32
+none,qwen2.5-coder:32b_7cb7_sg_batch,0,6100,257.28,e8dc_sg,,0,11503,failure,0.0,17603,e8dc3dc6,sg,qw32
+none,qwen2.5-coder:32b_7cb7_sg_batch,0,6032,257.86,91c4_sg,,0,11505,failure,0.0,17537,91c41711,sg,qw32
+none,qwen2.5-coder:32b_7cb7_sg_batch,0,6363,267.76,0687_sg,,0,11497,failure,0.0,17860,0687168f,sg,qw32
+none,qwen2.5-coder:32b_7cb7_sg_batch,0,6117,256.08,94ff_sg,,0,11496,failure,0.0,17613,94ff943c,sg,qw32
+none,qwen2.5-coder:32b_7cb7_sg_batch,0,6140,259.29,b9e8_sg,,0,11498,failure,0.0,17638,b9e8039b,sg,qw32
+none,qwen2.5-coder:32b_7cb7_sg_batch,0,5941,250.35,2f46_sg,,0,11503,failure,0.0,17444,2f46179a,sg,qw32
+none,qwen2.5-coder:32b_7cb7_sg_batch,0,6588,274.91,b170_sg,,0,11497,failure,0.0,18085,b1705a70,sg,qw32
+none,qwen2.5-coder:32b_7cb7_sg_batch,0,6026,254.1,65db_sg,,0,11510,failure,0.0,17536,65dbee41,sg,qw32
+none,qwen2.5-coder:32b_7cb7_sg_batch,0,5976,252.34,034e_sg,,0,11497,failure,0.0,17473,034e64b6,sg,qw32
+none,qwen2.5-coder:32b_7cb7_sg_batch,0,5770,243.52,d1de_sg,,0,11503,failure,0.0,17273,d1de4316,sg,qw32
+none,qwen2.5-coder:32b_7cb7_sg_batch,0,6303,265.12,ade4_sg,,0,11505,failure,0.0,17808,ade4d9f6,sg,qw32
+none,qwen2.5-coder:32b_7cb7_sg_batch,0,5993,252.24,5a5d_sg,,0,11495,failure,0.0,17488,5a5db02f,sg,qw32
+none,qwen2.5-coder:32b_7cb7_sg_batch,0,6185,258.84,9234_sg,,0,11501,failure,0.0,17686,9234c25c,sg,qw32
+none,qwen2.5-coder:32b_7cb7_sg_batch,0,6345,266.87,afa4_sg,,0,11498,failure,0.0,17843,afa4b3d5,sg,qw32
+none,qwen2.5-coder:32b_7cb7_sg_batch,0,6374,268.12,48bc_sg,,0,11507,failure,0.0,17881,48bc4396,sg,qw32
+none,qwen2.5-coder:32b_7cb7_sg_batch,0,5951,250.55,1645_sg,,0,11499,failure,0.0,17450,1645e7fe,sg,qw32
+none,qwen2.5-coder:32b_7cb7_sg_batch,0,6276,262.85,d8f2_sg,,0,11496,failure,0.0,17772,d8f20c91,sg,qw32
+none,qwen2.5-coder:32b_7cb7_sg_batch,0,5623,239.14,13b9_sg,,0,11506,failure,0.0,17129,13b97ab6,sg,qw32
+none,qwen2.5-coder:32b_7cb7_sg_batch,0,6068,255.58,ee21_sg,,0,11496,failure,0.0,17564,ee212870,sg,qw32
+none,qwen2.5-coder:32b_7cb7_sg_batch,0,6228,261.61,02a2_sg,,0,11496,failure,0.0,17724,02a25177,sg,qw32
+none,qwen2.5-coder:32b_7cb7_sg_batch,0,6091,256.79,f931_sg,,0,11503,failure,0.0,17594,f9310514,sg,qw32
+none,qwen2.5-coder:32b_7cb7_sg_batch,0,6266,263.77,ed26_sg,,0,11504,failure,0.0,17770,ed265d8b,sg,qw32
+none,qwen2.5-coder:32b_7cb7_sg_batch,0,5746,242.35,d391_sg,,0,11499,failure,0.0,17245,d3919945,sg,qw32
+none,qwen2.5-coder:32b_7cb7_sg_batch,0,5892,249.62,aacf_sg,,0,11503,failure,0.0,17395,aacf9e99,sg,qw32
+none,qwen2.5-coder:32b_7cb7_sg_batch,0,6005,252.79,a468_sg,,0,11513,failure,0.0,17518,a468b819,sg,qw32
+none,qwen2.5-coder:32b_7cb7_sg_batch,0,5946,249.88,0309_sg,,0,11498,failure,0.0,17444,0309f2bc,sg,qw32
+none,qwen2.5-coder:32b_7cb7_sg_batch,0,5668,241.47,e78f_sg,,0,11498,failure,0.0,17166,e78fed7a,sg,qw32
+none,qwen2.5-coder:32b_7cb7_sg_batch,0,5962,251.84,9455_sg,,0,11497,failure,0.0,17459,9455bba8,sg,qw32

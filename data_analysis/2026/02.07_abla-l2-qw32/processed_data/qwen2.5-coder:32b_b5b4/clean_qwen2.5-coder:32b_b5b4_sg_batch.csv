@@ -1,0 +1,21 @@
+num_run,name,trace_id,batch_id,status,latency,total_tokens,prompt_tokens,completion_tokens,total_cost,parameters,generation_count,prompt_cost,completion_cost,tags,timestamp
+1,003f_sketch_generator,003f2dd0,qwen2.5-coder:32b_b5b4_sg_batch,failure,179.46,16637,10285,6352,0.0,N/A,6,0,0,"['benchmark', 'qwen2.5-coder:32b', 'sketch_generator']",1770421171
+2,bf45_sketch_generator,bf457694,qwen2.5-coder:32b_b5b4_sg_batch,failure,185.2,16640,10040,6600,0.0,N/A,6,0,0,"['benchmark', 'qwen2.5-coder:32b', 'sketch_generator']",1770421463
+4,7046_sketch_generator,70463f51,qwen2.5-coder:32b_b5b4_sg_batch,failure,145.13,13621,8476,5145,0.0,N/A,6,0,0,"['benchmark', 'qwen2.5-coder:32b', 'sketch_generator']",1770422032
+5,2ff4_sketch_generator,2ff4408d,qwen2.5-coder:32b_b5b4_sg_batch,failure,178.1,16424,10087,6337,0.0,N/A,6,0,0,"['benchmark', 'qwen2.5-coder:32b', 'sketch_generator']",1770422289
+6,3b18_sketch_generator,3b18ebc0,qwen2.5-coder:32b_b5b4_sg_batch,failure,160.51,15753,10093,5660,0.0,N/A,6,0,0,"['benchmark', 'qwen2.5-coder:32b', 'sketch_generator']",1770422627
+8,bfb8_sketch_generator,bfb8e20f,qwen2.5-coder:32b_b5b4_sg_batch,failure,169.05,16135,10143,5992,0.0,N/A,6,0,0,"['benchmark', 'qwen2.5-coder:32b', 'sketch_generator']",1770423115
+10,b51a_sketch_generator,b51ad5aa,qwen2.5-coder:32b_b5b4_sg_batch,failure,158.09,14404,8769,5635,0.0,N/A,6,0,0,"['benchmark', 'qwen2.5-coder:32b', 'sketch_generator']",1770423699
+11,0e75_sketch_generator,0e75dc07,qwen2.5-coder:32b_b5b4_sg_batch,failure,181.99,16566,10082,6484,0.0,N/A,6,0,0,"['benchmark', 'qwen2.5-coder:32b', 'sketch_generator']",1770423970
+12,7c6c_sketch_generator,7c6cae1c,qwen2.5-coder:32b_b5b4_sg_batch,failure,193.82,17617,10727,6890,0.0,N/A,6,0,0,"['benchmark', 'qwen2.5-coder:32b', 'sketch_generator']",1770424311
+13,4517_sketch_generator,4517ef28,qwen2.5-coder:32b_b5b4_sg_batch,failure,178.31,15721,9362,6359,0.0,N/A,6,0,0,"['benchmark', 'qwen2.5-coder:32b', 'sketch_generator']",1770424669
+16,b959_sketch_generator,b959c684,qwen2.5-coder:32b_b5b4_sg_batch,failure,216.06,17877,10138,7739,0.0,N/A,6,0,0,"['benchmark', 'qwen2.5-coder:32b', 'sketch_generator']",1770425556
+17,2381_sketch_generator,2381b6a8,qwen2.5-coder:32b_b5b4_sg_batch,failure,163.78,15913,10147,5766,0.0,N/A,6,0,0,"['benchmark', 'qwen2.5-coder:32b', 'sketch_generator']",1770425933
+18,65cc_sketch_generator,65cc0b4b,qwen2.5-coder:32b_b5b4_sg_batch,failure,153.69,14780,9354,5426,0.0,N/A,6,0,0,"['benchmark', 'qwen2.5-coder:32b', 'sketch_generator']",1770426256
+19,3c40_sketch_generator,3c40d533,qwen2.5-coder:32b_b5b4_sg_batch,failure,163.91,15841,10071,5770,0.0,N/A,6,0,0,"['benchmark', 'qwen2.5-coder:32b', 'sketch_generator']",1770426543
+20,c3ee_sketch_generator,c3ee9576,qwen2.5-coder:32b_b5b4_sg_batch,failure,176.24,16336,10092,6244,0.0,N/A,6,0,0,"['benchmark', 'qwen2.5-coder:32b', 'sketch_generator']",1770426866
+22,e1d7_sketch_generator,e1d7ea8d,qwen2.5-coder:32b_b5b4_sg_batch,failure,171.31,15444,9356,6088,0.0,N/A,6,0,0,"['benchmark', 'qwen2.5-coder:32b', 'sketch_generator']",1770427514
+23,194e_sketch_generator,194e478a,qwen2.5-coder:32b_b5b4_sg_batch,failure,144.76,13702,8583,5119,0.0,N/A,6,0,0,"['benchmark', 'qwen2.5-coder:32b', 'sketch_generator']",1770427825
+24,b9b1_sketch_generator,b9b18b6c,qwen2.5-coder:32b_b5b4_sg_batch,failure,202.56,17311,10085,7226,0.0,N/A,6,0,0,"['benchmark', 'qwen2.5-coder:32b', 'sketch_generator']",1770428082
+27,4103_sketch_generator,410342fa,qwen2.5-coder:32b_b5b4_sg_batch,failure,167.72,15986,10087,5899,0.0,N/A,6,0,0,"['benchmark', 'qwen2.5-coder:32b', 'sketch_generator']",1770428891
+28,ec63_sketch_generator,ec63daed,qwen2.5-coder:32b_b5b4_sg_batch,failure,168.34,15235,9258,5977,0.0,N/A,6,0,0,"['benchmark', 'qwen2.5-coder:32b', 'sketch_generator']",1770429218
