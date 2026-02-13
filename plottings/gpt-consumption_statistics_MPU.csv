@@ -1,0 +1,5 @@
+model,model_label,category,category_label,status,latency,cost_cents
+gpt-5,G5,psg,PySG-CPU✔,success,138.42310344827587,8.660929310344828
+gpt-5,G5,tpusg,PySG-TPU✔,success,149.4477777777778,8.726624999999999
+gpt-5,G5,Total-Success,Total✔,success,143.73857142857145,8.692604017857143
+gpt-5,G5,Total-Failure,Total✖,failure,434.31,32.51039374999999

@@ -1,0 +1,11 @@
+model,model_label,category,category_label,status,latency,cost_cents
+gpt-4o,G4o,dp,DP✔,success,45.25949605261051,5.768187852902941
+gpt-4o,G4o,mc,MC✔,success,6.59125327065414,0.4967467948615385
+gpt-4o,G4o,sg,ArdSG✔,success,48.74891944669412,8.67222809090909
+gpt-4o,G4o,Total-Success,Total✔,success,27.76333163402267,3.7010240595035713
+gpt-4o,G4o,Total-Failure,Total✖,failure,66.05519163681454,7.41685877770278
+gpt-4o-mini,G4o-m,dp,DP✔,success,91.02824251400078,0.5425606666555556
+gpt-4o-mini,G4o-m,mc,MC✔,success,9.079089147591144,0.09529039999333333
+gpt-4o-mini,G4o-m,sg,ArdSG✔,success,15.748111140808104,0.13575
+gpt-4o-mini,G4o-m,Total-Success,Total✔,success,51.60545499278564,0.3276270857057143
+gpt-4o-mini,G4o-m,Total-Failure,Total✖,failure,69.94190779763916,0.6246127599839999

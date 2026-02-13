@@ -1,0 +1,13 @@
+model,model_label,processor,processor_label,success_count,failure_count,total,success_rate
+gpt-5,G5,psg,PSG,29,1,30,0.9666666666666667
+gpt-5,G5,tpusg,TPUSG,27,3,30,0.9
+phi4,Phi4,psg,PSG,48,12,60,0.8
+phi4,Phi4,tpusg,TPUSG,60,0,60,1.0
+qwen32,Qw32B,psg,PSG,31,29,60,0.5166666666666667
+qwen32,Qw32B,tpusg,TPUSG,48,12,60,0.8
+qwen14,Qw14B,psg,PSG,25,35,60,0.4166666666666667
+qwen14,Qw14B,tpusg,TPUSG,60,0,60,1.0
+codestral,Co22B,psg,PSG,11,49,60,0.18333333333333332
+codestral,Co22B,tpusg,TPUSG,18,42,60,0.3
+gemma3,Ge3,psg,PSG,41,19,60,0.6833333333333333
+gemma3,Ge3,tpusg,TPUSG,2,58,60,0.03333333333333333

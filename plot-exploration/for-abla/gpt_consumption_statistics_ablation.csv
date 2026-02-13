@@ -1,0 +1,16 @@
+model,model_label,category,category_label,prompt_type,prompt_type_label,status,latency,cost_cents
+gpt-5,G5,ArdSG,ArdSG✔,abla-l1,Prompt L1,success,296.33,16.06370833333333
+gpt-5,G5,ArdSG,ArdSG✔,abla-l2,Prompt L2,success,263.85809523809525,19.191987618571428
+gpt-5,G5,ArdSG,ArdSG✔,original,Prompt Original,success,244.69999999999996,13.441003799666666
+gpt-5,G5,PySG-CPU,PySG-CPU✔,abla-l1,Prompt L1,success,83.02199999999999,4.718883333333333
+gpt-5,G5,PySG-CPU,PySG-CPU✔,abla-l2,Prompt L2,success,117.47833333333334,8.0528625
+gpt-5,G5,PySG-CPU,PySG-CPU✔,original,Prompt Original,success,138.42310344827587,8.660929310344825
+gpt-5,G5,PySG-TPU,PySG-TPU✔,abla-l1,Prompt L1,success,136.46,8.146632333333333
+gpt-5,G5,PySG-TPU,PySG-TPU✔,abla-l2,Prompt L2,success,108.15166666666666,8.351550000000001
+gpt-5,G5,PySG-TPU,PySG-TPU✔,original,Prompt Original,success,149.4477777777778,8.726624999999997
+gpt-5,G5,Total-Success,Total✔,abla-l1,Prompt L1,success,118.6261904761905,6.891374523809524
+gpt-5,G5,Total-Success,Total✔,abla-l2,Prompt L2,success,151.97432098765432,11.051408827037038
+gpt-5,G5,Total-Success,Total✔,original,Prompt Original,success,178.95767441860463,10.349022546395352
+gpt-5,G5,Total-Failure,Total✖,abla-l1,Prompt L1,failure,379.4185185185185,23.501394369629633
+gpt-5,G5,Total-Failure,Total✖,abla-l2,Prompt L2,failure,495.5577777777778,32.41763055444444
+gpt-5,G5,Total-Failure,Total✖,original,Prompt Original,failure,434.31,32.5103937475
