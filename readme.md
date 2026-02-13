@@ -30,10 +30,10 @@ This repo collects experiment outputs, similarity scoring code, and plotting not
 	- `analyser-results/` — Notebooks to calculate scores and simply visualiza some results. And similarity result CSVs.
 	- `references/` — Three reference files (sketches) to calculate against. 
 	- others - Leave them as they are
-- `data_analysis/` — Trace exporting and pre-processinf only relevant to ablation and newest necessary tests. The similarity calculation directly reads code files here.
-- `plotting/for-*` - The `.csv` datasets ready for plotting, the content is listed above. 
+- `langfuse_export/` — Trace exporting and pre-processinf only relevant to ablation and newest necessary tests. The similarity calculation directly reads code files here.
+- `plot-exploration/for-*` - The `.csv` datasets ready for plotting, the content is listed above. 
 
 ## Note
-- `convert-csv.ipynb` accepts CSVs from both right after langfuse export (under `data_analysis`) and the CSVs used from the middleware paper (extracted from those Excel files), and converts to current CSV files in this repo. Only re-orders columns, expands/merges/removes some columns. 
+- `convert-csv.ipynb` accepts CSVs from both right after langfuse export (under `langfuse_export`) and the CSVs used from the middleware paper (extracted from those Excel files), and converts to current CSV files in this repo. Only re-orders columns, expands/merges/removes some columns. 
 
  
