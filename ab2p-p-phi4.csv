@@ -1,0 +1,11 @@
+name,trace_id,batch_id,status,latency,total_tokens,prompt_tokens,completion_tokens,total_cost,prompt_cost,completion_cost,parameters,processor,model,prompt_type
+c64a_psg,c64a2f0c,phi4_2a34_psg_batch,failure,87.39,6933,2864,4069,0.0,0,0,T,psg,phi4,abla-2p
+1908_psg,19084c52,phi4_2a34_psg_batch,failure,89.12,7028,2864,4164,0.0,0,0,T,psg,phi4,abla-2p
+eaee_psg,eaee274b,phi4_2a34_psg_batch,success,53.97,4135,1606,2529,0.0,0,0,T,psg,phi4,abla-2p
+b92b_psg,b92b3fb2,phi4_2a34_psg_batch,success,89.47,7068,2868,4200,0.0,0,0,T,psg,phi4,abla-2p
+9f40_psg,9f40da0d,phi4_2a34_psg_batch,failure,85.86,6891,2864,4027,0.0,0,0,T,psg,phi4,abla-2p
+bb84_psg,bb842270,phi4_2a34_psg_batch,success,90.94,7110,2868,4242,0.0,0,0,T,psg,phi4,abla-2p
+729a_psg,729a3228,phi4_2a34_psg_batch,success,52.25,4042,1606,2436,0.0,0,0,T,psg,phi4,abla-2p
+3807_psg,3807b812,phi4_2a34_psg_batch,failure,85.19,6846,2864,3982,0.0,0,0,T,psg,phi4,abla-2p
+1113_psg,11139d51,phi4_2a34_psg_batch,success,50.94,3984,1606,2378,0.0,0,0,T,psg,phi4,abla-2p
+44aa_psg,44aaf0a9,phi4_2a34_psg_batch,failure,86.03,6894,2864,4030,0.0,0,0,T,psg,phi4,abla-2p

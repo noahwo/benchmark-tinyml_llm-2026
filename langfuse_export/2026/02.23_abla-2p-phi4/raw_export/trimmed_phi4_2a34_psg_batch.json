@@ -1,0 +1,1433 @@
+{
+  "data": [
+    {
+      "id": "44aaf0a9",
+      "timestamp": "2026-02-24T13:54:33.130000+00:00",
+      "name": "44aa_py_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "failed",
+        "last_code": "import os\nimport cv2\nimport numpy as np\nfrom tflite_runtime.interpreter import Interpreter\n\n# Configuration parameters\nmodel_path = \"models/ssd-mobilenet_v1/detect.tflite\"\nlabel_path = \"models/ssd-mobilenet_v1/labelmap.txt\"\ninput_path = \"data/object_detection/sheeps.mp4\"\noutput_path = \"results/object_detection/test_results/sheeps_detections.mp4\"\nconfidence_threshold = 0.5\n\n# Load labels\nwith open(label_path, 'r') as f:\n    labels = [line.strip() for line in f.readlines()]\n\n# Initialize the TFLite interpreter\ninterpreter = Interpreter(model_path=model_path)\ninterpreter.allocate_tensors()\n\n# Get input and output details\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\n# Video capture and writer setup\ncap = cv2.VideoCapture(input_path)\nframe_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))\nframe_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))\nfps = cap.get(cv2.CAP_PROP_FPS)\n\nfourcc = cv2.VideoWriter_fourcc(*'mp4v')\nout = cv2.VideoWriter(output_path, fourcc, fps, (frame_width, frame_height))\n\n# Function to preprocess input image\ndef preprocess_image(image):\n    # Resize and normalize the image\n    input_size = input_details[0]['shape'][1:3]\n    image_resized = cv2.resize(image, input_size)\n    image_normalized = image_resized / 255.0\n    return np.expand_dims(image_normalized, axis=0).astype(np.float32)\n\n# Function to draw bounding boxes and labels on the image\ndef draw_boxes(image, detections, threshold):\n    for detection in detections:\n        score = detection[2]\n        if score > threshold:\n            ymin, xmin, ymax, xmax = detection[1:5]\n            left, right, top, bottom = int(xmin * frame_width), int(xmax * frame_width), int(ymin * frame_height), int(ymax * frame_height)\n            \n            # Draw rectangle\n            cv2.rectangle(image, (left, top), (right, bottom), (0, 255, 0), 2)\n            \n            # Get label and draw text\n            class_id = int(detection[0])\n            label = f\"{labels[class_id]}: {score:.2f}\"\n            cv2.putText(image, label, (left, top - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)\n\n# Main processing loop\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n\n    # Preprocess the image\n    input_data = preprocess_image(frame)\n    \n    # Set tensor and run inference\n    interpreter.set_tensor(input_details[0]['index'], input_data.astype(np.float32))\n    interpreter.invoke()\n\n    # Get output data\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]  # Bounding box coordinates of detected objects\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]  # Class index of detected objects\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]  # Confidence of detected objects\n\n    # Combine boxes, classes, and scores into a single list for easier processing\n    detections = np.stack((classes, boxes, scores), axis=1)\n\n    # Draw bounding boxes on the frame\n    draw_boxes(frame, detections, confidence_threshold)\n\n    # Write the frame with detections to output video\n    out.write(frame)\n\n# Release resources\ncap.release()\nout.release()\ncv2.destroyAllWindows()",
+        "last_error": "Max retries reached with failure. Last error from execution: INFO: Created TensorFlow Lite XNNPACK delegate for CPU.\nTraceback (most recent call last):\n  File \"/home/wuguangh/Projects/tinyml-autopilot/results/object_detection/sketches/tmp_20260224155559_psg_phi4:latest/tmp_20260224155559_psg_phi4:latest.py\", line 68, in <module>\n    interpreter.set_tensor(input_details[0]['index'], input_data.astype(np.float32))\n  File \"/home/wuguangh/.conda/envs/tinyml/lib/python3.10/site-packages/tflite_runtime/interpreter.py\", line 720, in set_tensor\n    self._interpreter.SetTensor(tensor_index, value)\nValueError: Cannot set tensor: Got value of type FLOAT32 but expected type UINT8 for input 175, name: normalized_input_image_tensor \n"
+      },
+      "session_id": "phi4_2a34_psg_batch",
+      "metadata": {
+        "num_run": 10
+      },
+      "tags": [
+        "benchmark",
+        "phi4:latest",
+        "py_sketch_generator"
+      ],
+      "latency": 86.836,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-15-54-33-131694_chatcmpl-175b4e5f-2d16-4434-add8-d97a35619590",
+          "traceId": "44aaf0a9",
+          "type": "GENERATION",
+          "name": "44aa_psg_gen_attempt#1",
+          "startTime": "2026-02-24T13:54:33.131000+00:00",
+          "endTime": "2026-02-24T13:54:48.467000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 15336.0,
+          "completionTokens": 718,
+          "environment": "default",
+          "totalTokens": 1135,
+          "promptTokens": 417,
+          "costDetails": {},
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-15-54-48-611651_chatcmpl-23b5ce4c-2a56-46bb-bbf7-0e3e15b51a19",
+          "traceId": "44aaf0a9",
+          "type": "GENERATION",
+          "name": "44aa_psg_gen_attempt#2",
+          "startTime": "2026-02-24T13:54:48.611000+00:00",
+          "endTime": "2026-02-24T13:55:03.352000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 14741.0,
+          "completionTokens": 688,
+          "environment": "default",
+          "totalTokens": 1248,
+          "promptTokens": 560,
+          "costDetails": {},
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-15-55-03-520437_chatcmpl-0de1228c-cda5-4686-a77a-1f79abc79cbd",
+          "traceId": "44aaf0a9",
+          "type": "GENERATION",
+          "name": "44aa_psg_gen_attempt#3",
+          "startTime": "2026-02-24T13:55:03.520000+00:00",
+          "endTime": "2026-02-24T13:55:22.488000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 18968.0,
+          "completionTokens": 888,
+          "environment": "default",
+          "totalTokens": 1517,
+          "promptTokens": 629,
+          "costDetails": {},
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-15-55-22-641614_chatcmpl-76a0623b-3c62-4941-8a20-90b7e4df1faf",
+          "traceId": "44aaf0a9",
+          "type": "GENERATION",
+          "name": "44aa_psg_gen_attempt#4",
+          "startTime": "2026-02-24T13:55:22.641000+00:00",
+          "endTime": "2026-02-24T13:55:41.793000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 19152.0,
+          "completionTokens": 897,
+          "environment": "default",
+          "totalTokens": 1526,
+          "promptTokens": 629,
+          "costDetails": {},
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-15-55-41-971415_chatcmpl-752cddea-bc5e-4d66-936a-47370e5dcef6",
+          "traceId": "44aaf0a9",
+          "type": "GENERATION",
+          "name": "44aa_psg_gen_attempt#5",
+          "startTime": "2026-02-24T13:55:41.971000+00:00",
+          "endTime": "2026-02-24T13:55:59.807000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 17836.0,
+          "completionTokens": 839,
+          "environment": "default",
+          "totalTokens": 1468,
+          "promptTokens": 629,
+          "costDetails": {},
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "9613552b-f6f8-4bad-b727-c0daefa712d4",
+          "traceId": "44aaf0a9",
+          "type": "SPAN",
+          "name": "error_44_psg_failure_signal_py_sketch_generator",
+          "startTime": "2026-02-24T13:55:59.967000+00:00",
+          "level": "ERROR",
+          "statusMessage": "Failed. Last error: Max retries reached with failure. Last error from execution: INFO: Created TensorFlow Lite XNNPACK delegate for CPU.\nTraceback (most recent call last):\n  File \"/home/wuguangh/Projects/tinyml-autopilot/results/object_detection/sketches/tmp_20260224155559_psg_phi4:latest/tmp_20260224155559_psg_phi4:latest.py\", line 68, in <module>\n    interpreter.set_tensor(input_details[0]['index'], input_data.astype(np.float32))\n  File \"/home/wuguangh/.conda/envs/tinyml/lib/python3.10/site-packages/tflite_runtime/interpreter.py\", line 720, in set_tensor\n    self._interpreter.SetTensor(tensor_index, value)\nValueError: Cannot set tensor: Got value of type FLOAT32 but expected type UINT8 for input 175, name: normalized_input_image_tensor \n",
+          "calculatedTotalCost": 0.0,
+          "completionTokens": 0,
+          "environment": "default",
+          "totalTokens": 0,
+          "promptTokens": 0,
+          "costDetails": {},
+          "endTime": null,
+          "model": null,
+          "modelParameters": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null,
+          "latency": null
+        }
+      ],
+      "createdAt": "2026-02-24T13:54:33.639Z",
+      "environment": "default",
+      "updatedAt": "2026-02-24T13:56:05.574Z"
+    },
+    {
+      "id": "11139d51",
+      "timestamp": "2026-02-24T13:52:42.559000+00:00",
+      "name": "1113_py_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import os\nimport cv2\nimport numpy as np\nfrom tflite_runtime.interpreter import Interpreter\n\n# Configuration parameters\nmodel_path = \"models/ssd-mobilenet_v1/detect.tflite\"\nlabel_path = \"models/ssd-mobilenet_v1/labelmap.txt\"\ninput_path = \"data/object_detection/sheeps.mp4\"\noutput_path = \"results/object_detection/test_results/sheeps_detections.mp4\"\nconfidence_threshold = 0.5\n\n# Load labels\nwith open(label_path, 'r') as f:\n    labels = [line.strip() for line in f.readlines()]\n\n# Initialize the TFLite interpreter\ninterpreter = Interpreter(model_path=model_path)\ninterpreter.allocate_tensors()\n\n# Get input and output details\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\n# Video capture and writer setup\ncap = cv2.VideoCapture(input_path)\nif not cap.isOpened():\n    raise ValueError(\"Error opening video file\")\n\nframe_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))\nframe_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))\nfps = int(cap.get(cv2.CAP_PROP_FPS))\n\nfourcc = cv2.VideoWriter_fourcc(*'mp4v')\nout = cv2.VideoWriter(output_path, fourcc, fps, (frame_width, frame_height))\n\n# Function to preprocess input image\ndef preprocess_image(image):\n    # Resize and normalize the image\n    input_shape = input_details[0]['shape']\n    resized_image = cv2.resize(image, (input_shape[2], input_shape[1]))\n    normalized_image = np.expand_dims(resized_image / 255.0, axis=0).astype(np.float32)\n    return normalized_image\n\n# Function to draw bounding boxes and labels\ndef draw_boxes(frame, detections):\n    for detection in detections:\n        # Extract information from the detection\n        ymin, xmin, ymax, xmax = detection['bbox']\n        class_id = int(detection['class_id'])\n        score = float(detection['score'])\n\n        if score >= confidence_threshold:\n            label = labels[class_id]\n            left, right, top, bottom = (xmin * frame.shape[1], xmax * frame.shape[1],\n                                        ymin * frame.shape[0], ymax * frame.shape[0])\n            \n            # Draw rectangle and label\n            cv2.rectangle(frame, (int(left), int(top)), (int(right), int(bottom)), (0, 255, 0), 2)\n            text = f'{label}: {score:.2f}'\n            cv2.putText(frame, text, (int(left), int(top) - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)\n\n# Process video frames\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n\n    # Preprocess the image\n    input_data = preprocess_image(frame)\n    \n    # Set tensor and run inference\n    interpreter.set_tensor(input_details[0]['index'], input_data.astype(np.uint8))\n    interpreter.invoke()\n\n    # Extract output data\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]  # Bounding box coordinates of detected objects\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]  # Class index of detected objects\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]  # Confidence of detected objects\n\n    # Prepare detections for drawing\n    detections = []\n    for i in range(len(scores)):\n        if scores[i] >= confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[i]\n            detections.append({\n                'bbox': (ymin, xmin, ymax, xmax),\n                'class_id': int(classes[i]),\n                'score': scores[i]\n            })\n\n    # Draw bounding boxes and labels on the frame\n    draw_boxes(frame, detections)\n\n    # Write the frame with detections to output video\n    out.write(frame)\n\n# Release resources\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "phi4_2a34_psg_batch",
+      "metadata": {
+        "num_run": 9
+      },
+      "tags": [
+        "benchmark",
+        "phi4:latest",
+        "py_sketch_generator"
+      ],
+      "latency": 51.25,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-15-52-42-560694_chatcmpl-5ca75cc0-586c-4e15-af87-8d0af6d09778",
+          "traceId": "11139d51",
+          "type": "GENERATION",
+          "name": "1113_psg_gen_attempt#1",
+          "startTime": "2026-02-24T13:52:42.560000+00:00",
+          "endTime": "2026-02-24T13:52:58.221000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 15661.0,
+          "completionTokens": 734,
+          "environment": "default",
+          "totalTokens": 1151,
+          "promptTokens": 417,
+          "costDetails": {},
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-15-52-58-373284_chatcmpl-70d1e178-666a-4556-bf88-5cd6959cede4",
+          "traceId": "11139d51",
+          "type": "GENERATION",
+          "name": "1113_psg_gen_attempt#2",
+          "startTime": "2026-02-24T13:52:58.373000+00:00",
+          "endTime": "2026-02-24T13:53:13.834000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 15461.0,
+          "completionTokens": 719,
+          "environment": "default",
+          "totalTokens": 1279,
+          "promptTokens": 560,
+          "costDetails": {},
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-15-53-13-988041_chatcmpl-f64ff72d-e7f4-4828-854f-8c595f8bf1b3",
+          "traceId": "11139d51",
+          "type": "GENERATION",
+          "name": "1113_psg_gen_attempt#3",
+          "startTime": "2026-02-24T13:53:13.988000+00:00",
+          "endTime": "2026-02-24T13:53:33.810000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 19822.0,
+          "completionTokens": 925,
+          "environment": "default",
+          "totalTokens": 1554,
+          "promptTokens": 629,
+          "costDetails": {},
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "createdAt": "2026-02-24T13:52:43.071Z",
+      "environment": "default",
+      "updatedAt": "2026-02-24T13:54:12.761Z"
+    },
+    {
+      "id": "3807b812",
+      "timestamp": "2026-02-24T13:50:49.635000+00:00",
+      "name": "3807_py_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "failed",
+        "last_code": "import os\nimport cv2\nimport numpy as np\nfrom tflite_runtime.interpreter import Interpreter\n\n# Configuration parameters\nmodel_path = \"models/ssd-mobilenet_v1/detect.tflite\"\nlabel_path = \"models/ssd-mobilenet_v1/labelmap.txt\"\ninput_path = \"data/object_detection/sheeps.mp4\"\noutput_path = \"results/object_detection/test_results/sheeps_detections.mp4\"\nconfidence_threshold = 0.5\n\n# Load labels\nwith open(label_path, 'r') as f:\n    labels = [line.strip() for line in f.readlines()]\n\n# Initialize the TFLite interpreter\ninterpreter = Interpreter(model_path=model_path)\ninterpreter.allocate_tensors()\n\n# Get input and output details\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\n# Video capture and writer setup\ncap = cv2.VideoCapture(input_path)\nframe_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))\nframe_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))\nfps = cap.get(cv2.CAP_PROP_FPS)\n\nfourcc = cv2.VideoWriter_fourcc(*'mp4v')\nout = cv2.VideoWriter(output_path, fourcc, fps, (frame_width, frame_height))\n\ndef preprocess_frame(frame):\n    # Resize and normalize the image\n    input_size = input_details[0]['shape'][1:3]\n    frame_resized = cv2.resize(frame, input_size)\n    input_data = np.expand_dims(frame_resized, axis=0).astype(np.float32)\n    input_data = (input_data / 127.5) - 1.0\n    return input_data\n\ndef postprocess(output_data):\n    # Extract boxes, classes, and scores from the output data\n    num_detections = int(output_data[0][0])\n    detection_boxes = output_data[0][1:num_detections * 4 + 1].reshape(num_detections, 4)\n    detection_classes = output_data[0][num_detections * 4 + 1:num_detections * 5 + 1]\n    detection_scores = output_data[0][num_detections * 5 + 1:]\n\n    return detection_boxes, detection_classes, detection_scores\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n\n    # Preprocess the frame\n    input_data = preprocess_frame(frame)\n\n    # Set the tensor and run inference\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n    interpreter.invoke()\n\n    # Get output data\n    boxes, classes, scores = postprocess([interpreter.get_tensor(output['index']) for output in output_details])\n\n    # Draw detection results on the frame\n    for i in range(len(scores)):\n        if scores[i] >= confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[i]\n            (left, right, top, bottom) = (xmin * frame_width, xmax * frame_width,\n                                          ymin * frame_height, ymax * frame_height)\n            left, right, top, bottom = int(left), int(right), int(top), int(bottom)\n\n            cv2.rectangle(frame, (left, top), (right, bottom), (0, 255, 0), 2)\n            label = f\"{labels[int(classes[i])]}: {scores[i]:.2f}\"\n            cv2.putText(frame, label, (left, top - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)\n\n    # Write the frame with detections\n    out.write(frame)\n\n# Release resources\ncap.release()\nout.release()\ncv2.destroyAllWindows()",
+        "last_error": "Max retries reached with failure. Last error from execution: INFO: Created TensorFlow Lite XNNPACK delegate for CPU.\nTraceback (most recent call last):\n  File \"/home/wuguangh/Projects/tinyml-autopilot/results/object_detection/sketches/tmp_20260224155215_psg_phi4:latest/tmp_20260224155215_psg_phi4:latest.py\", line 60, in <module>\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n  File \"/home/wuguangh/.conda/envs/tinyml/lib/python3.10/site-packages/tflite_runtime/interpreter.py\", line 720, in set_tensor\n    self._interpreter.SetTensor(tensor_index, value)\nValueError: Cannot set tensor: Got value of type FLOAT32 but expected type UINT8 for input 175, name: normalized_input_image_tensor \n"
+      },
+      "session_id": "phi4_2a34_psg_batch",
+      "metadata": {
+        "num_run": 8
+      },
+      "tags": [
+        "benchmark",
+        "phi4:latest",
+        "py_sketch_generator"
+      ],
+      "latency": 85.964,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-15-50-49-636992_chatcmpl-16d6e887-4dea-45d5-82c3-af896b511dd5",
+          "traceId": "3807b812",
+          "type": "GENERATION",
+          "name": "3807_psg_gen_attempt#1",
+          "startTime": "2026-02-24T13:50:49.636000+00:00",
+          "endTime": "2026-02-24T13:51:04.935000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 15299.0,
+          "completionTokens": 718,
+          "environment": "default",
+          "totalTokens": 1135,
+          "promptTokens": 417,
+          "costDetails": {},
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-15-51-05-081175_chatcmpl-3031e787-564e-4733-b19e-32365b3d9d4f",
+          "traceId": "3807b812",
+          "type": "GENERATION",
+          "name": "3807_psg_gen_attempt#2",
+          "startTime": "2026-02-24T13:51:05.081000+00:00",
+          "endTime": "2026-02-24T13:51:20.440000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 15359.0,
+          "completionTokens": 718,
+          "environment": "default",
+          "totalTokens": 1278,
+          "promptTokens": 560,
+          "costDetails": {},
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-15-51-20-593642_chatcmpl-ab8eebad-c197-4294-9460-f79642788fca",
+          "traceId": "3807b812",
+          "type": "GENERATION",
+          "name": "3807_psg_gen_attempt#3",
+          "startTime": "2026-02-24T13:51:20.593000+00:00",
+          "endTime": "2026-02-24T13:51:39.650000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 19057.0,
+          "completionTokens": 888,
+          "environment": "default",
+          "totalTokens": 1517,
+          "promptTokens": 629,
+          "costDetails": {},
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-15-51-39-813813_chatcmpl-ddf1b65f-723e-474c-8dc0-2aef1269daa1",
+          "traceId": "3807b812",
+          "type": "GENERATION",
+          "name": "3807_psg_gen_attempt#4",
+          "startTime": "2026-02-24T13:51:39.813000+00:00",
+          "endTime": "2026-02-24T13:51:57.545000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 17732.0,
+          "completionTokens": 829,
+          "environment": "default",
+          "totalTokens": 1458,
+          "promptTokens": 629,
+          "costDetails": {},
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-15-51-57-702300_chatcmpl-4b6016ca-4d1f-4ead-b438-97dffc2e1ab2",
+          "traceId": "3807b812",
+          "type": "GENERATION",
+          "name": "3807_psg_gen_attempt#5",
+          "startTime": "2026-02-24T13:51:57.702000+00:00",
+          "endTime": "2026-02-24T13:52:15.447000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 17745.0,
+          "completionTokens": 829,
+          "environment": "default",
+          "totalTokens": 1458,
+          "promptTokens": 629,
+          "costDetails": {},
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "9f38e9e4-1a81-40aa-8d31-ed016745e7fb",
+          "traceId": "3807b812",
+          "type": "SPAN",
+          "name": "error_38_psg_failure_signal_py_sketch_generator",
+          "startTime": "2026-02-24T13:52:15.600000+00:00",
+          "level": "ERROR",
+          "statusMessage": "Failed. Last error: Max retries reached with failure. Last error from execution: INFO: Created TensorFlow Lite XNNPACK delegate for CPU.\nTraceback (most recent call last):\n  File \"/home/wuguangh/Projects/tinyml-autopilot/results/object_detection/sketches/tmp_20260224155215_psg_phi4:latest/tmp_20260224155215_psg_phi4:latest.py\", line 60, in <module>\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n  File \"/home/wuguangh/.conda/envs/tinyml/lib/python3.10/site-packages/tflite_runtime/interpreter.py\", line 720, in set_tensor\n    self._interpreter.SetTensor(tensor_index, value)\nValueError: Cannot set tensor: Got value of type FLOAT32 but expected type UINT8 for input 175, name: normalized_input_image_tensor \n",
+          "calculatedTotalCost": 0.0,
+          "completionTokens": 0,
+          "environment": "default",
+          "totalTokens": 0,
+          "promptTokens": 0,
+          "costDetails": {},
+          "endTime": null,
+          "model": null,
+          "modelParameters": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null,
+          "latency": null
+        }
+      ],
+      "createdAt": "2026-02-24T13:50:50.145Z",
+      "environment": "default",
+      "updatedAt": "2026-02-24T13:52:21.252Z"
+    },
+    {
+      "id": "729a3228",
+      "timestamp": "2026-02-24T13:48:56.204000+00:00",
+      "name": "729a_py_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import os\nimport cv2\nimport numpy as np\nfrom tflite_runtime.interpreter import Interpreter\n\n# Configuration parameters\nmodel_path = \"models/ssd-mobilenet_v1/detect.tflite\"\nlabel_path = \"models/ssd-mobilenet_v1/labelmap.txt\"\ninput_path = \"data/object_detection/sheeps.mp4\"\noutput_path = \"results/object_detection/test_results/sheeps_detections.mp4\"\nconfidence_threshold = 0.5\n\n# Load labels\nwith open(label_path, 'r') as f:\n    labels = [line.strip() for line in f.readlines()]\n\n# Initialize the TFLite interpreter\ninterpreter = Interpreter(model_path=model_path)\ninterpreter.allocate_tensors()\n\n# Get input and output details\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\n# Video capture and writer setup\ncap = cv2.VideoCapture(input_path)\nif not cap.isOpened():\n    raise ValueError(\"Error opening video file\")\n\nframe_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))\nframe_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))\nfps = int(cap.get(cv2.CAP_PROP_FPS))\n\nfourcc = cv2.VideoWriter_fourcc(*'mp4v')\nout = cv2.VideoWriter(output_path, fourcc, fps, (frame_width, frame_height))\n\n# Function to preprocess input image\ndef preprocess_image(image):\n    # Resize and normalize the image\n    input_shape = input_details[0]['shape']\n    resized_image = cv2.resize(image, (input_shape[2], input_shape[1]))\n    normalized_image = np.expand_dims(resized_image / 255.0, axis=0).astype(np.float32)\n    return normalized_image\n\n# Function to draw bounding boxes and labels\ndef draw_boxes(frame, detections):\n    for detection in detections:\n        # Extract information from the detection\n        ymin, xmin, ymax, xmax = detection['bbox']\n        class_id = int(detection['class_id'])\n        score = float(detection['score'])\n\n        if score >= confidence_threshold:\n            label = labels[class_id]\n            left, right, top, bottom = (xmin * frame.shape[1], xmax * frame.shape[1],\n                                        ymin * frame.shape[0], ymax * frame.shape[0])\n            \n            # Draw rectangle and label\n            cv2.rectangle(frame, (int(left), int(top)), (int(right), int(bottom)), (0, 255, 0), 2)\n            text = f'{label}: {score:.2f}'\n            cv2.putText(frame, text, (int(left), int(top) - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)\n\n# Process video frames\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n\n    # Preprocess the image\n    input_data = preprocess_image(frame)\n    \n    # Set tensor and run inference\n    interpreter.set_tensor(input_details[0]['index'], input_data.astype(np.uint8))\n    interpreter.invoke()\n\n    # Extract output data\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]  # Bounding box coordinates of detected objects\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]  # Class index of detected objects\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]  # Confidence of detected objects\n\n    # Prepare detections for drawing\n    detections = []\n    for i in range(len(scores)):\n        if scores[i] >= confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[i]\n            detections.append({\n                'bbox': (ymin, xmin, ymax, xmax),\n                'class_id': int(classes[i]),\n                'score': scores[i]\n            })\n\n    # Draw bounding boxes and labels on the frame\n    draw_boxes(frame, detections)\n\n    # Write the frame with detections to output video\n    out.write(frame)\n\n# Release resources\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "phi4_2a34_psg_batch",
+      "metadata": {
+        "num_run": 7
+      },
+      "tags": [
+        "benchmark",
+        "phi4:latest",
+        "py_sketch_generator"
+      ],
+      "latency": 52.564,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-15-48-56-205732_chatcmpl-821ac172-ae4c-4fee-8fae-0285c5a476f5",
+          "traceId": "729a3228",
+          "type": "GENERATION",
+          "name": "729a_psg_gen_attempt#1",
+          "startTime": "2026-02-24T13:48:56.205000+00:00",
+          "endTime": "2026-02-24T13:49:13.190000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 16985.0,
+          "completionTokens": 793,
+          "environment": "default",
+          "totalTokens": 1210,
+          "promptTokens": 417,
+          "costDetails": {},
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-15-49-13-339206_chatcmpl-976d6c6c-f214-4701-b33f-fbf3b01407fd",
+          "traceId": "729a3228",
+          "type": "GENERATION",
+          "name": "729a_psg_gen_attempt#2",
+          "startTime": "2026-02-24T13:49:13.339000+00:00",
+          "endTime": "2026-02-24T13:49:28.847000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 15508.0,
+          "completionTokens": 720,
+          "environment": "default",
+          "totalTokens": 1280,
+          "promptTokens": 560,
+          "costDetails": {},
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-15-49-29-010929_chatcmpl-4b5bf8e4-938f-44bd-9bcd-5a5c5693cb5b",
+          "traceId": "729a3228",
+          "type": "GENERATION",
+          "name": "729a_psg_gen_attempt#3",
+          "startTime": "2026-02-24T13:49:29.010000+00:00",
+          "endTime": "2026-02-24T13:49:48.769000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 19759.0,
+          "completionTokens": 923,
+          "environment": "default",
+          "totalTokens": 1552,
+          "promptTokens": 629,
+          "costDetails": {},
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "createdAt": "2026-02-24T13:48:56.715Z",
+      "environment": "default",
+      "updatedAt": "2026-02-24T13:50:29.446Z"
+    },
+    {
+      "id": "bb842270",
+      "timestamp": "2026-02-24T13:46:25.681000+00:00",
+      "name": "bb84_py_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import os\nimport cv2\nimport numpy as np\nfrom tflite_runtime.interpreter import Interpreter\n\n# Configuration parameters\nmodel_path = \"models/ssd-mobilenet_v1/detect.tflite\"\nlabel_path = \"models/ssd-mobilenet_v1/labelmap.txt\"\ninput_path = \"data/object_detection/sheeps.mp4\"\noutput_path = \"results/object_detection/test_results/sheeps_detections.mp4\"\nconfidence_threshold = 0.5\n\n# Load labels\nwith open(label_path, 'r') as f:\n    labels = [line.strip() for line in f.readlines()]\n\n# Initialize the TFLite interpreter\ninterpreter = Interpreter(model_path=model_path)\ninterpreter.allocate_tensors()\n\n# Get input and output details\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\n# Video capture and writer setup\ncap = cv2.VideoCapture(input_path)\nif not cap.isOpened():\n    raise ValueError(\"Error opening video file\")\n\nframe_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))\nframe_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))\nfps = int(cap.get(cv2.CAP_PROP_FPS))\n\nfourcc = cv2.VideoWriter_fourcc(*'mp4v')\nout = cv2.VideoWriter(output_path, fourcc, fps, (frame_width, frame_height))\n\n# Function to preprocess input image\ndef preprocess_image(image):\n    # Resize and normalize the image\n    input_shape = input_details[0]['shape']\n    resized_image = cv2.resize(image, (input_shape[2], input_shape[1]))\n    normalized_image = np.expand_dims(resized_image / 255.0, axis=0).astype(np.float32)\n    return normalized_image\n\n# Function to draw bounding boxes and labels\ndef draw_boxes(frame, detections):\n    for detection in detections:\n        # Extract information from the detection\n        ymin, xmin, ymax, xmax = detection['bbox']\n        class_id = int(detection['class_id'])\n        score = float(detection['score'])\n\n        if score >= confidence_threshold:\n            label = labels[class_id]\n            left, right, top, bottom = (xmin * frame.shape[1], xmax * frame.shape[1],\n                                        ymin * frame.shape[0], ymax * frame.shape[0])\n            \n            # Draw rectangle and label\n            cv2.rectangle(frame, (int(left), int(top)), (int(right), int(bottom)), (0, 255, 0), 2)\n            text = f'{label}: {score:.2f}'\n            cv2.putText(frame, text, (int(left), int(top) - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)\n\n# Process video frames\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n\n    # Preprocess the image\n    input_data = preprocess_image(frame)\n    \n    # Set tensor and run inference\n    interpreter.set_tensor(input_details[0]['index'], input_data.astype(np.uint8))\n    interpreter.invoke()\n\n    # Extract output data\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]  # Bounding box coordinates of detected objects\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]  # Class index of detected objects\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]  # Confidence of detected objects\n\n    # Prepare detections list\n    detections = []\n    for i in range(len(scores)):\n        if scores[i] >= confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[i]\n            detection = {\n                'bbox': (ymin, xmin, ymax, xmax),\n                'class_id': int(classes[i]),\n                'score': float(scores[i])\n            }\n            detections.append(detection)\n\n    # Draw bounding boxes and labels on the frame\n    draw_boxes(frame, detections)\n\n    # Write the frame with detections to output video\n    out.write(frame)\n\n# Release resources\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "phi4_2a34_psg_batch",
+      "metadata": {
+        "num_run": 6
+      },
+      "tags": [
+        "benchmark",
+        "phi4:latest",
+        "py_sketch_generator"
+      ],
+      "latency": 91.606,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-15-46-25-683123_chatcmpl-9e18e738-e093-4ce8-9e47-5e9189b954bc",
+          "traceId": "bb842270",
+          "type": "GENERATION",
+          "name": "bb84_psg_gen_attempt#1",
+          "startTime": "2026-02-24T13:46:25.683000+00:00",
+          "endTime": "2026-02-24T13:46:42.624000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 16941.0,
+          "completionTokens": 793,
+          "environment": "default",
+          "totalTokens": 1210,
+          "promptTokens": 417,
+          "costDetails": {},
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-15-46-42-790199_chatcmpl-1e847d6b-d675-4fe0-9d40-d2d614ecc6f3",
+          "traceId": "bb842270",
+          "type": "GENERATION",
+          "name": "bb84_psg_gen_attempt#2",
+          "startTime": "2026-02-24T13:46:42.790000+00:00",
+          "endTime": "2026-02-24T13:46:58.269000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 15479.0,
+          "completionTokens": 718,
+          "environment": "default",
+          "totalTokens": 1278,
+          "promptTokens": 560,
+          "costDetails": {},
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-15-46-58-435848_chatcmpl-7f4c8d5e-1ea0-49fb-81cf-34d78e4ec08e",
+          "traceId": "bb842270",
+          "type": "GENERATION",
+          "name": "bb84_psg_gen_attempt#3",
+          "startTime": "2026-02-24T13:46:58.435000+00:00",
+          "endTime": "2026-02-24T13:47:17.874000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 19439.0,
+          "completionTokens": 906,
+          "environment": "default",
+          "totalTokens": 1535,
+          "promptTokens": 629,
+          "costDetails": {},
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-15-47-18-047153_chatcmpl-59c680a6-cee6-47fd-af5e-1c3d7e2c71bd",
+          "traceId": "bb842270",
+          "type": "GENERATION",
+          "name": "bb84_psg_gen_attempt#4",
+          "startTime": "2026-02-24T13:47:18.047000+00:00",
+          "endTime": "2026-02-24T13:47:37.236000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 19189.0,
+          "completionTokens": 895,
+          "environment": "default",
+          "totalTokens": 1528,
+          "promptTokens": 633,
+          "costDetails": {},
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-15-47-37-393995_chatcmpl-ef7bb3b1-a873-460c-8626-1e929ff334b5",
+          "traceId": "bb842270",
+          "type": "GENERATION",
+          "name": "bb84_psg_gen_attempt#5",
+          "startTime": "2026-02-24T13:47:37.393000+00:00",
+          "endTime": "2026-02-24T13:47:57.289000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 19896.0,
+          "completionTokens": 930,
+          "environment": "default",
+          "totalTokens": 1559,
+          "promptTokens": 629,
+          "costDetails": {},
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "createdAt": "2026-02-24T13:46:26.194Z",
+      "environment": "default",
+      "updatedAt": "2026-02-24T13:48:35.342Z"
+    },
+    {
+      "id": "9f40da0d",
+      "timestamp": "2026-02-24T13:44:31.847000+00:00",
+      "name": "9f40_py_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "failed",
+        "last_code": "import os\nimport cv2\nimport numpy as np\nfrom tflite_runtime.interpreter import Interpreter\n\n# Configuration parameters\nmodel_path = \"models/ssd-mobilenet_v1/detect.tflite\"\nlabel_path = \"models/ssd-mobilenet_v1/labelmap.txt\"\ninput_path = \"data/object_detection/sheeps.mp4\"\noutput_path = \"results/object_detection/test_results/sheeps_detections.mp4\"\nconfidence_threshold = 0.5\n\n# Load labels\nwith open(label_path, 'r') as f:\n    labels = [line.strip() for line in f.readlines()]\n\n# Initialize the TFLite interpreter\ninterpreter = Interpreter(model_path=model_path)\ninterpreter.allocate_tensors()\n\n# Get input and output details\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\n# Video capture and writer setup\ncap = cv2.VideoCapture(input_path)\nframe_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))\nframe_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))\nfps = cap.get(cv2.CAP_PROP_FPS)\n\nfourcc = cv2.VideoWriter_fourcc(*'mp4v')\nout = cv2.VideoWriter(output_path, fourcc, fps, (frame_width, frame_height))\n\ndef preprocess_frame(frame):\n    # Resize and normalize the image\n    input_size = input_details[0]['shape'][1:3]\n    frame_resized = cv2.resize(frame, input_size)\n    input_data = np.expand_dims(frame_resized, axis=0).astype(np.float32)\n    input_data = (input_data / 127.5) - 1.0\n    return input_data\n\ndef postprocess(output_data):\n    # Extract boxes, classes, and scores from the output data\n    num_detections = int(output_data[0][0])\n    detection_boxes = output_data[0][1:num_detections * 4 + 1].reshape(num_detections, 4)\n    detection_classes = output_data[0][num_detections * 4 + 1:num_detections * 5 + 1]\n    detection_scores = output_data[0][num_detections * 5 + 1:]\n\n    return detection_boxes, detection_classes, detection_scores\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n\n    # Preprocess the frame\n    input_data = preprocess_frame(frame)\n\n    # Set the tensor and run inference\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n    interpreter.invoke()\n\n    # Get output data\n    boxes, classes, scores = postprocess([interpreter.get_tensor(output['index']) for output in output_details])\n\n    # Draw detection results on the frame\n    for i in range(len(scores)):\n        if scores[i] >= confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[i]\n            (left, right, top, bottom) = (xmin * frame_width, xmax * frame_width,\n                                          ymin * frame_height, ymax * frame_height)\n            left, right, top, bottom = int(left), int(right), int(top), int(bottom)\n\n            cv2.rectangle(frame, (left, top), (right, bottom), (0, 255, 0), 2)\n            label = f\"{labels[int(classes[i])]}: {scores[i]:.2f}\"\n            cv2.putText(frame, label, (left, top - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)\n\n    # Write the frame with detections\n    out.write(frame)\n\n# Release resources\ncap.release()\nout.release()\ncv2.destroyAllWindows()",
+        "last_error": "Max retries reached with failure. Last error from execution: INFO: Created TensorFlow Lite XNNPACK delegate for CPU.\nTraceback (most recent call last):\n  File \"/home/wuguangh/Projects/tinyml-autopilot/results/object_detection/sketches/tmp_20260224154558_psg_phi4:latest/tmp_20260224154558_psg_phi4:latest.py\", line 60, in <module>\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n  File \"/home/wuguangh/.conda/envs/tinyml/lib/python3.10/site-packages/tflite_runtime/interpreter.py\", line 720, in set_tensor\n    self._interpreter.SetTensor(tensor_index, value)\nValueError: Cannot set tensor: Got value of type FLOAT32 but expected type UINT8 for input 175, name: normalized_input_image_tensor \n"
+      },
+      "session_id": "phi4_2a34_psg_batch",
+      "metadata": {
+        "num_run": 5
+      },
+      "tags": [
+        "benchmark",
+        "phi4:latest",
+        "py_sketch_generator"
+      ],
+      "latency": 86.637,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-15-44-31-849218_chatcmpl-1fa28f3b-a658-47b5-ab07-6b1bf64bc626",
+          "traceId": "9f40da0d",
+          "type": "GENERATION",
+          "name": "9f40_psg_gen_attempt#1",
+          "startTime": "2026-02-24T13:44:31.849000+00:00",
+          "endTime": "2026-02-24T13:44:48.719000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 16870.0,
+          "completionTokens": 793,
+          "environment": "default",
+          "totalTokens": 1210,
+          "promptTokens": 417,
+          "costDetails": {},
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-15-44-48-866662_chatcmpl-52d4ee2a-3f3b-4f5c-b7c4-9792998d4633",
+          "traceId": "9f40da0d",
+          "type": "GENERATION",
+          "name": "9f40_psg_gen_attempt#2",
+          "startTime": "2026-02-24T13:44:48.866000+00:00",
+          "endTime": "2026-02-24T13:45:03.419000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 14553.0,
+          "completionTokens": 688,
+          "environment": "default",
+          "totalTokens": 1248,
+          "promptTokens": 560,
+          "costDetails": {},
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-15-45-03-576389_chatcmpl-3a20debd-8d9e-43e5-b6ce-7ff506e539b0",
+          "traceId": "9f40da0d",
+          "type": "GENERATION",
+          "name": "9f40_psg_gen_attempt#3",
+          "startTime": "2026-02-24T13:45:03.576000+00:00",
+          "endTime": "2026-02-24T13:45:22.629000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 19053.0,
+          "completionTokens": 888,
+          "environment": "default",
+          "totalTokens": 1517,
+          "promptTokens": 629,
+          "costDetails": {},
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-15-45-22-785383_chatcmpl-6d2a4e25-7b30-4533-9649-a72d93bc4694",
+          "traceId": "9f40da0d",
+          "type": "GENERATION",
+          "name": "9f40_psg_gen_attempt#4",
+          "startTime": "2026-02-24T13:45:22.785000+00:00",
+          "endTime": "2026-02-24T13:45:40.503000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 17718.0,
+          "completionTokens": 829,
+          "environment": "default",
+          "totalTokens": 1458,
+          "promptTokens": 629,
+          "costDetails": {},
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-15-45-40-658216_chatcmpl-d98046c2-ddb4-4eb4-8c5c-a85d129c8518",
+          "traceId": "9f40da0d",
+          "type": "GENERATION",
+          "name": "9f40_psg_gen_attempt#5",
+          "startTime": "2026-02-24T13:45:40.658000+00:00",
+          "endTime": "2026-02-24T13:45:58.323000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 17665.0,
+          "completionTokens": 829,
+          "environment": "default",
+          "totalTokens": 1458,
+          "promptTokens": 629,
+          "costDetails": {},
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "b266b711-d298-4ee9-ac2c-57aad23b7bd5",
+          "traceId": "9f40da0d",
+          "type": "SPAN",
+          "name": "error_9f_psg_failure_signal_py_sketch_generator",
+          "startTime": "2026-02-24T13:45:58.486000+00:00",
+          "level": "ERROR",
+          "statusMessage": "Failed. Last error: Max retries reached with failure. Last error from execution: INFO: Created TensorFlow Lite XNNPACK delegate for CPU.\nTraceback (most recent call last):\n  File \"/home/wuguangh/Projects/tinyml-autopilot/results/object_detection/sketches/tmp_20260224154558_psg_phi4:latest/tmp_20260224154558_psg_phi4:latest.py\", line 60, in <module>\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n  File \"/home/wuguangh/.conda/envs/tinyml/lib/python3.10/site-packages/tflite_runtime/interpreter.py\", line 720, in set_tensor\n    self._interpreter.SetTensor(tensor_index, value)\nValueError: Cannot set tensor: Got value of type FLOAT32 but expected type UINT8 for input 175, name: normalized_input_image_tensor \n",
+          "calculatedTotalCost": 0.0,
+          "completionTokens": 0,
+          "environment": "default",
+          "totalTokens": 0,
+          "promptTokens": 0,
+          "costDetails": {},
+          "endTime": null,
+          "model": null,
+          "modelParameters": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null,
+          "latency": null
+        }
+      ],
+      "createdAt": "2026-02-24T13:44:32.358Z",
+      "environment": "default",
+      "updatedAt": "2026-02-24T13:46:04.295Z"
+    },
+    {
+      "id": "b92b3fb2",
+      "timestamp": "2026-02-24T13:42:04.386000+00:00",
+      "name": "b92b_py_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import os\nimport cv2\nimport numpy as np\nfrom tflite_runtime.interpreter import Interpreter\n\n# Configuration parameters\nmodel_path = \"models/ssd-mobilenet_v1/detect.tflite\"\nlabel_path = \"models/ssd-mobilenet_v1/labelmap.txt\"\ninput_path = \"data/object_detection/sheeps.mp4\"\noutput_path = \"results/object_detection/test_results/sheeps_detections.mp4\"\nconfidence_threshold = 0.5\n\n# Load labels\nwith open(label_path, 'r') as f:\n    labels = [line.strip() for line in f.readlines()]\n\n# Initialize the TFLite interpreter\ninterpreter = Interpreter(model_path=model_path)\ninterpreter.allocate_tensors()\n\n# Get input and output details\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\n# Video capture and writer setup\ncap = cv2.VideoCapture(input_path)\nif not cap.isOpened():\n    raise ValueError(\"Error opening video file\")\n\nframe_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))\nframe_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))\nfps = int(cap.get(cv2.CAP_PROP_FPS))\n\nfourcc = cv2.VideoWriter_fourcc(*'mp4v')\nout = cv2.VideoWriter(output_path, fourcc, fps, (frame_width, frame_height))\n\n# Function to preprocess input image\ndef preprocess_image(image):\n    # Resize and normalize the image\n    input_shape = input_details[0]['shape']\n    resized_image = cv2.resize(image, (input_shape[2], input_shape[1]))\n    normalized_image = np.expand_dims(resized_image / 255.0, axis=0).astype(np.float32)\n    return normalized_image\n\n# Function to draw bounding boxes and labels\ndef draw_boxes(frame, detections):\n    for detection in detections:\n        # Extract information from the detection\n        ymin, xmin, ymax, xmax = detection['bbox']\n        class_id = int(detection['class_id'])\n        score = float(detection['score'])\n\n        if score >= confidence_threshold:\n            label = labels[class_id]\n            left, right, top, bottom = (xmin * frame.shape[1], xmax * frame.shape[1],\n                                        ymin * frame.shape[0], ymax * frame.shape[0])\n            \n            # Draw rectangle and label\n            cv2.rectangle(frame, (int(left), int(top)), (int(right), int(bottom)), (0, 255, 0), 2)\n            text = f'{label}: {score:.2f}'\n            cv2.putText(frame, text, (int(left), int(top) - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)\n\n# Process video frames\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n\n    # Preprocess the image\n    input_data = preprocess_image(frame)\n    \n    # Set tensor and run inference\n    interpreter.set_tensor(input_details[0]['index'], input_data.astype(np.uint8))\n    interpreter.invoke()\n\n    # Extract output data\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]  # Bounding box coordinates of detected objects\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]  # Class index of detected objects\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]  # Confidence of detected objects\n\n    # Prepare detections for drawing\n    detections = []\n    for i in range(len(scores)):\n        if scores[i] >= confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[i]\n            detection = {\n                'bbox': (ymin, xmin, ymax, xmax),\n                'class_id': int(classes[i]),\n                'score': float(scores[i])\n            }\n            detections.append(detection)\n\n    # Draw bounding boxes and labels on the frame\n    draw_boxes(frame, detections)\n\n    # Write the frame with detections to output video\n    out.write(frame)\n\n# Release resources\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "phi4_2a34_psg_batch",
+      "metadata": {
+        "num_run": 4
+      },
+      "tags": [
+        "benchmark",
+        "phi4:latest",
+        "py_sketch_generator"
+      ],
+      "latency": 90.089,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-15-42-04-388241_chatcmpl-d547a4e7-6d8a-49be-8c5b-8c8339b8002e",
+          "traceId": "b92b3fb2",
+          "type": "GENERATION",
+          "name": "b92b_psg_gen_attempt#1",
+          "startTime": "2026-02-24T13:42:04.388000+00:00",
+          "endTime": "2026-02-24T13:42:21.317000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 16929.0,
+          "completionTokens": 793,
+          "environment": "default",
+          "totalTokens": 1210,
+          "promptTokens": 417,
+          "costDetails": {},
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-15-42-21-459911_chatcmpl-a01bcba7-848d-4ec5-a78c-33a81ca1c16b",
+          "traceId": "b92b3fb2",
+          "type": "GENERATION",
+          "name": "b92b_psg_gen_attempt#2",
+          "startTime": "2026-02-24T13:42:21.459000+00:00",
+          "endTime": "2026-02-24T13:42:36.331000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 14872.0,
+          "completionTokens": 706,
+          "environment": "default",
+          "totalTokens": 1266,
+          "promptTokens": 560,
+          "costDetails": {},
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-15-42-36-486189_chatcmpl-f3f47542-89d9-4081-b2b1-21002da66d17",
+          "traceId": "b92b3fb2",
+          "type": "GENERATION",
+          "name": "b92b_psg_gen_attempt#3",
+          "startTime": "2026-02-24T13:42:36.486000+00:00",
+          "endTime": "2026-02-24T13:42:56.172000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 19686.0,
+          "completionTokens": 924,
+          "environment": "default",
+          "totalTokens": 1553,
+          "promptTokens": 629,
+          "costDetails": {},
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-15-42-56-329459_chatcmpl-d638fe3d-d96c-499a-ad1a-7a704e8c6118",
+          "traceId": "b92b3fb2",
+          "type": "GENERATION",
+          "name": "b92b_psg_gen_attempt#4",
+          "startTime": "2026-02-24T13:42:56.329000+00:00",
+          "endTime": "2026-02-24T13:43:14.642000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 18313.0,
+          "completionTokens": 858,
+          "environment": "default",
+          "totalTokens": 1491,
+          "promptTokens": 633,
+          "costDetails": {},
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-15-43-14-811975_chatcmpl-95ae411b-b23b-47e5-a593-5546790be457",
+          "traceId": "b92b3fb2",
+          "type": "GENERATION",
+          "name": "b92b_psg_gen_attempt#5",
+          "startTime": "2026-02-24T13:43:14.811000+00:00",
+          "endTime": "2026-02-24T13:43:34.477000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 19666.0,
+          "completionTokens": 919,
+          "environment": "default",
+          "totalTokens": 1548,
+          "promptTokens": 629,
+          "costDetails": {},
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "createdAt": "2026-02-24T13:42:04.900Z",
+      "environment": "default",
+      "updatedAt": "2026-02-24T13:44:11.585Z"
+    },
+    {
+      "id": "eaee274b",
+      "timestamp": "2026-02-24T13:40:10.782000+00:00",
+      "name": "eaee_py_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import os\nimport cv2\nimport numpy as np\nfrom tflite_runtime.interpreter import Interpreter\n\n# Configuration parameters\nmodel_path = \"models/ssd-mobilenet_v1/detect.tflite\"\nlabel_path = \"models/ssd-mobilenet_v1/labelmap.txt\"\ninput_path = \"data/object_detection/sheeps.mp4\"\noutput_path = \"results/object_detection/test_results/sheeps_detections.mp4\"\nconfidence_threshold = 0.5\n\n# Load labels\nwith open(label_path, 'r') as f:\n    labels = [line.strip() for line in f.readlines()]\n\n# Initialize the TFLite interpreter\ninterpreter = Interpreter(model_path=model_path)\ninterpreter.allocate_tensors()\n\n# Get input and output details\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\n# Video capture and writer setup\ncap = cv2.VideoCapture(input_path)\nif not cap.isOpened():\n    raise ValueError(\"Error opening video file\")\n\nframe_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))\nframe_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))\nfps = int(cap.get(cv2.CAP_PROP_FPS))\n\nfourcc = cv2.VideoWriter_fourcc(*'mp4v')\nout = cv2.VideoWriter(output_path, fourcc, fps, (frame_width, frame_height))\n\n# Function to preprocess input image\ndef preprocess_image(image):\n    # Resize and normalize the image\n    input_shape = input_details[0]['shape']\n    resized_image = cv2.resize(image, (input_shape[2], input_shape[1]))\n    normalized_image = np.expand_dims(resized_image / 255.0, axis=0).astype(np.float32)\n    return normalized_image\n\n# Function to draw bounding boxes and labels\ndef draw_boxes(frame, detections):\n    for detection in detections:\n        # Extract information from the detection\n        ymin, xmin, ymax, xmax = detection['bbox']\n        class_id = int(detection['class_id'])\n        score = float(detection['score'])\n\n        if score >= confidence_threshold:\n            label = labels[class_id]\n            left, right, top, bottom = (xmin * frame.shape[1], xmax * frame.shape[1],\n                                        ymin * frame.shape[0], ymax * frame.shape[0])\n            \n            # Draw rectangle and label\n            cv2.rectangle(frame, (int(left), int(top)), (int(right), int(bottom)), (0, 255, 0), 2)\n            text = f'{label}: {score:.2f}'\n            cv2.putText(frame, text, (int(left), int(top) - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)\n\n# Process video frames\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n\n    # Preprocess the image\n    input_data = preprocess_image(frame)\n    \n    # Set tensor and run inference\n    interpreter.set_tensor(input_details[0]['index'], input_data.astype(np.uint8))\n    interpreter.invoke()\n\n    # Extract output data\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]  # Bounding box coordinates of detected objects\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]  # Class index of detected objects\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]  # Confidence of detected objects\n\n    # Prepare detections list\n    detections = []\n    for i in range(len(scores)):\n        if scores[i] >= confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[i]\n            detections.append({\n                'bbox': (ymin, xmin, ymax, xmax),\n                'class_id': int(classes[i]),\n                'score': float(scores[i])\n            })\n\n    # Draw bounding boxes and labels on the frame\n    draw_boxes(frame, detections)\n\n    # Write the frame with detections to output video\n    out.write(frame)\n\n# Release resources\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "phi4_2a34_psg_batch",
+      "metadata": {
+        "num_run": 3
+      },
+      "tags": [
+        "benchmark",
+        "phi4:latest",
+        "py_sketch_generator"
+      ],
+      "latency": 54.265,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-15-40-10-783868_chatcmpl-2ec7694d-7e3e-454a-a0af-069366476d08",
+          "traceId": "eaee274b",
+          "type": "GENERATION",
+          "name": "eaee_psg_gen_attempt#1",
+          "startTime": "2026-02-24T13:40:10.783000+00:00",
+          "endTime": "2026-02-24T13:40:26.470000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 15687.0,
+          "completionTokens": 736,
+          "environment": "default",
+          "totalTokens": 1153,
+          "promptTokens": 417,
+          "costDetails": {},
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-15-40-26-608390_chatcmpl-40e318c9-f15a-4b4b-977c-580e9b356b8a",
+          "traceId": "eaee274b",
+          "type": "GENERATION",
+          "name": "eaee_psg_gen_attempt#2",
+          "startTime": "2026-02-24T13:40:26.608000+00:00",
+          "endTime": "2026-02-24T13:40:45.198000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 18590.0,
+          "completionTokens": 868,
+          "environment": "default",
+          "totalTokens": 1428,
+          "promptTokens": 560,
+          "costDetails": {},
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-15-40-45-356503_chatcmpl-917bc4b0-35f3-4b93-9c9e-7b67c9e3c9b2",
+          "traceId": "eaee274b",
+          "type": "GENERATION",
+          "name": "eaee_psg_gen_attempt#3",
+          "startTime": "2026-02-24T13:40:45.356000+00:00",
+          "endTime": "2026-02-24T13:41:05.048000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 19692.0,
+          "completionTokens": 925,
+          "environment": "default",
+          "totalTokens": 1554,
+          "promptTokens": 629,
+          "costDetails": {},
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "createdAt": "2026-02-24T13:40:11.297Z",
+      "environment": "default",
+      "updatedAt": "2026-02-24T13:41:44.151Z"
+    },
+    {
+      "id": "19084c52",
+      "timestamp": "2026-02-24T13:38:14.334000+00:00",
+      "name": "1908_py_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "failed",
+        "last_code": "import os\nimport cv2\nimport numpy as np\nfrom tflite_runtime.interpreter import Interpreter\n\n# Configuration parameters\nmodel_path = \"models/ssd-mobilenet_v1/detect.tflite\"\nlabel_path = \"models/ssd-mobilenet_v1/labelmap.txt\"\ninput_path = \"data/object_detection/sheeps.mp4\"\noutput_path = \"results/object_detection/test_results/sheeps_detections.mp4\"\nconfidence_threshold = 0.5\n\n# Load labels\nwith open(label_path, 'r') as f:\n    labels = [line.strip() for line in f.readlines()]\n\n# Initialize the TFLite interpreter\ninterpreter = Interpreter(model_path=model_path)\ninterpreter.allocate_tensors()\n\n# Get input and output details\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\n# Video capture and writer setup\ncap = cv2.VideoCapture(input_path)\nfps = int(cap.get(cv2.CAP_PROP_FPS))\nwidth = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))\nheight = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))\nfourcc = cv2.VideoWriter_fourcc(*'mp4v')\nout = cv2.VideoWriter(output_path, fourcc, fps, (width, height))\n\n# Function to preprocess input image\ndef preprocess_image(image):\n    # Resize and normalize the image\n    input_shape = input_details[0]['shape']\n    image_resized = cv2.resize(image, (input_shape[2], input_shape[1]))\n    input_data = np.expand_dims(image_resized, axis=0)\n    input_data = (np.float32(input_data) - 127.5) / 127.5\n    return input_data\n\n# Function to draw bounding boxes and labels on the image\ndef draw_boxes(image, detections):\n    for detection in detections:\n        # Extract information from the detection\n        ymin, xmin, ymax, xmax = detection['bbox']\n        class_id = int(detection['class_id'])\n        score = detection['score']\n\n        if score >= confidence_threshold:\n            # Scale bounding box to image dimensions\n            (left, right, top, bottom) = (xmin * width, xmax * width,\n                                          ymin * height, ymax * height)\n            left, right, top, bottom = int(left), int(right), int(top), int(bottom)\n\n            # Draw rectangle and label on the image\n            cv2.rectangle(image, (left, top), (right, bottom), (0, 255, 0), 2)\n            label = f\"{labels[class_id]}: {score:.2f}\"\n            cv2.putText(image, label, (left, top - 10), cv2.FONT_HERSHEY_SIMPLEX,\n                        0.5, (0, 255, 0), 2)\n\n# Process video frame by frame\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n\n    # Preprocess the image\n    input_data = preprocess_image(frame)\n    \n    # Set tensor and run inference\n    interpreter.set_tensor(input_details[0]['index'], input_data.astype(np.float32))\n    interpreter.invoke()\n\n    # Retrieve detection results\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]  # Bounding box coordinates of detected objects\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]  # Class index of detected objects\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]  # Confidence of detected objects\n\n    # Prepare detections for drawing\n    detections = []\n    for i in range(len(scores)):\n        if scores[i] >= confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[i]\n            detections.append({\n                'bbox': (ymin, xmin, ymax, xmax),\n                'class_id': int(classes[i]),\n                'score': float(scores[i])\n            })\n\n    # Draw bounding boxes and labels on the frame\n    draw_boxes(frame, detections)\n\n    # Write the processed frame to output video\n    out.write(frame)\n\n# Release resources\ncap.release()\nout.release()\ncv2.destroyAllWindows()",
+        "last_error": "Max retries reached with failure. Last error from execution: INFO: Created TensorFlow Lite XNNPACK delegate for CPU.\nTraceback (most recent call last):\n  File \"/home/wuguangh/Projects/tinyml-autopilot/results/object_detection/sketches/tmp_20260224153944_psg_phi4:latest/tmp_20260224153944_psg_phi4:latest.py\", line 72, in <module>\n    interpreter.set_tensor(input_details[0]['index'], input_data.astype(np.float32))\n  File \"/home/wuguangh/.conda/envs/tinyml/lib/python3.10/site-packages/tflite_runtime/interpreter.py\", line 720, in set_tensor\n    self._interpreter.SetTensor(tensor_index, value)\nValueError: Cannot set tensor: Got value of type FLOAT32 but expected type UINT8 for input 175, name: normalized_input_image_tensor \n"
+      },
+      "session_id": "phi4_2a34_psg_batch",
+      "metadata": {
+        "num_run": 2
+      },
+      "tags": [
+        "benchmark",
+        "phi4:latest",
+        "py_sketch_generator"
+      ],
+      "latency": 90.06,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-15-38-14-335931_chatcmpl-27d6f62c-988c-4c3e-8d62-9a53445448e2",
+          "traceId": "19084c52",
+          "type": "GENERATION",
+          "name": "1908_psg_gen_attempt#1",
+          "startTime": "2026-02-24T13:38:14.335000+00:00",
+          "endTime": "2026-02-24T13:38:29.737000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 15402.0,
+          "completionTokens": 718,
+          "environment": "default",
+          "totalTokens": 1135,
+          "promptTokens": 417,
+          "costDetails": {},
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-15-38-30-039174_chatcmpl-3f1ec472-395f-4eb3-b821-2446158d4271",
+          "traceId": "19084c52",
+          "type": "GENERATION",
+          "name": "1908_psg_gen_attempt#2",
+          "startTime": "2026-02-24T13:38:30.039000+00:00",
+          "endTime": "2026-02-24T13:38:45.268000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 15229.0,
+          "completionTokens": 711,
+          "environment": "default",
+          "totalTokens": 1271,
+          "promptTokens": 560,
+          "costDetails": {},
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-15-38-45-421790_chatcmpl-4519995e-cb40-41db-807d-53c3c377dd35",
+          "traceId": "19084c52",
+          "type": "GENERATION",
+          "name": "1908_psg_gen_attempt#3",
+          "startTime": "2026-02-24T13:38:45.421000+00:00",
+          "endTime": "2026-02-24T13:39:05.002000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 19581.0,
+          "completionTokens": 915,
+          "environment": "default",
+          "totalTokens": 1544,
+          "promptTokens": 629,
+          "costDetails": {},
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-15-39-05-159317_chatcmpl-6a64f3e5-26d9-4b8c-8ca9-9f34aa4be3e9",
+          "traceId": "19084c52",
+          "type": "GENERATION",
+          "name": "1908_psg_gen_attempt#4",
+          "startTime": "2026-02-24T13:39:05.159000+00:00",
+          "endTime": "2026-02-24T13:39:24.121000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 18962.0,
+          "completionTokens": 886,
+          "environment": "default",
+          "totalTokens": 1515,
+          "promptTokens": 629,
+          "costDetails": {},
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-15-39-24-283686_chatcmpl-37779113-85d8-4105-8c53-ff6ebbcbd278",
+          "traceId": "19084c52",
+          "type": "GENERATION",
+          "name": "1908_psg_gen_attempt#5",
+          "startTime": "2026-02-24T13:39:24.283000+00:00",
+          "endTime": "2026-02-24T13:39:44.234000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 19951.0,
+          "completionTokens": 934,
+          "environment": "default",
+          "totalTokens": 1563,
+          "promptTokens": 629,
+          "costDetails": {},
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "27b5b491-9d20-45e5-9aa8-29c6cb991191",
+          "traceId": "19084c52",
+          "type": "SPAN",
+          "name": "error_19_psg_failure_signal_py_sketch_generator",
+          "startTime": "2026-02-24T13:39:44.395000+00:00",
+          "level": "ERROR",
+          "statusMessage": "Failed. Last error: Max retries reached with failure. Last error from execution: INFO: Created TensorFlow Lite XNNPACK delegate for CPU.\nTraceback (most recent call last):\n  File \"/home/wuguangh/Projects/tinyml-autopilot/results/object_detection/sketches/tmp_20260224153944_psg_phi4:latest/tmp_20260224153944_psg_phi4:latest.py\", line 72, in <module>\n    interpreter.set_tensor(input_details[0]['index'], input_data.astype(np.float32))\n  File \"/home/wuguangh/.conda/envs/tinyml/lib/python3.10/site-packages/tflite_runtime/interpreter.py\", line 720, in set_tensor\n    self._interpreter.SetTensor(tensor_index, value)\nValueError: Cannot set tensor: Got value of type FLOAT32 but expected type UINT8 for input 175, name: normalized_input_image_tensor \n",
+          "calculatedTotalCost": 0.0,
+          "completionTokens": 0,
+          "environment": "default",
+          "totalTokens": 0,
+          "promptTokens": 0,
+          "costDetails": {},
+          "endTime": null,
+          "model": null,
+          "modelParameters": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null,
+          "latency": null
+        }
+      ],
+      "createdAt": "2026-02-24T13:38:14.847Z",
+      "environment": "default",
+      "updatedAt": "2026-02-24T13:39:49.739Z"
+    },
+    {
+      "id": "c64a2f0c",
+      "timestamp": "2026-02-24T13:36:19.655000+00:00",
+      "name": "c64a_py_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "failed",
+        "last_code": "import os\nimport cv2\nimport numpy as np\nfrom tflite_runtime.interpreter import Interpreter\n\n# Configuration parameters\nmodel_path = \"models/ssd-mobilenet_v1/detect.tflite\"\nlabel_path = \"models/ssd-mobilenet_v1/labelmap.txt\"\ninput_path = \"data/object_detection/sheeps.mp4\"\noutput_path = \"results/object_detection/test_results/sheeps_detections.mp4\"\nconfidence_threshold = 0.5\n\n# Load labels\nwith open(label_path, 'r') as f:\n    labels = [line.strip() for line in f.readlines()]\n\n# Initialize the TFLite interpreter\ninterpreter = Interpreter(model_path=model_path)\ninterpreter.allocate_tensors()\n\n# Get input and output details\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\n# Video capture and writer setup\ncap = cv2.VideoCapture(input_path)\nframe_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))\nframe_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))\nfps = cap.get(cv2.CAP_PROP_FPS)\n\nfourcc = cv2.VideoWriter_fourcc(*'mp4v')\nout = cv2.VideoWriter(output_path, fourcc, fps, (frame_width, frame_height))\n\n# Function to preprocess input image\ndef preprocess_image(frame):\n    # Resize and normalize the image\n    input_size = input_details[0]['shape'][1:3]\n    frame_resized = cv2.resize(frame, input_size)\n    input_data = np.expand_dims(frame_resized, axis=0).astype(np.float32)\n    input_data = (input_data / 127.5) - 1.0\n    return input_data\n\n# Function to draw bounding boxes and labels on the frame\ndef draw_boxes(frame, detections):\n    for detection in detections:\n        # Extract information from the detection\n        ymin, xmin, ymax, xmax, score, class_id = detection\n        if score < confidence_threshold:\n            continue\n        \n        # Scale box to original image size\n        (left, right, top, bottom) = (xmin * frame.shape[1], xmax * frame.shape[1],\n                                     ymin * frame.shape[0], ymax * frame.shape[0])\n        \n        # Draw rectangle and label on the frame\n        cv2.rectangle(frame, (int(left), int(top)), (int(right), int(bottom)), (0, 255, 0), 2)\n        label = f\"{labels[int(class_id)]}: {score:.2f}\"\n        cv2.putText(frame, label, (int(left), int(top) - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)\n\n# Process video frames\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n\n    # Preprocess the frame\n    input_data = preprocess_image(frame)\n    \n    # Set tensor and run inference\n    interpreter.set_tensor(input_details[0]['index'], input_data.astype(np.float32))\n    interpreter.invoke()\n\n    # Retrieve detection results\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]  # Bounding box coordinates of detected objects\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]  # Class index of detected objects\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]  # Confidence of detected objects\n\n    # Filter out detections below the confidence threshold\n    detections = []\n    for i in range(len(scores)):\n        if scores[i] >= confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[i]\n            class_id = int(classes[i])\n            detections.append((ymin, xmin, ymax, xmax, scores[i], class_id))\n\n    # Draw bounding boxes and labels on the frame\n    draw_boxes(frame, detections)\n\n    # Write the processed frame to output video\n    out.write(frame)\n\n# Release resources\ncap.release()\nout.release()\ncv2.destroyAllWindows()",
+        "last_error": "Max retries reached with failure. Last error from execution: INFO: Created TensorFlow Lite XNNPACK delegate for CPU.\nTraceback (most recent call last):\n  File \"/home/wuguangh/Projects/tinyml-autopilot/results/object_detection/sketches/tmp_20260224153747_psg_phi4:latest/tmp_20260224153747_psg_phi4:latest.py\", line 70, in <module>\n    interpreter.set_tensor(input_details[0]['index'], input_data.astype(np.float32))\n  File \"/home/wuguangh/.conda/envs/tinyml/lib/python3.10/site-packages/tflite_runtime/interpreter.py\", line 720, in set_tensor\n    self._interpreter.SetTensor(tensor_index, value)\nValueError: Cannot set tensor: Got value of type FLOAT32 but expected type UINT8 for input 175, name: normalized_input_image_tensor \n"
+      },
+      "session_id": "phi4_2a34_psg_batch",
+      "metadata": {
+        "num_run": 1
+      },
+      "tags": [
+        "benchmark",
+        "phi4:latest",
+        "py_sketch_generator"
+      ],
+      "latency": 88.371,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-15-36-19-656603_chatcmpl-aa25b3d1-828b-4659-9479-ea1ac56fdca7",
+          "traceId": "c64a2f0c",
+          "type": "GENERATION",
+          "name": "c64a_psg_gen_attempt#1",
+          "startTime": "2026-02-24T13:36:19.656000+00:00",
+          "endTime": "2026-02-24T13:36:35.261000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 15605.0,
+          "completionTokens": 718,
+          "environment": "default",
+          "totalTokens": 1135,
+          "promptTokens": 417,
+          "costDetails": {},
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-15-36-35-463559_chatcmpl-e44f2834-a2a2-41ca-98f4-f68f6f49a35e",
+          "traceId": "c64a2f0c",
+          "type": "GENERATION",
+          "name": "c64a_psg_gen_attempt#2",
+          "startTime": "2026-02-24T13:36:35.463000+00:00",
+          "endTime": "2026-02-24T13:36:50.927000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 15464.0,
+          "completionTokens": 719,
+          "environment": "default",
+          "totalTokens": 1279,
+          "promptTokens": 560,
+          "costDetails": {},
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-15-36-51-233251_chatcmpl-efc9d8a3-2f92-45e4-9ee5-2aaf28ffc460",
+          "traceId": "c64a2f0c",
+          "type": "GENERATION",
+          "name": "c64a_psg_gen_attempt#3",
+          "startTime": "2026-02-24T13:36:51.233000+00:00",
+          "endTime": "2026-02-24T13:37:10.630000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 19397.0,
+          "completionTokens": 904,
+          "environment": "default",
+          "totalTokens": 1533,
+          "promptTokens": 629,
+          "costDetails": {},
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-15-37-10-785387_chatcmpl-017a8e48-f3bb-4c6e-9de8-2468168b2ede",
+          "traceId": "c64a2f0c",
+          "type": "GENERATION",
+          "name": "c64a_psg_gen_attempt#4",
+          "startTime": "2026-02-24T13:37:10.785000+00:00",
+          "endTime": "2026-02-24T13:37:28.360000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 17575.0,
+          "completionTokens": 829,
+          "environment": "default",
+          "totalTokens": 1458,
+          "promptTokens": 629,
+          "costDetails": {},
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-15-37-28-512827_chatcmpl-f1c5c75f-12f5-4e94-bc95-c741e29da492",
+          "traceId": "c64a2f0c",
+          "type": "GENERATION",
+          "name": "c64a_psg_gen_attempt#5",
+          "startTime": "2026-02-24T13:37:28.512000+00:00",
+          "endTime": "2026-02-24T13:37:47.857000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 19345.0,
+          "completionTokens": 899,
+          "environment": "default",
+          "totalTokens": 1528,
+          "promptTokens": 629,
+          "costDetails": {},
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "8cfda154-274c-4774-8a07-cd7bbcf5b3a6",
+          "traceId": "c64a2f0c",
+          "type": "SPAN",
+          "name": "error_c6_psg_failure_signal_py_sketch_generator",
+          "startTime": "2026-02-24T13:37:48.027000+00:00",
+          "level": "ERROR",
+          "statusMessage": "Failed. Last error: Max retries reached with failure. Last error from execution: INFO: Created TensorFlow Lite XNNPACK delegate for CPU.\nTraceback (most recent call last):\n  File \"/home/wuguangh/Projects/tinyml-autopilot/results/object_detection/sketches/tmp_20260224153747_psg_phi4:latest/tmp_20260224153747_psg_phi4:latest.py\", line 70, in <module>\n    interpreter.set_tensor(input_details[0]['index'], input_data.astype(np.float32))\n  File \"/home/wuguangh/.conda/envs/tinyml/lib/python3.10/site-packages/tflite_runtime/interpreter.py\", line 720, in set_tensor\n    self._interpreter.SetTensor(tensor_index, value)\nValueError: Cannot set tensor: Got value of type FLOAT32 but expected type UINT8 for input 175, name: normalized_input_image_tensor \n",
+          "calculatedTotalCost": 0.0,
+          "completionTokens": 0,
+          "environment": "default",
+          "totalTokens": 0,
+          "promptTokens": 0,
+          "costDetails": {},
+          "endTime": null,
+          "model": null,
+          "modelParameters": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null,
+          "latency": null
+        }
+      ],
+      "createdAt": "2026-02-24T13:36:20.283Z",
+      "environment": "default",
+      "updatedAt": "2026-02-24T13:37:53.446Z"
+    }
+  ],
+  "meta": {
+    "total_items": 11
+  }
+}

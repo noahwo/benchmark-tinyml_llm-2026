@@ -1,0 +1,12 @@
+num_run,name,trace_id,batch_id,status,latency,total_tokens,prompt_tokens,completion_tokens,total_cost,parameters,generation_count,prompt_cost,completion_cost,tags,timestamp
+1,6fac_py_sketch_generator,6fac9b0e,phi4_9caa_psg_batch,failure,106.68,4847,900,3947,0.0,"{'top_p:0.3', 'temperature:0.1'}",5,0,0,"['benchmark', 'phi4:latest', 'py_sketch_generator']",1771938622
+2,9305_py_sketch_generator,930503bb,phi4_9caa_psg_batch,failure,81.79,4847,900,3947,0.0,"{'top_p:0.3', 'temperature:0.1'}",5,0,0,"['benchmark', 'phi4:latest', 'py_sketch_generator']",1771938781
+3,d977_py_sketch_generator,d9772ac1,phi4_9caa_psg_batch,failure,82.62,4863,900,3963,0.0,"{'top_p:0.3', 'temperature:0.1'}",5,0,0,"['benchmark', 'phi4:latest', 'py_sketch_generator']",1771938912
+4,6562_py_sketch_generator,65626434,phi4_9caa_psg_batch,failure,81.85,4851,900,3951,0.0,"{'top_p:0.3', 'temperature:0.1'}",5,0,0,"['benchmark', 'phi4:latest', 'py_sketch_generator']",1771939040
+5,9015_py_sketch_generator,901597c7,phi4_9caa_psg_batch,failure,82.26,4863,900,3963,0.0,"{'top_p:0.3', 'temperature:0.1'}",5,0,0,"['benchmark', 'phi4:latest', 'py_sketch_generator']",1771939165
+6,e50c_py_sketch_generator,e50c323e,phi4_9caa_psg_batch,failure,81.97,4847,900,3947,0.0,"{'top_p:0.3', 'temperature:0.1'}",5,0,0,"['benchmark', 'phi4:latest', 'py_sketch_generator']",1771939291
+7,0ac2_py_sketch_generator,0ac2fb97,phi4_9caa_psg_batch,failure,81.61,4843,900,3943,0.0,"{'top_p:0.3', 'temperature:0.1'}",5,0,0,"['benchmark', 'phi4:latest', 'py_sketch_generator']",1771939415
+8,f0f3_py_sketch_generator,f0f324e5,phi4_9caa_psg_batch,failure,81.68,4851,900,3951,0.0,"{'top_p:0.3', 'temperature:0.1'}",5,0,0,"['benchmark', 'phi4:latest', 'py_sketch_generator']",1771939538
+9,ce24_py_sketch_generator,ce248550,phi4_9caa_psg_batch,failure,81.84,4843,900,3943,0.0,"{'top_p:0.3', 'temperature:0.1'}",5,0,0,"['benchmark', 'phi4:latest', 'py_sketch_generator']",1771939662
+10,cf87_py_sketch_generator,cf87be65,phi4_9caa_psg_batch,failure,81.72,4847,900,3947,0.0,"{'top_p:0.3', 'temperature:0.1'}",5,0,0,"['benchmark', 'phi4:latest', 'py_sketch_generator']",1771939790
+11,9ec9_py_sketch_generator,9ec97a25,phi4_9caa_psg_batch,failure,81.72,4843,900,3943,0.0,"{'top_p:0.3', 'temperature:0.1'}",5,0,0,"['benchmark', 'phi4:latest', 'py_sketch_generator']",1771939914

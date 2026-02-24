@@ -1,0 +1,11 @@
+num_run,name,trace_id,batch_id,status,latency,total_tokens,prompt_tokens,completion_tokens,total_cost,parameters,generation_count,prompt_cost,completion_cost,tags,timestamp
+1,c64a_py_sketch_generator,c64a2f0c,phi4_2a34_psg_batch,failure,87.39,6933,2864,4069,0.0,"{'top_p:0.3', 'temperature:0.1'}",5,0,0,"['benchmark', 'phi4:latest', 'py_sketch_generator']",1771940179
+2,1908_py_sketch_generator,19084c52,phi4_2a34_psg_batch,failure,89.12,7028,2864,4164,0.0,"{'top_p:0.3', 'temperature:0.1'}",5,0,0,"['benchmark', 'phi4:latest', 'py_sketch_generator']",1771940294
+3,eaee_py_sketch_generator,eaee274b,phi4_2a34_psg_batch,success,53.97,4135,1606,2529,0.0,"{'top_p:0.3', 'temperature:0.1'}",3,0,0,"['benchmark', 'phi4:latest', 'py_sketch_generator']",1771940410
+4,b92b_py_sketch_generator,b92b3fb2,phi4_2a34_psg_batch,success,89.47,7068,2868,4200,0.0,"{'top_p:0.3', 'temperature:0.1'}",5,0,0,"['benchmark', 'phi4:latest', 'py_sketch_generator']",1771940524
+5,9f40_py_sketch_generator,9f40da0d,phi4_2a34_psg_batch,failure,85.86,6891,2864,4027,0.0,"{'top_p:0.3', 'temperature:0.1'}",5,0,0,"['benchmark', 'phi4:latest', 'py_sketch_generator']",1771940671
+6,bb84_py_sketch_generator,bb842270,phi4_2a34_psg_batch,success,90.94,7110,2868,4242,0.0,"{'top_p:0.3', 'temperature:0.1'}",5,0,0,"['benchmark', 'phi4:latest', 'py_sketch_generator']",1771940785
+7,729a_py_sketch_generator,729a3228,phi4_2a34_psg_batch,success,52.25,4042,1606,2436,0.0,"{'top_p:0.3', 'temperature:0.1'}",3,0,0,"['benchmark', 'phi4:latest', 'py_sketch_generator']",1771940936
+8,3807_py_sketch_generator,3807b812,phi4_2a34_psg_batch,failure,85.19,6846,2864,3982,0.0,"{'top_p:0.3', 'temperature:0.1'}",5,0,0,"['benchmark', 'phi4:latest', 'py_sketch_generator']",1771941049
+9,1113_py_sketch_generator,11139d51,phi4_2a34_psg_batch,success,50.94,3984,1606,2378,0.0,"{'top_p:0.3', 'temperature:0.1'}",3,0,0,"['benchmark', 'phi4:latest', 'py_sketch_generator']",1771941162
+10,44aa_py_sketch_generator,44aaf0a9,phi4_2a34_psg_batch,failure,86.03,6894,2864,4030,0.0,"{'top_p:0.3', 'temperature:0.1'}",5,0,0,"['benchmark', 'phi4:latest', 'py_sketch_generator']",1771941273
