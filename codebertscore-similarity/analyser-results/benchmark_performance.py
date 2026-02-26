@@ -9,8 +9,9 @@ import time
 from pathlib import Path
 
 # Add code_bert_score to path
-SCRIPT_DIR = Path(__file__).parent
+SCRIPT_DIR = Path(__file__).parent.parent
 sys.path.insert(0, str(SCRIPT_DIR.parent))
+sys.path.insert(0, str(SCRIPT_DIR))
 
 import torch
 import code_bert_score
@@ -52,7 +53,7 @@ def main():
     print()
     
     # Load sample reference and candidate
-    ref_file = SCRIPT_DIR / "references" / "TFLite_detection_video.py"
+    ref_file = SCRIPT_DIR  / "references" / "TFLite_detection_video.py"
     if not ref_file.exists():
         print(f"ERROR: Reference file not found: {ref_file}")
         print("Please run this script from codebertscore-similarity/ directory")
