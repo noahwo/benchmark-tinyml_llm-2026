@@ -54,7 +54,7 @@ Contains success rates grouped by models, prompt types (only for ablation datase
 - `model`: Internal model name (e.g., 'gpt-5', 'phi4', 'qwen32')
 - `model_label`: Display label (e.g., 'G5', 'Phi4', 'Qw32B')
 - `processor`: Processor stage ('sg', 'psg', 'tpusg')
-- `processor_label`: Display label ('ArdSG', 'PySG-CPU', 'PySG-TPU')
+- `processor_label`: Display label ('ArdSG', 'PyCPU-SG', 'PyTPU-SG')
 - `prompt_type`: Prompt type identifier ('abla-l1', 'abla-l2', 'original') - ONLY ABLATION
 - `prompt_type_label`: Display label ('Prompt L1', 'Prompt L2', 'Prompt Original') - ONLY ABLATION
 - `success_count`: Number of successful runs
@@ -77,7 +77,7 @@ Contains comprehensive box plot statistics for latency (execution time) and tota
 **Columns:**
 - `metric`: Performance metric ('latency', 'total_tokens')
 - `processor`: Processor stage ('sg', 'psg', 'tpusg')
-- `processor_label`: Display label ('ArdSG', 'PySG-CPU', 'PySG-TPU')
+- `processor_label`: Display label ('ArdSG', 'PyCPU-SG', 'PyTPU-SG')
 - `model`: Internal model name ('gpt-5', 'phi4', 'qwen32')
 - `model_label`: Display label ('G5', 'Phi4', 'Qw32B')
 - `prompt_type`: Prompt type identifier ('abla-l1', 'abla-l2', 'original') - ONLY ABLATION
@@ -115,7 +115,7 @@ Contains average latency and cost statistics for GPT models only, broken down by
 - `model`: Internal model name ('gpt-5')
 - `model_label`: Display label ('G5')
 - `category`: Category identifier (processor names or 'Total-Success', 'Total-Failure')
-- `category_label`: Display label with status (e.g., 'ArdSG✔', 'PySG-CPU✔', 'Total✖')
+- `category_label`: Display label with status (e.g., 'ArdSG✔', 'PyCPU-SG✔', 'Total✖')
 - `prompt_type`: Prompt type identifier ('abla-l1', 'abla-l2', 'original') - ONLY ABLATION
 - `prompt_type_label`: Display label ('Prompt L1', 'Prompt L2', 'Prompt Original') - ONLY ABLATION
 - `status`: 'success' or 'failure'
@@ -135,8 +135,8 @@ Contains average latency and cost statistics for GPT models only, broken down by
   - `*_MPU.csv`: MPU-specific data (no prompt_type column)
 - **Processor abbreviations:**
   - `sg` / `ArdSG`: Arduino Single-shot Generation
-  - `psg` / `PySG-CPU`: Python Single-shot Generation (CPU)
-  - `tpusg` / `PySG-TPU`: Python Single-shot Generation (TPU)
+  - `psg` / `PyCPU-SG`: Python Single-shot Generation (CPU)
+  - `tpusg` / `PyTPU-SG`: Python Single-shot Generation (TPU)
 - **Model abbreviations:**
   - `gpt-5` / `G5`: GPT-5
   - `phi4` / `Phi4`: Microsoft Phi-4
