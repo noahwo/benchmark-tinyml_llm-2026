@@ -1,0 +1,1636 @@
+{
+  "data": [
+    {
+      "id": "cad25f17",
+      "timestamp": "2026-04-09T05:35:49.511000+00:00",
+      "name": "cad2_py_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import os\nimport numpy as np\nimport cv2\nfrom ai_edge_litert.interpreter import Interpreter\n\n# Phase 1: Setup\nmodel_path  = \"models/ssd-mobilenet_v1/detect.tflite\"\nlabel_path  = \"models/ssd-mobilenet_v1/labelmap.txt\"\ninput_path  = \"data/object_detection/sheeps.mp4\"\noutput_path  = \"results/object_detection/test_results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# Load labels\nwith open(label_path, 'r') as f:\n    labels = [line.strip() for line in f.readlines()]\n\n# Load Interpreter\ninterpreter = Interpreter(model_path=model_path)\ninterpreter.allocate_tensors()\n\n# Get Model Details\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\n# Phase 2: Input Acquisition & Preprocessing Loop\ncap = cv2.VideoCapture(input_path)\nwidth = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))\nheight = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))\nfps = cap.get(cv2.CAP_PROP_FPS)\n\nfourcc = cv2.VideoWriter_fourcc(*'mp4v')\nout = cv2.VideoWriter(output_path, fourcc, fps, (width, height))\n\nfloating_model = (input_details[0]['dtype'] == np.float32)\ninput_shape = input_details[0]['shape']\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n\n    # Preprocess Data\n    input_data = cv2.resize(frame, (input_shape[1], input_shape[2]))\n    input_data = np.expand_dims(input_data, axis=0)\n\n    if floating_model:\n        input_data = (np.float32(input_data) - 127.5) / 127.5\n\n    # Phase 3: Inference\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n    interpreter.invoke()\n\n    # Phase 4: Output Interpretation & Handling Loop\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]\n\n    for i in range(len(scores)):\n        if scores[i] > confidence_threshold:\n            ymin = int(max(1, (boxes[i][0] * height)))\n            xmin = int(max(1, (boxes[i][1] * width)))\n            ymax = int(min(height, (boxes[i][2] * height)))\n            xmax = int(min(width, (boxes[i][3] * width)))\n\n            cv2.rectangle(frame, (xmin, ymin), (xmax, ymax), (0, 255, 0), 2)\n            label = f'{labels[int(classes[i])]}: {scores[i]:.2f}'\n            cv2.putText(frame, label, (xmin, ymin - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (36, 255, 12), 2)\n\n    # Write the frame to output video\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "qwen2.5-coder:32b_1099_psg_batch",
+      "metadata": {
+        "num_run": 30
+      },
+      "tags": [
+        "agx",
+        "benchmark",
+        "py_sketch_generator",
+        "qwen2.5-coder:32b"
+      ],
+      "latency": 253.897,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-08-35-49-512682_chatcmpl-8d343536-77cc-4c63-8519-a183b35a1164",
+          "traceId": "cad25f17",
+          "type": "GENERATION",
+          "name": "cad2_psg_gen_attempt#1",
+          "startTime": "2026-04-09T05:35:49.512000+00:00",
+          "endTime": "2026-04-09T05:37:47.017000+00:00",
+          "model": "qwen2.5-coder:32b",
+          "modelParameters": {},
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 117505.0,
+          "totalTokens": 2246,
+          "completionTokens": 732,
+          "environment": "default",
+          "costDetails": {},
+          "promptTokens": 1514,
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-08-37-47-162822_chatcmpl-adaf72f8-35d0-4753-a841-f9f9ce6aef85",
+          "traceId": "cad25f17",
+          "type": "GENERATION",
+          "name": "cad2_psg_gen_attempt#2",
+          "startTime": "2026-04-09T05:37:47.162000+00:00",
+          "endTime": "2026-04-09T05:40:03.409000+00:00",
+          "model": "qwen2.5-coder:32b",
+          "modelParameters": {},
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 136247.0,
+          "totalTokens": 3213,
+          "completionTokens": 783,
+          "environment": "default",
+          "costDetails": {},
+          "promptTokens": 2430,
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "updatedAt": "2026-04-09T05:40:53.292Z",
+      "createdAt": "2026-04-09T05:35:50.030Z",
+      "environment": "default"
+    },
+    {
+      "id": "49fa4d9c",
+      "timestamp": "2026-04-09T05:33:01.206000+00:00",
+      "name": "49fa_py_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "from ai_edge_litert.interpreter import Interpreter\nimport os\nimport numpy as np\nimport cv2\n\n# Phase 1: Setup\nmodel_path  = \"models/ssd-mobilenet_v1/detect.tflite\"\nlabel_path  = \"models/ssd-mobilenet_v1/labelmap.txt\"\ninput_path  = \"data/object_detection/sheeps.mp4\"\noutput_path  = \"results/object_detection/test_results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# Load Labels\nwith open(label_path, 'r') as f:\n    labels = [line.strip() for line in f.readlines()]\n\n# Load Interpreter\ninterpreter = Interpreter(model_path=model_path)\ninterpreter.allocate_tensors()\n\n# Get Model Details\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\nheight = input_details[0]['shape'][1]\nwidth = input_details[0]['shape'][2]\nfloating_model = (input_details[0]['dtype'] == np.float32)\n\n# Phase 2: Input Acquisition & Preprocessing Loop\ncap = cv2.VideoCapture(input_path)\nfourcc = cv2.VideoWriter_fourcc(*'mp4v')\nout = cv2.VideoWriter(output_path, fourcc, 25.0, (int(cap.get(3)), int(cap.get(4))))\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n\n    # Preprocess Data\n    input_data = cv2.resize(frame, (width, height))\n    input_data = np.expand_dims(input_data, axis=0)\n    \n    if floating_model:\n        input_data = (np.float32(input_data) - 127.5) / 127.5\n\n    # Phase 3: Inference\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n    interpreter.invoke()\n\n    # Phase 4: Output Interpretation & Handling Loop\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]\n    num_detections = int(interpreter.get_tensor(output_details[3]['index']))\n\n    for i in range(num_detections):\n        if scores[i] > confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[i]\n            (left, right, top, bottom) = (xmin * frame.shape[1], xmax * frame.shape[1],\n                                          ymin * frame.shape[0], ymax * frame.shape[0])\n            \n            cv2.rectangle(frame, (int(left), int(top)), (int(right), int(bottom)), (0, 255, 0), 2)\n            label = labels[int(classes[i])] + \": \" + str(round(scores[i], 2))\n            cv2.putText(frame, label, (int(left), int(top) - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)\n\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "qwen2.5-coder:32b_1099_psg_batch",
+      "metadata": {
+        "num_run": 29
+      },
+      "tags": [
+        "agx",
+        "benchmark",
+        "py_sketch_generator",
+        "qwen2.5-coder:32b"
+      ],
+      "latency": 113.136,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-08-33-01-207978_chatcmpl-97c22eee-29fa-414a-adba-cddd8eb8b24f",
+          "traceId": "49fa4d9c",
+          "type": "GENERATION",
+          "name": "49fa_psg_gen_attempt#1",
+          "startTime": "2026-04-09T05:33:01.207000+00:00",
+          "endTime": "2026-04-09T05:34:54.343000+00:00",
+          "model": "qwen2.5-coder:32b",
+          "modelParameters": {},
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 113136.0,
+          "totalTokens": 2219,
+          "completionTokens": 705,
+          "environment": "default",
+          "costDetails": {},
+          "promptTokens": 1514,
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "updatedAt": "2026-04-09T05:35:43.923Z",
+      "createdAt": "2026-04-09T05:33:01.727Z",
+      "environment": "default"
+    },
+    {
+      "id": "bce6bbd6",
+      "timestamp": "2026-04-09T05:29:47.910000+00:00",
+      "name": "bce6_py_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import os\nimport numpy as np\nimport cv2\nfrom ai_edge_litert.interpreter import Interpreter\n\n### Phase 1: Setup\n# 1.1 Imports: Done above\n# 1.2 Paths/Parameters\nmodel_path  = \"models/ssd-mobilenet_v1/detect.tflite\"\nlabel_path  = \"models/ssd-mobilenet_v1/labelmap.txt\"\ninput_path  = \"data/object_detection/sheeps.mp4\"\noutput_path  = \"results/object_detection/test_results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# 1.3 Load Labels\nwith open(label_path, 'r') as f:\n    labels = [line.strip() for line in f.readlines()]\n\n# 1.4 Load Interpreter\ninterpreter = Interpreter(model_path=model_path)\ninterpreter.allocate_tensors()\n\n# 1.5 Get Model Details\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\nheight, width = input_details[0]['shape'][1:3]\nfloating_model = (input_details[0]['dtype'] == np.float32)\n\n### Phase 2: Input Acquisition & Preprocessing Loop\n# 2.1 Acquire Input Data\ncap = cv2.VideoCapture(input_path)\nif not cap.isOpened():\n    raise IOError(\"Could not open video file\")\n\n# Define the codec and create VideoWriter object\nfourcc = cv2.VideoWriter_fourcc(*'mp4v')\nout = cv2.VideoWriter(output_path, fourcc, 30.0, (int(cap.get(3)), int(cap.get(4))))\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n\n    # 2.2 Preprocess Data\n    input_data = cv2.resize(frame, (width, height))\n    input_data = np.expand_dims(input_data, axis=0)\n    \n    if floating_model:\n        input_data = (np.float32(input_data) - 127.5) / 127.5\n\n    # Phase 3: Inference\n    # 3.1 Set Input Tensor(s)\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n\n    # 3.2 Run Inference\n    interpreter.invoke()\n\n    # Phase 4: Output Interpretation & Handling Loop\n    # 4.1 Get Output Tensor(s)\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]\n    num_detections = int(interpreter.get_tensor(output_details[3]['index']))\n\n    # 4.2 Interpret Results\n    for i in range(num_detections):\n        if scores[i] > confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[i]\n            class_id = int(classes[i])\n            label = labels[class_id]\n            score = scores[i]\n\n            # 4.3 Post-processing\n            im_height, im_width, _ = frame.shape\n            (xminn, xmaxx, yminn, ymaxx) = (xmin * im_width, xmax * im_width, ymin * im_height, ymax * im_height)\n            cv2.rectangle(frame, (int(xminn), int(yminn)), (int(xmaxx), int(ymaxx)), (10, 255, 0), 2)\n            cv2.putText(frame, f'{label}: {score:.2f}', (int(xminn), int(yminn) - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (36,255,12), 2)\n\n    # 4.4 Handle Output\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "qwen2.5-coder:32b_1099_psg_batch",
+      "metadata": {
+        "num_run": 28
+      },
+      "tags": [
+        "agx",
+        "benchmark",
+        "py_sketch_generator",
+        "qwen2.5-coder:32b"
+      ],
+      "latency": 137.585,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-08-29-47-911873_chatcmpl-c088727f-a0f8-4089-a63f-27e9ea8cde27",
+          "traceId": "bce6bbd6",
+          "type": "GENERATION",
+          "name": "bce6_psg_gen_attempt#1",
+          "startTime": "2026-04-09T05:29:47.911000+00:00",
+          "endTime": "2026-04-09T05:32:05.496000+00:00",
+          "model": "qwen2.5-coder:32b",
+          "modelParameters": {},
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 137585.0,
+          "totalTokens": 2371,
+          "completionTokens": 857,
+          "environment": "default",
+          "costDetails": {},
+          "promptTokens": 1514,
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "updatedAt": "2026-04-09T05:32:55.596Z",
+      "createdAt": "2026-04-09T05:29:48.429Z",
+      "environment": "default"
+    },
+    {
+      "id": "4f39528b",
+      "timestamp": "2026-04-09T05:26:45.428000+00:00",
+      "name": "4f39_py_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "from ai_edge_litert.interpreter import Interpreter\nimport numpy as np\nimport cv2\n\n# Phase 1: Setup\nmodel_path  = \"models/ssd-mobilenet_v1/detect.tflite\"\nlabel_path  = \"models/ssd-mobilenet_v1/labelmap.txt\"\ninput_path  = \"data/object_detection/sheeps.mp4\"\noutput_path  = \"results/object_detection/test_results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# Load Labels\nwith open(label_path, 'r') as f:\n    labels = [line.strip() for line in f.readlines()]\n\n# Load Interpreter\ninterpreter = Interpreter(model_path=model_path)\ninterpreter.allocate_tensors()\n\n# Get Model Details\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\nheight = input_details[0]['shape'][1]\nwidth = input_details[0]['shape'][2]\nfloating_model = (input_details[0]['dtype'] == np.float32)\n\n# Phase 2: Input Acquisition & Preprocessing Loop\ncap = cv2.VideoCapture(input_path)\nif not cap.isOpened():\n    raise IOError(\"Cannot open video file\")\n\nfourcc = cv2.VideoWriter_fourcc(*'mp4v')\nfps = cap.get(cv2.CAP_PROP_FPS)\nout = cv2.VideoWriter(output_path, fourcc, fps, (int(cap.get(3)), int(cap.get(4))))\n\nwhile True:\n    ret, frame = cap.read()\n    if not ret:\n        break\n\n    # Preprocess Data\n    input_data = cv2.resize(frame, (width, height))\n    input_data = np.expand_dims(input_data, axis=0)\n    if floating_model:\n        input_data = (np.float32(input_data) - 127.5) / 127.5\n\n    # Phase 3: Inference\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n    interpreter.invoke()\n\n    # Phase 4: Output Interpretation & Handling Loop\n    # Get Output Tensor(s)\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]\n    num_detections = int(interpreter.get_tensor(output_details[3]['index']))\n\n    # Interpret Results\n    for i in range(num_detections):\n        if scores[i] > confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[i]\n            label = labels[int(classes[i])]\n            score = scores[i]\n\n            # Post-processing: Scale and clip bounding box coordinates\n            (left, right, top, bottom) = (xmin * frame.shape[1], xmax * frame.shape[1],\n                                          ymin * frame.shape[0], ymax * frame.shape[0])\n            left, right, top, bottom = int(left), int(right), int(top), int(bottom)\n\n            # Draw rectangle and label\n            cv2.rectangle(frame, (left, top), (right, bottom), (255, 0, 0), 2)\n            label_text = f'{label}: {score:.2f}'\n            cv2.putText(frame, label_text, (left, top - 10),\n                        cv2.FONT_HERSHEY_SIMPLEX, 0.9, (255, 0, 0), 2)\n\n    # Handle Output\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "qwen2.5-coder:32b_1099_psg_batch",
+      "metadata": {
+        "num_run": 27
+      },
+      "tags": [
+        "agx",
+        "benchmark",
+        "py_sketch_generator",
+        "qwen2.5-coder:32b"
+      ],
+      "latency": 127.307,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-08-26-45-429735_chatcmpl-57083675-eec6-498f-852a-278587d41d7a",
+          "traceId": "4f39528b",
+          "type": "GENERATION",
+          "name": "4f39_psg_gen_attempt#1",
+          "startTime": "2026-04-09T05:26:45.429000+00:00",
+          "endTime": "2026-04-09T05:28:52.736000+00:00",
+          "model": "qwen2.5-coder:32b",
+          "modelParameters": {},
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 127307.0,
+          "totalTokens": 2307,
+          "completionTokens": 793,
+          "environment": "default",
+          "costDetails": {},
+          "promptTokens": 1514,
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "updatedAt": "2026-04-09T05:29:42.163Z",
+      "createdAt": "2026-04-09T05:26:45.949Z",
+      "environment": "default"
+    },
+    {
+      "id": "8f6c5931",
+      "timestamp": "2026-04-09T05:23:24.121000+00:00",
+      "name": "8f6c_py_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "from ai_edge_litert.interpreter import Interpreter\nimport numpy as np\nimport cv2\nimport os\n\n# Phase 1: Setup\n\n# 1.1 Imports: Already imported the required interpreter\n\n# 1.2 Paths/Parameters\nmodel_path  = \"models/ssd-mobilenet_v1/detect.tflite\"\nlabel_path  = \"models/ssd-mobilenet_v1/labelmap.txt\"\ninput_path  = \"data/object_detection/sheeps.mp4\"\noutput_path  = \"results/object_detection/test_results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# 1.3 Load Labels\nwith open(label_path, 'r') as f:\n    labels = [line.strip() for line in f.readlines()]\n\n# 1.4 Load Interpreter\ninterpreter = Interpreter(model_path=model_path)\ninterpreter.allocate_tensors()\n\n# 1.5 Get Model Details\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\nheight, width = input_details[0]['shape'][1:3]\nfloating_model = (input_details[0]['dtype'] == np.float32)\n\n# Phase 2: Input Acquisition & Preprocessing Loop\n\n# 2.1 Acquire Input Data\ncap = cv2.VideoCapture(input_path)\nif not cap.isOpened():\n    raise IOError(\"Cannot open video\")\n\n# 2.4 Loop Control\nframe_count = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))\nfps = cap.get(cv2.CAP_PROP_FPS)\n\n# Define codec and create VideoWriter object\nfourcc = cv2.VideoWriter_fourcc(*'mp4v')\nout = cv2.VideoWriter(output_path, fourcc, fps, (int(cap.get(3)), int(cap.get(4))))\n\nfor frame_id in range(frame_count):\n    ret, frame = cap.read()\n    if not ret:\n        break\n\n    # 2.2 Preprocess Data\n    input_data = cv2.resize(frame, (width, height))\n    input_data = np.expand_dims(input_data, axis=0)\n\n    # 2.3 Quantization Handling\n    if floating_model:\n        input_data = (np.float32(input_data) - 127.5) / 127.5\n\n    # Phase 3: Inference\n\n    # 3.1 Set Input Tensor(s)\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n\n    # 3.2 Run Inference\n    interpreter.invoke()\n\n    # Phase 4: Output Interpretation & Handling Loop\n\n    # 4.1 Get Output Tensor(s)\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]\n    num_detections = int(interpreter.get_tensor(output_details[3]['index']))\n\n    # 4.2 Interpret Results\n    for i in range(num_detections):\n        if scores[i] > confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[i]\n            (left, right, top, bottom) = (xmin * frame.shape[1], xmax * frame.shape[1],\n                                          ymin * frame.shape[0], ymax * frame.shape[0])\n            left, right, top, bottom = int(left), int(right), int(top), int(bottom)\n\n            # 4.3 Post-processing\n            label = labels[int(classes[i]) - 1]\n            cv2.rectangle(frame, (left, top), (right, bottom), (0, 255, 0), 2)\n            cv2.putText(frame, f'{label}: {scores[i]:.2f}', (left, top - 8),\n                        cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)\n\n    # 4.4 Handle Output\n    out.write(frame)\n\n# Phase 5: Cleanup\n\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "qwen2.5-coder:32b_1099_psg_batch",
+      "metadata": {
+        "num_run": 26
+      },
+      "tags": [
+        "agx",
+        "benchmark",
+        "py_sketch_generator",
+        "qwen2.5-coder:32b"
+      ],
+      "latency": 146.612,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-08-23-24-122540_chatcmpl-4965a16d-18a5-46ff-96c8-6717c26082f3",
+          "traceId": "8f6c5931",
+          "type": "GENERATION",
+          "name": "8f6c_psg_gen_attempt#1",
+          "startTime": "2026-04-09T05:23:24.122000+00:00",
+          "endTime": "2026-04-09T05:25:50.734000+00:00",
+          "model": "qwen2.5-coder:32b",
+          "modelParameters": {},
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 146612.0,
+          "totalTokens": 2427,
+          "completionTokens": 913,
+          "environment": "default",
+          "costDetails": {},
+          "promptTokens": 1514,
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "updatedAt": "2026-04-09T05:26:40.304Z",
+      "createdAt": "2026-04-09T05:23:24.642Z",
+      "environment": "default"
+    },
+    {
+      "id": "543e30f0",
+      "timestamp": "2026-04-09T05:20:40.813000+00:00",
+      "name": "543e_py_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import os\nimport numpy as np\nimport cv2\nfrom ai_edge_litert.interpreter import Interpreter\n\n# Phase 1: Setup\nmodel_path  = \"models/ssd-mobilenet_v1/detect.tflite\"\nlabel_path  = \"models/ssd-mobilenet_v1/labelmap.txt\"\ninput_path  = \"data/object_detection/sheeps.mp4\"\noutput_path  = \"results/object_detection/test_results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# Load Labels\nwith open(label_path, 'r') as f:\n    labels = [line.strip() for line in f.readlines()]\n\n# Load Interpreter\ninterpreter = Interpreter(model_path=model_path)\ninterpreter.allocate_tensors()\n\n# Get Model Details\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\n# Extract input shape and dtype\ninput_shape = input_details[0]['shape']\ninput_dtype = input_details[0]['dtype']\nfloating_model = (input_details[0]['dtype'] == np.float32)\n\n# Phase 2: Input Acquisition & Preprocessing Loop\ncap = cv2.VideoCapture(input_path)\nframe_width = int(cap.get(3))\nframe_height = int(cap.get(4))\nfourcc = cv2.VideoWriter_fourcc(*'mp4v')\nout = cv2.VideoWriter(output_path, fourcc, 20.0, (frame_width, frame_height))\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n\n    # Preprocess Data\n    input_data = cv2.resize(frame, (input_shape[1], input_shape[2]))\n    input_data = np.expand_dims(input_data, axis=0)\n    \n    if floating_model:\n        input_data = (np.float32(input_data) - 127.5) / 127.5\n\n    # Phase 3: Inference\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n    interpreter.invoke()\n\n    # Phase 4: Output Interpretation & Handling Loop\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]\n\n    for i in range(len(scores)):\n        if scores[i] > confidence_threshold:\n            ymin = int(max(1, boxes[i][0] * frame_height))\n            xmin = int(max(1, boxes[i][1] * frame_width))\n            ymax = int(min(frame_height, boxes[i][2] * frame_height))\n            xmax = int(min(frame_width, boxes[i][3] * frame_width))\n            \n            label = labels[int(classes[i])]\n            score = scores[i]\n            cv2.rectangle(frame, (xmin, ymin), (xmax, ymax), (0, 255, 0), 2)\n            cv2.putText(frame, f'{label}: {score:.2f}', (xmin, ymin - 10), \n                        cv2.FONT_HERSHEY_SIMPLEX, 0.9, (36, 255, 12), 2)\n\n    # Handle Output\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "qwen2.5-coder:32b_1099_psg_batch",
+      "metadata": {
+        "num_run": 25
+      },
+      "tags": [
+        "agx",
+        "benchmark",
+        "py_sketch_generator",
+        "qwen2.5-coder:32b"
+      ],
+      "latency": 109.885,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-08-20-40-814548_chatcmpl-4fb930c4-263e-4769-aa61-b10dc6d4dd1d",
+          "traceId": "543e30f0",
+          "type": "GENERATION",
+          "name": "543e_psg_gen_attempt#1",
+          "startTime": "2026-04-09T05:20:40.814000+00:00",
+          "endTime": "2026-04-09T05:22:30.699000+00:00",
+          "model": "qwen2.5-coder:32b",
+          "modelParameters": {},
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 109885.0,
+          "totalTokens": 2200,
+          "completionTokens": 686,
+          "environment": "default",
+          "costDetails": {},
+          "promptTokens": 1514,
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "updatedAt": "2026-04-09T05:23:18.025Z",
+      "createdAt": "2026-04-09T05:20:41.334Z",
+      "environment": "default"
+    },
+    {
+      "id": "8fb9b600",
+      "timestamp": "2026-04-09T05:17:56.521000+00:00",
+      "name": "8fb9_py_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import os\nimport time\nimport numpy as np\nimport cv2\nfrom ai_edge_litert.interpreter import Interpreter\n\n# Phase 1: Setup\n# Paths and Parameters\nmodel_path  = \"models/ssd-mobilenet_v1/detect.tflite\"\nlabel_path  = \"models/ssd-mobilenet_v1/labelmap.txt\"\ninput_path  = \"data/object_detection/sheeps.mp4\"\noutput_path  = \"results/object_detection/test_results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# Load Labels\nwith open(label_path, 'r') as f:\n    labels = [line.strip() for line in f.readlines()]\n\n# Load Interpreter\ninterpreter = Interpreter(model_path=model_path)\ninterpreter.allocate_tensors()\n\n# Get Model Details\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\nheight = input_details[0]['shape'][1]\nwidth = input_details[0]['shape'][2]\nfloating_model = (input_details[0]['dtype'] == np.float32)\n\n# Phase 2: Input Acquisition & Preprocessing Loop\ncap = cv2.VideoCapture(input_path)\nfps = cap.get(cv2.CAP_PROP_FPS)\nframe_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))\nframe_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))\n\nfourcc = cv2.VideoWriter_fourcc(*'mp4v')\nout = cv2.VideoWriter(output_path, fourcc, fps, (frame_width, frame_height))\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n\n    # Preprocess Data\n    input_data = cv2.resize(frame, (width, height))\n    input_data = np.expand_dims(input_data, axis=0)\n    \n    if floating_model:\n        input_data = (np.float32(input_data) - 127.5) / 127.5\n\n    # Phase 3: Inference\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n    interpreter.invoke()\n\n    # Phase 4: Output Interpretation & Handling Loop\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]\n    \n    for i in range(len(scores)):\n        if scores[i] > confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[i]\n            label = labels[int(classes[i])]\n            \n            # Scale coordinates\n            (left, right, top, bottom) = (xmin * frame_width, xmax * frame_width,\n                                          ymin * frame_height, ymax * frame_height)\n            \n            # Draw bounding box and label\n            cv2.rectangle(frame, (int(left), int(top)), (int(right), int(bottom)), (0, 255, 0), 2)\n            cv2.putText(frame, f'{label}: {scores[i]:.2f}', (int(left), int(top) - 8),\n                        cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)\n\n    # Write frame to output video\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "qwen2.5-coder:32b_1099_psg_batch",
+      "metadata": {
+        "num_run": 24
+      },
+      "tags": [
+        "agx",
+        "benchmark",
+        "py_sketch_generator",
+        "qwen2.5-coder:32b"
+      ],
+      "latency": 111.271,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-08-17-56-522775_chatcmpl-214b7645-bcfc-4dfd-b8d5-74afbfb5df91",
+          "traceId": "8fb9b600",
+          "type": "GENERATION",
+          "name": "8fb9_psg_gen_attempt#1",
+          "startTime": "2026-04-09T05:17:56.522000+00:00",
+          "endTime": "2026-04-09T05:19:47.793000+00:00",
+          "model": "qwen2.5-coder:32b",
+          "modelParameters": {},
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 111271.0,
+          "totalTokens": 2207,
+          "completionTokens": 693,
+          "environment": "default",
+          "costDetails": {},
+          "promptTokens": 1514,
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "updatedAt": "2026-04-09T05:20:35.209Z",
+      "createdAt": "2026-04-09T05:17:57.042Z",
+      "environment": "default"
+    },
+    {
+      "id": "0b412ee1",
+      "timestamp": "2026-04-09T05:14:47.094000+00:00",
+      "name": "0b41_py_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import os\nimport numpy as np\nimport cv2\nfrom ai_edge_litert.interpreter import Interpreter\n\n# Phase 1: Setup\n## 1.1 Imports: Already done above\n\n## 1.2 Paths/Parameters\nmodel_path  = \"models/ssd-mobilenet_v1/detect.tflite\"\nlabel_path  = \"models/ssd-mobilenet_v1/labelmap.txt\"\ninput_path  = \"data/object_detection/sheeps.mp4\"\noutput_path  = \"results/object_detection/test_results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n## 1.3 Load Labels\nwith open(label_path, 'r') as f:\n    labels = [line.strip() for line in f.readlines()]\n\n## 1.4 Load Interpreter\ninterpreter = Interpreter(model_path=model_path)\ninterpreter.allocate_tensors()\n\n## 1.5 Get Model Details\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\nheight, width = input_details[0]['shape'][1:3]\nfloating_model = (input_details[0]['dtype'] == np.float32)\n\n# Phase 2: Input Acquisition & Preprocessing Loop\n## 2.1 Acquire Input Data\ncap = cv2.VideoCapture(input_path)\nfourcc = cv2.VideoWriter_fourcc(*'mp4v')\nfps = cap.get(cv2.CAP_PROP_FPS)\nout = cv2.VideoWriter(output_path, fourcc, fps, (int(cap.get(3)), int(cap.get(4))))\n\n## 2.2 Preprocess Data\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n\n    input_data = cv2.resize(frame, (width, height))\n    input_data = np.expand_dims(input_data, axis=0)\n\n    ## 2.3 Quantization Handling\n    if floating_model:\n        input_data = (np.float32(input_data) - 127.5) / 127.5\n\n    # Phase 3: Inference\n    ## 3.1 Set Input Tensor(s)\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n\n    ## 3.2 Run Inference\n    interpreter.invoke()\n\n    # Phase 4: Output Interpretation & Handling Loop\n    ## 4.1 Get Output Tensor(s)\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]\n\n    ## 4.2 Interpret Results\n    for i in range(len(scores)):\n        if scores[i] > confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[i]\n            (left, right, top, bottom) = (xmin * width, xmax * width,\n                                        ymin * height, ymax * height)\n            label = labels[int(classes[i])]\n            cv2.rectangle(frame, (int(left), int(top)), (int(right), int(bottom)), (0, 255, 0), 2)\n            label_text = f'{label}: {scores[i]:.2f}'\n            cv2.putText(frame, label_text, (int(left), int(top) - 8),\n                        cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)\n\n    ## 4.3 Post-processing: Already done in the loop above\n\n    ## 4.4 Handle Output\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "qwen2.5-coder:32b_1099_psg_batch",
+      "metadata": {
+        "num_run": 23
+      },
+      "tags": [
+        "agx",
+        "benchmark",
+        "py_sketch_generator",
+        "qwen2.5-coder:32b"
+      ],
+      "latency": 134.215,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-08-14-47-095717_chatcmpl-74c3598b-ed8a-4ca8-b9a8-94efb72b7b89",
+          "traceId": "0b412ee1",
+          "type": "GENERATION",
+          "name": "0b41_psg_gen_attempt#1",
+          "startTime": "2026-04-09T05:14:47.095000+00:00",
+          "endTime": "2026-04-09T05:17:01.310000+00:00",
+          "model": "qwen2.5-coder:32b",
+          "modelParameters": {},
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 134215.0,
+          "totalTokens": 2318,
+          "completionTokens": 804,
+          "environment": "default",
+          "costDetails": {},
+          "promptTokens": 1514,
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "updatedAt": "2026-04-09T05:17:50.801Z",
+      "createdAt": "2026-04-09T05:14:47.615Z",
+      "environment": "default"
+    },
+    {
+      "id": "129d5471",
+      "timestamp": "2026-04-09T05:05:50.740000+00:00",
+      "name": "129d_py_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "from ai_edge_litert.interpreter import Interpreter\nimport numpy as np\nimport cv2\n\n### Phase 1: Setup\n# 1.1 Imports: Already imported necessary libraries\n\n# 1.2 Paths/Parameters\nmodel_path   = \"models/ssd-mobilenet_v1/detect.tflite\"\nlabel_path   = \"models/ssd-mobilenet_v1/labelmap.txt\"\ninput_path   = \"data/object_detection/sheeps.mp4\"\noutput_path   = \"results/object_detection/test_results/sheeps_detections.mp4\"\nconfidence_threshold   = 0.5\n\n# 1.3 Load Labels\nwith open(label_path, 'r') as f:\n    labels = [line.strip() for line in f.readlines()]\n\n# 1.4 Load Interpreter\ninterpreter = Interpreter(model_path=model_path)\ninterpreter.allocate_tensors()\n\n# 1.5 Get Model Details\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\ninput_shape = input_details[0]['shape']\nfloating_model = (input_details[0]['dtype'] == np.float32)\n\n### Phase 2: Input Acquisition & Preprocessing Loop\n# 2.1 Acquire Input Data\ncap = cv2.VideoCapture(input_path)\nwidth = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))\nheight = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))\nfps = cap.get(cv2.CAP_PROP_FPS)\n\n# Define the codec and create VideoWriter object\nfourcc = cv2.VideoWriter_fourcc(*'mp4v')\nout = cv2.VideoWriter(output_path, fourcc, fps, (width, height))\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n\n    # 2.2 Preprocess Data\n    input_data = cv2.resize(frame, (input_shape[1], input_shape[2]))\n    input_data = np.expand_dims(input_data, axis=0)\n\n    # 2.3 Quantization Handling\n    if floating_model:\n        input_data = (np.float32(input_data) - 127.5) / 127.5\n\n    ### Phase 3: Inference\n    # 3.1 Set Input Tensor(s)\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n\n    # 3.2 Run Inference\n    interpreter.invoke()\n\n    ### Phase 4: Output Interpretation & Handling Loop\n    # 4.1 Get Output Tensor(s)\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]       # Detection Boxes\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]   # Detection Classes\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]      # Detection Scores\n    num_detections = int(interpreter.get_tensor(output_details[3]['index']))\n\n    # 4.2 Interpret Results\n    for i in range(num_detections):\n        if scores[i] > confidence_threshold:\n            box = boxes[i]\n            class_id = int(classes[i])\n            label = labels[class_id]\n            score = scores[i]\n\n            # 4.3 Post-processing\n            ymin, xmin, ymax, xmax = box\n            (left, right, top, bottom) = (xmin * width, xmax * width,\n                                          ymin * height, ymax * height)\n            left, right, top, bottom = int(left), int(right), int(top), int(bottom)\n\n            # Draw bounding box and label on the frame\n            cv2.rectangle(frame, (left, top), (right, bottom), (0, 255, 0), 2)\n            label_text = f'{label}: {score:.2f}'\n            cv2.putText(frame, label_text, (left, top - 10),\n                        cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)\n\n    # 4.4 Handle Output\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "qwen2.5-coder:32b_1099_psg_batch",
+      "metadata": {
+        "num_run": 22
+      },
+      "tags": [
+        "agx",
+        "benchmark",
+        "py_sketch_generator",
+        "qwen2.5-coder:32b"
+      ],
+      "latency": 481.59,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-08-05-50-741501_chatcmpl-49c70b0a-a72e-4ca2-82db-15d868b58a02",
+          "traceId": "129d5471",
+          "type": "GENERATION",
+          "name": "129d_psg_gen_attempt#1",
+          "startTime": "2026-04-09T05:05:50.741000+00:00",
+          "endTime": "2026-04-09T05:08:10.288000+00:00",
+          "model": "qwen2.5-coder:32b",
+          "modelParameters": {},
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 139547.0,
+          "totalTokens": 2383,
+          "completionTokens": 869,
+          "environment": "default",
+          "costDetails": {},
+          "promptTokens": 1514,
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-08-08-10-436143_chatcmpl-0f6020e7-d656-4eb9-b3e3-a897b063a55d",
+          "traceId": "129d5471",
+          "type": "GENERATION",
+          "name": "129d_psg_gen_attempt#2",
+          "startTime": "2026-04-09T05:08:10.436000+00:00",
+          "endTime": "2026-04-09T05:10:54.860000+00:00",
+          "model": "qwen2.5-coder:32b",
+          "modelParameters": {},
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 164424.0,
+          "totalTokens": 3536,
+          "completionTokens": 950,
+          "environment": "default",
+          "costDetails": {},
+          "promptTokens": 2586,
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-08-10-55-045766_chatcmpl-d775293d-ced8-475f-9900-9bc4ffd1b8f9",
+          "traceId": "129d5471",
+          "type": "GENERATION",
+          "name": "129d_psg_gen_attempt#3",
+          "startTime": "2026-04-09T05:10:55.045000+00:00",
+          "endTime": "2026-04-09T05:13:52.331000+00:00",
+          "model": "qwen2.5-coder:32b",
+          "modelParameters": {},
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 177286.0,
+          "totalTokens": 3651,
+          "completionTokens": 1064,
+          "environment": "default",
+          "costDetails": {},
+          "promptTokens": 2587,
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "updatedAt": "2026-04-09T05:14:42.098Z",
+      "createdAt": "2026-04-09T05:05:51.263Z",
+      "environment": "default"
+    },
+    {
+      "id": "27859139",
+      "timestamp": "2026-04-09T05:02:40.023000+00:00",
+      "name": "2785_py_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import os\nimport time\nimport numpy as np\nimport cv2\nfrom ai_edge_litert.interpreter import Interpreter\n\n# Phase 1: Setup\n# 1.1 Imports: Done above\n\n# 1.2 Paths/Parameters\nmodel_path  = \"models/ssd-mobilenet_v1/detect.tflite\"\nlabel_path  = \"models/ssd-mobilenet_v1/labelmap.txt\"\ninput_path  = \"data/object_detection/sheeps.mp4\"\noutput_path  = \"results/object_detection/test_results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# 1.3 Load Labels\nwith open(label_path, 'r') as f:\n    labels = [line.strip() for line in f.readlines()]\n\n# 1.4 Load Interpreter\ninterpreter = Interpreter(model_path=model_path)\ninterpreter.allocate_tensors()\n\n# 1.5 Get Model Details\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\nheight = input_details[0]['shape'][1]\nwidth = input_details[0]['shape'][2]\nfloating_model = (input_details[0]['dtype'] == np.float32)\n\n# Phase 2: Input Acquisition & Preprocessing Loop\ncap = cv2.VideoCapture(input_path)\nif not cap.isOpened():\n    raise IOError(\"Cannot open video file\")\n\nfourcc = cv2.VideoWriter_fourcc(*'mp4v')\nfps = cap.get(cv2.CAP_PROP_FPS)\nframe_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))\nframe_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))\n\nout = cv2.VideoWriter(output_path, fourcc, fps, (frame_width, frame_height))\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n\n    # 2.2 Preprocess Data\n    input_data = cv2.resize(frame, (width, height))\n    input_data = np.expand_dims(input_data, axis=0)\n\n    # 2.3 Quantization Handling\n    if floating_model:\n        input_data = (np.float32(input_data) - 127.5) / 127.5\n\n    # Phase 3: Inference\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n    interpreter.invoke()\n\n    # Phase 4: Output Interpretation & Handling Loop\n    # 4.1 Get Output Tensor(s)\n    boxes = interpreter.get_tensor(output_details[0]['index'])\n    classes = interpreter.get_tensor(output_details[1]['index'])\n    scores = interpreter.get_tensor(output_details[2]['index'])\n    num_detections = interpreter.get_tensor(output_details[3]['index'])\n\n    # 4.2 Interpret Results\n    for i in range(int(num_detections)):\n        confidence = float(scores[0][i])\n        if confidence > confidence_threshold:\n            ymin, xmin, ymax, xmax = map(int, (boxes[0][i] * np.array([frame_height, frame_width, frame_height, frame_width])))\n            class_id = int(classes[0][i])\n            label = labels[class_id]\n\n            # 4.3 Post-processing\n            cv2.rectangle(frame, (xmin, ymin), (xmax, ymax), (10, 255, 0), 2)\n            cv2.putText(frame, f'{label}: {confidence:.2f}', (xmin, ymin - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (10, 255, 0), 2)\n\n    # 4.4 Handle Output\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()"
+      },
+      "session_id": "qwen2.5-coder:32b_1099_psg_batch",
+      "metadata": {
+        "num_run": 21
+      },
+      "tags": [
+        "agx",
+        "benchmark",
+        "py_sketch_generator",
+        "qwen2.5-coder:32b"
+      ],
+      "latency": 134.991,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-08-02-40-023961_chatcmpl-5ef982a1-9bf9-4d4f-a0d9-8b623b34dada",
+          "traceId": "27859139",
+          "type": "GENERATION",
+          "name": "2785_psg_gen_attempt#1",
+          "startTime": "2026-04-09T05:02:40.023000+00:00",
+          "endTime": "2026-04-09T05:04:55.014000+00:00",
+          "model": "qwen2.5-coder:32b",
+          "modelParameters": {},
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 134991.0,
+          "totalTokens": 2355,
+          "completionTokens": 841,
+          "environment": "default",
+          "costDetails": {},
+          "promptTokens": 1514,
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "updatedAt": "2026-04-09T05:05:44.764Z",
+      "createdAt": "2026-04-09T05:02:40.542Z",
+      "environment": "default"
+    },
+    {
+      "id": "6fdfd53a",
+      "timestamp": "2026-04-09T04:59:27.744000+00:00",
+      "name": "6fdf_py_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "from ai_edge_litert.interpreter import Interpreter\nimport os\nimport time\nimport numpy as np\nimport cv2\n\n# Phase 1: Setup\n## Paths/Parameters\nmodel_path  = \"models/ssd-mobilenet_v1/detect.tflite\"\nlabel_path  = \"models/ssd-mobilenet_v1/labelmap.txt\"\ninput_path  = \"data/object_detection/sheeps.mp4\"\noutput_path  = \"results/object_detection/test_results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n## Load Labels\nwith open(label_path, 'r') as f:\n    labels = [line.strip() for line in f.readlines()]\n\n## Load Interpreter\ninterpreter = Interpreter(model_path=model_path)\ninterpreter.allocate_tensors()\n\n## Get Model Details\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\n# Extract necessary details from input and output tensors\nheight = input_details[0]['shape'][1]\nwidth = input_details[0]['shape'][2]\nfloating_model = (input_details[0]['dtype'] == np.float32)\n\n# Phase 2: Input Acquisition & Preprocessing Loop\n## Acquire Input Data\ncap = cv2.VideoCapture(input_path)\nif not cap.isOpened():\n    raise IOError(\"Error opening video stream or file\")\n\nframe_rate = int(cap.get(cv2.CAP_PROP_FPS))\nframe_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))\nframe_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))\n\n## Setup Video Writer\nfourcc = cv2.VideoWriter_fourcc(*'mp4v')\nout = cv2.VideoWriter(output_path, fourcc, frame_rate, (frame_width, frame_height))\n\n# Phase 3: Inference & Phase 4: Output Interpretation & Handling Loop\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n\n    ## Preprocess Data\n    input_data = cv2.resize(frame, (width, height))\n    input_data = np.expand_dims(input_data, axis=0)\n\n    ## Quantization Handling\n    if floating_model:\n        input_data = (np.float32(input_data) - 127.5) / 127.5\n\n    ## Set Input Tensor(s)\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n\n    ## Run Inference\n    interpreter.invoke()\n\n    ## Get Output Tensor(s)\n    boxes = interpreter.get_tensor(output_details[0]['index'])\n    classes = interpreter.get_tensor(output_details[1]['index'])\n    scores = interpreter.get_tensor(output_details[2]['index'])\n    num_detections = interpreter.get_tensor(output_details[3]['index'])\n\n    ## Interpret Results\n    for i in range(int(num_detections)):\n        confidence = scores[0][i]\n        if confidence > confidence_threshold:\n            # Get bounding box coordinates and scale them to the original image dimensions\n            ymin, xmin, ymax, xmax = boxes[0][i]\n            im_height, im_width, _ = frame.shape\n            (left, right, top, bottom) = (xmin * im_width, xmax * im_width,\n                                          ymin * im_height, ymax * im_height)\n\n            # Draw the bounding box and label on the image\n            cv2.rectangle(frame, (int(left), int(top)), (int(right), int(bottom)),\n                          (0, 255, 0), thickness=2)\n            label = labels[int(classes[0][i])]\n            label_text = f'{label}: {confidence:.2f}'\n            cv2.putText(frame, label_text, (int(left), int(top) - 10),\n                        cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), thickness=2)\n\n    ## Handle Output\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "qwen2.5-coder:32b_1099_psg_batch",
+      "metadata": {
+        "num_run": 20
+      },
+      "tags": [
+        "agx",
+        "benchmark",
+        "py_sketch_generator",
+        "qwen2.5-coder:32b"
+      ],
+      "latency": 136.895,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-07-59-27-746165_chatcmpl-b79670e2-2a23-4206-a6ec-e366865b8a99",
+          "traceId": "6fdfd53a",
+          "type": "GENERATION",
+          "name": "6fdf_psg_gen_attempt#1",
+          "startTime": "2026-04-09T04:59:27.746000+00:00",
+          "endTime": "2026-04-09T05:01:44.641000+00:00",
+          "model": "qwen2.5-coder:32b",
+          "modelParameters": {},
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 136895.0,
+          "totalTokens": 2367,
+          "completionTokens": 853,
+          "environment": "default",
+          "costDetails": {},
+          "promptTokens": 1514,
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "updatedAt": "2026-04-09T05:02:34.445Z",
+      "createdAt": "2026-04-09T04:59:28.264Z",
+      "environment": "default"
+    },
+    {
+      "id": "f0bac40d",
+      "timestamp": "2026-04-09T04:56:33.330000+00:00",
+      "name": "f0ba_py_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import os\nimport numpy as np\nimport cv2\nfrom ai_edge_litert.interpreter import Interpreter\n\n# Phase 1: Setup\n# 1.1 Imports: Already done above\n# 1.2 Paths/Parameters\nmodel_path  = \"models/ssd-mobilenet_v1/detect.tflite\"\nlabel_path  = \"models/ssd-mobilenet_v1/labelmap.txt\"\ninput_path  = \"data/object_detection/sheeps.mp4\"\noutput_path  = \"results/object_detection/test_results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# 1.3 Load Labels\nwith open(label_path, 'r') as f:\n    labels = [line.strip() for line in f.readlines()]\n\n# 1.4 Load Interpreter\ninterpreter = Interpreter(model_path=model_path)\ninterpreter.allocate_tensors()\n\n# 1.5 Get Model Details\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\n# Extract necessary information from input details\nheight, width, _ = input_details[0]['shape'][1:4]\nfloating_model = (input_details[0]['dtype'] == np.float32)\n\n# Phase 2: Input Acquisition & Preprocessing Loop\ncap = cv2.VideoCapture(input_path)\nframe_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))\nframe_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))\n\nfourcc = cv2.VideoWriter_fourcc(*'mp4v')\nout = cv2.VideoWriter(output_path, fourcc, 30.0, (frame_width, frame_height))\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n\n    # Preprocess Data\n    input_data = cv2.resize(frame, (width, height))\n    input_data = np.expand_dims(input_data, axis=0)\n\n    if floating_model:\n        input_data = (np.float32(input_data) - 127.5) / 127.5\n\n    # Phase 3: Inference\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n    interpreter.invoke()\n\n    # Phase 4: Output Interpretation & Handling Loop\n    # Get Output Tensor(s)\n    boxes = interpreter.get_tensor(output_details[0]['index'])\n    classes = interpreter.get_tensor(output_details[1]['index'])\n    scores = interpreter.get_tensor(output_details[2]['index'])\n    num_detections = int(interpreter.get_tensor(output_details[3]['index']))\n\n    # Interpret Results\n    for i in range(num_detections):\n        confidence = scores[0][i]\n        if confidence > confidence_threshold:\n            class_id = int(classes[0][i])\n            box = boxes[0][i]\n\n            # Post-processing\n            ymin, xmin, ymax, xmax = box\n            (left, right, top, bottom) = (xmin * frame_width, xmax * frame_width,\n                                          ymin * frame_height, ymax * frame_height)\n\n            # Draw rectangle and label on the frame\n            cv2.rectangle(frame, (int(left), int(top)), (int(right), int(bottom)), (0, 255, 0), 2)\n            label = f'{labels[class_id]}: {confidence:.2f}'\n            cv2.putText(frame, label, (int(left), int(top) - 10),\n                        cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)\n\n    # Handle Output\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "qwen2.5-coder:32b_1099_psg_batch",
+      "metadata": {
+        "num_run": 19
+      },
+      "tags": [
+        "agx",
+        "benchmark",
+        "py_sketch_generator",
+        "qwen2.5-coder:32b"
+      ],
+      "latency": 121.656,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-07-56-33-331918_chatcmpl-b204377d-2291-4ecf-ab96-00f10f94ea16",
+          "traceId": "f0bac40d",
+          "type": "GENERATION",
+          "name": "f0ba_psg_gen_attempt#1",
+          "startTime": "2026-04-09T04:56:33.331000+00:00",
+          "endTime": "2026-04-09T04:58:34.987000+00:00",
+          "model": "qwen2.5-coder:32b",
+          "modelParameters": {},
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 121656.0,
+          "totalTokens": 2272,
+          "completionTokens": 758,
+          "environment": "default",
+          "costDetails": {},
+          "promptTokens": 1514,
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "updatedAt": "2026-04-09T04:59:22.530Z",
+      "createdAt": "2026-04-09T04:56:33.852Z",
+      "environment": "default"
+    },
+    {
+      "id": "10aea8c4",
+      "timestamp": "2026-04-09T04:53:37.996000+00:00",
+      "name": "10ae_py_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import os\nimport time\nimport numpy as np\nimport cv2\nfrom ai_edge_litert.interpreter import Interpreter\n\n### CONFIGURATION PARAMETERS ###\nmodel_path  = \"models/ssd-mobilenet_v1/detect.tflite\"\nlabel_path  = \"models/ssd-mobilenet_v1/labelmap.txt\"\ninput_path  = \"data/object_detection/sheeps.mp4\"\noutput_path  = \"results/object_detection/test_results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n### Phase 1: Setup ###\n# 1.3 Load Labels\nwith open(label_path, 'r') as f:\n    labels = [line.strip() for line in f.readlines()]\n\n# 1.4 Load Interpreter\ninterpreter = Interpreter(model_path=model_path)\ninterpreter.allocate_tensors()\n\n# 1.5 Get Model Details\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\n# Determine if the model uses floating point inputs\nfloating_model = (input_details[0]['dtype'] == np.float32)\n\n### Phase 2: Input Acquisition & Preprocessing Loop ###\ncap = cv2.VideoCapture(input_path)\nframe_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))\nframe_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))\nfps = cap.get(cv2.CAP_PROP_FPS)\n\n# Prepare video writer for output\nfourcc = cv2.VideoWriter_fourcc(*'mp4v')\nout = cv2.VideoWriter(output_path, fourcc, fps, (frame_width, frame_height))\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n\n    # Preprocess Data\n    input_data = cv2.resize(frame, (input_details[0]['shape'][1], input_details[0]['shape'][2]))\n    input_data = np.expand_dims(input_data, axis=0)\n\n    # Quantization Handling\n    if floating_model:\n        input_data = (np.float32(input_data) - 127.5) / 127.5\n\n    ### Phase 3: Inference ###\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n    interpreter.invoke()\n\n    ### Phase 4: Output Interpretation & Handling Loop ###\n    # Get Output Tensor(s)\n    output_data = []\n    for i in range(len(output_details)):\n        output_data.append(interpreter.get_tensor(output_details[i]['index']))\n\n    # Interpret Results\n    boxes = np.squeeze(output_data[0])\n    classes = np.squeeze(output_data[1]).astype(int)\n    scores = np.squeeze(output_data[2])\n\n    # Post-processing\n    for i in range(len(scores)):\n        if scores[i] > confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[i]\n            label_id = labels[classes[i]]\n            \n            # Scale bounding box coordinates to frame dimensions\n            (left, right, top, bottom) = (xmin * frame_width, xmax * frame_width,\n                                          ymin * frame_height, ymax * frame_height)\n            cv2.rectangle(frame, (int(left), int(top)), (int(right), int(bottom)), (0, 255, 0), 2)\n            label_text = f'{label_id}: {scores[i]:.2f}'\n            cv2.putText(frame, label_text, (int(left), int(top) - 10),\n                        cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)\n\n    # Handle Output\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "qwen2.5-coder:32b_1099_psg_batch",
+      "metadata": {
+        "num_run": 18
+      },
+      "tags": [
+        "agx",
+        "benchmark",
+        "py_sketch_generator",
+        "qwen2.5-coder:32b"
+      ],
+      "latency": 121.276,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-07-53-37-998156_chatcmpl-89c061ab-fd20-40e3-a493-bba7d4fbee57",
+          "traceId": "10aea8c4",
+          "type": "GENERATION",
+          "name": "10ae_psg_gen_attempt#1",
+          "startTime": "2026-04-09T04:53:37.998000+00:00",
+          "endTime": "2026-04-09T04:55:39.274000+00:00",
+          "model": "qwen2.5-coder:32b",
+          "modelParameters": {},
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 121276.0,
+          "totalTokens": 2270,
+          "completionTokens": 756,
+          "environment": "default",
+          "costDetails": {},
+          "promptTokens": 1514,
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "updatedAt": "2026-04-09T04:56:27.674Z",
+      "createdAt": "2026-04-09T04:53:38.517Z",
+      "environment": "default"
+    },
+    {
+      "id": "689a6dc5",
+      "timestamp": "2026-04-09T04:50:08.662000+00:00",
+      "name": "689a_py_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "from ai_edge_litert.interpreter import Interpreter\nimport numpy as np\nimport cv2\n\n# Phase 1: Setup\n# 1.1 Imports: Already done above\n# 1.2 Paths/Parameters\nmodel_path  = \"models/ssd-mobilenet_v1/detect.tflite\"\nlabel_path  = \"models/ssd-mobilenet_v1/labelmap.txt\"\ninput_path  = \"data/object_detection/sheeps.mp4\"\noutput_path  = \"results/object_detection/test_results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# 1.3 Load Labels\nwith open(label_path, 'r') as f:\n    labels = [line.strip() for line in f.readlines()]\n\n# 1.4 Load Interpreter\ninterpreter = Interpreter(model_path=model_path)\ninterpreter.allocate_tensors()\n\n# 1.5 Get Model Details\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\nheight = input_details[0]['shape'][1]\nwidth = input_details[0]['shape'][2]\nfloating_model = (input_details[0]['dtype'] == np.float32)\n\n# Phase 2: Input Acquisition & Preprocessing Loop\ncap = cv2.VideoCapture(input_path)\nvideo_writer = None\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n    \n    # Resize frame to fit the model's input size\n    input_data = cv2.resize(frame, (width, height))\n    input_data = np.expand_dims(input_data, axis=0)\n    \n    # 2.3 Quantization Handling\n    if floating_model:\n        input_data = (np.float32(input_data) - 127.5) / 127.5\n    \n    # Phase 3: Inference\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n    interpreter.invoke()\n    \n    # Phase 4: Output Interpretation & Handling Loop\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]  # Bounding box coordinates of detected objects\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]  # Class index of detected objects\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]   # Confidence score of detections\n    \n    imH, imW, _ = frame.shape\n    \n    for i in range(len(scores)):\n        if (scores[i] > confidence_threshold) and (scores[i] <= 1.0):\n            # Get bounding box coordinates and draw a rectangle\n            ymin = int(max(1,(boxes[i][0] * imH)))\n            xmin = int(max(1,(boxes[i][1] * imW)))\n            ymax = int(min(imH,(boxes[i][2] * imH)))\n            xmax = int(min(imW,(boxes[i][3] * imW)))\n            \n            cv2.rectangle(frame, (xmin,ymin), (xmax,ymax), (10, 255, 0), 2)\n            \n            # Draw label\n            object_name = labels[int(classes[i])]\n            label = '%s: %d%%' % (object_name, int(scores[i]*100)) \n            labelSize, baseLine = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.7, 2)\n            label_ymin = max(ymin, labelSize[1] + 10) # Below the detection\n            cv2.rectangle(frame, (xmin, label_ymin-labelSize[1]-10), (xmin+labelSize[0], label_ymin+baseLine-10), (255, 255, 255), cv2.FILLED)\n            cv2.putText(frame, label, (xmin, label_ymin-7), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0), 2)\n    \n    # Phase 4.5: Handle Output\n    if video_writer is None:\n        fourcc = cv2.VideoWriter_fourcc(*'mp4v')\n        fps = cap.get(cv2.CAP_PROP_FPS)\n        video_writer = cv2.VideoWriter(output_path, fourcc, fps, (imW, imH))\n    \n    video_writer.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nvideo_writer.release()"
+      },
+      "session_id": "qwen2.5-coder:32b_1099_psg_batch",
+      "metadata": {
+        "num_run": 17
+      },
+      "tags": [
+        "agx",
+        "benchmark",
+        "py_sketch_generator",
+        "qwen2.5-coder:32b"
+      ],
+      "latency": 156.186,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-07-50-08-664033_chatcmpl-0b8719a4-fe24-4f4b-8e75-8a2f3bad3222",
+          "traceId": "689a6dc5",
+          "type": "GENERATION",
+          "name": "689a_psg_gen_attempt#1",
+          "startTime": "2026-04-09T04:50:08.664000+00:00",
+          "endTime": "2026-04-09T04:52:44.850000+00:00",
+          "model": "qwen2.5-coder:32b",
+          "modelParameters": {},
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 156186.0,
+          "totalTokens": 2487,
+          "completionTokens": 973,
+          "environment": "default",
+          "costDetails": {},
+          "promptTokens": 1514,
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "updatedAt": "2026-04-09T04:53:32.413Z",
+      "createdAt": "2026-04-09T04:50:09.182Z",
+      "environment": "default"
+    },
+    {
+      "id": "9bb2b909",
+      "timestamp": "2026-04-09T04:47:12.319000+00:00",
+      "name": "9bb2_py_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import os\nimport numpy as np\nimport cv2\n\n# Phase 1: Setup\nfrom ai_edge_litert.interpreter import Interpreter\n\n# Paths/Parameters\nmodel_path  = \"models/ssd-mobilenet_v1/detect.tflite\"\nlabel_path  = \"models/ssd-mobilenet_v1/labelmap.txt\"\ninput_path  = \"data/object_detection/sheeps.mp4\"\noutput_path  = \"results/object_detection/test_results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# Load Labels\nwith open(label_path, 'r') as f:\n    labels = [line.strip() for line in f.readlines()]\n\n# Load Interpreter\ninterpreter = Interpreter(model_path=model_path)\ninterpreter.allocate_tensors()\n\n# Get Model Details\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\nfloating_model = (input_details[0]['dtype'] == np.float32)\n\nheight, width, channels = input_details[0]['shape'][1:4]\n\n# Phase 2: Input Acquisition & Preprocessing Loop\ncap = cv2.VideoCapture(input_path)\nfourcc = cv2.VideoWriter_fourcc(*'mp4v')\nout = cv2.VideoWriter(output_path, fourcc, 30.0, (int(cap.get(3)), int(cap.get(4))))\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n\n    # Preprocess Data\n    input_data = cv2.resize(frame, (width, height))\n    input_data = np.expand_dims(input_data, axis=0)\n    if floating_model:\n        input_data = (np.float32(input_data) - 127.5) / 127.5\n\n    # Phase 3: Inference\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n    interpreter.invoke()\n\n    # Phase 4: Output Interpretation & Handling Loop\n    output_data = []\n    for i in range(len(output_details)):\n        output_data.append(interpreter.get_tensor(output_details[i]['index']))\n\n    boxes = output_data[0][0]\n    class_ids = output_data[1][0]\n    scores = output_data[2][0]\n\n    # Interpret Results and Post-processing\n    for detection in range(len(scores)):\n        score = float(scores[detection])\n        if score > confidence_threshold:\n            box = boxes[detection]\n            left = int(box[1] * cap.get(cv2.CAP_PROP_FRAME_WIDTH))\n            top = int(box[0] * cap.get(cv2.CAP_PROP_FRAME_HEIGHT))\n            right = int(box[3] * cap.get(cv2.CAP_PROP_FRAME_WIDTH))\n            bottom = int(box[2] * cap.get(cv2.CAP_PROP_FRAME_HEIGHT))\n\n            cv2.rectangle(frame, (left, top), (right, bottom), (0, 255, 0), 2)\n            label = f'{labels[int(class_ids[detection])]}: {score:.2f}'\n            cv2.putText(frame, label, (left, top - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)\n\n    # Handle Output\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "qwen2.5-coder:32b_1099_psg_batch",
+      "metadata": {
+        "num_run": 16
+      },
+      "tags": [
+        "agx",
+        "benchmark",
+        "py_sketch_generator",
+        "qwen2.5-coder:32b"
+      ],
+      "latency": 120.491,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-07-47-12-320653_chatcmpl-889fee1c-bd77-4f67-a4cc-d50cbc343021",
+          "traceId": "9bb2b909",
+          "type": "GENERATION",
+          "name": "9bb2_psg_gen_attempt#1",
+          "startTime": "2026-04-09T04:47:12.320000+00:00",
+          "endTime": "2026-04-09T04:49:12.811000+00:00",
+          "model": "qwen2.5-coder:32b",
+          "modelParameters": {},
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 120491.0,
+          "totalTokens": 2265,
+          "completionTokens": 751,
+          "environment": "default",
+          "costDetails": {},
+          "promptTokens": 1514,
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "updatedAt": "2026-04-09T04:50:02.527Z",
+      "createdAt": "2026-04-09T04:47:12.843Z",
+      "environment": "default"
+    },
+    {
+      "id": "66fb9594",
+      "timestamp": "2026-04-09T04:44:29.004000+00:00",
+      "name": "66fb_py_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "from ai_edge_litert.interpreter import Interpreter\nimport numpy as np\nimport cv2\n\n# Phase 1: Setup\nmodel_path  = \"models/ssd-mobilenet_v1/detect.tflite\"\nlabel_path  = \"models/ssd-mobilenet_v1/labelmap.txt\"\ninput_path  = \"data/object_detection/sheeps.mp4\"\noutput_path  = \"results/object_detection/test_results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# Load Labels\nwith open(label_path, 'r') as f:\n    labels = [line.strip() for line in f.readlines()]\n\n# Load Interpreter\ninterpreter = Interpreter(model_path=model_path)\ninterpreter.allocate_tensors()\n\n# Get Model Details\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\nfloating_model = (input_details[0]['dtype'] == np.float32)\n\n# Phase 2: Input Acquisition & Preprocessing Loop\ncap = cv2.VideoCapture(input_path)\nframe_width = int(cap.get(3))\nframe_height = int(cap.get(4))\n\nfourcc = cv2.VideoWriter_fourcc(*'mp4v')\nout = cv2.VideoWriter(output_path, fourcc, 20.0, (frame_width, frame_height))\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n\n    # Preprocess Data\n    input_data = cv2.resize(frame, (300, 300))\n    input_data = np.expand_dims(input_data, axis=0)\n\n    # Quantization Handling\n    if floating_model:\n        input_data = (np.float32(input_data) - 127.5) / 127.5\n\n    # Phase 3: Inference\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n    interpreter.invoke()\n\n    # Phase 4: Output Interpretation & Handling Loop\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]\n\n    for i in range(len(scores)):\n        if scores[i] > confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[i]\n            (left, right, top, bottom) = (xmin * frame_width, xmax * frame_width,\n                                          ymin * frame_height, ymax * frame_height)\n            \n            label = labels[int(classes[i])]\n            cv2.rectangle(frame, (int(left), int(top)), (int(right), int(bottom)), (0, 255, 0), 2)\n            cv2.putText(frame, f'{label}: {scores[i]:.2f}', (int(left), int(top) - 8),\n                        cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)\n\n    # Handle Output\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "qwen2.5-coder:32b_1099_psg_batch",
+      "metadata": {
+        "num_run": 15
+      },
+      "tags": [
+        "agx",
+        "benchmark",
+        "py_sketch_generator",
+        "qwen2.5-coder:32b"
+      ],
+      "latency": 107.05,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-07-44-29-005595_chatcmpl-0bb4da6f-d005-4f01-8809-dcfc803084a4",
+          "traceId": "66fb9594",
+          "type": "GENERATION",
+          "name": "66fb_psg_gen_attempt#1",
+          "startTime": "2026-04-09T04:44:29.005000+00:00",
+          "endTime": "2026-04-09T04:46:16.055000+00:00",
+          "model": "qwen2.5-coder:32b",
+          "modelParameters": {},
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 107050.0,
+          "totalTokens": 2148,
+          "completionTokens": 634,
+          "environment": "default",
+          "costDetails": {},
+          "promptTokens": 1514,
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "updatedAt": "2026-04-09T04:47:06.702Z",
+      "createdAt": "2026-04-09T04:44:29.525Z",
+      "environment": "default"
+    },
+    {
+      "id": "0739cd56",
+      "timestamp": "2026-04-09T04:38:28.629000+00:00",
+      "name": "0739_py_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import os\nimport time\nimport numpy as np\nimport cv2\nfrom ai_edge_litert.interpreter import Interpreter\n\n### Phase 1: Setup\n# 1.1 Imports: Already done above\n# 1.2 Paths/Parameters\nmodel_path  = \"models/ssd-mobilenet_v1/detect.tflite\"\nlabel_path  = \"models/ssd-mobilenet_v1/labelmap.txt\"\ninput_path  = \"data/object_detection/sheeps.mp4\"\noutput_path  = \"results/object_detection/test_results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# 1.3 Load Labels\nwith open(label_path, 'r') as f:\n    labels = [line.strip() for line in f.readlines()]\n\n# 1.4 Load Interpreter\ninterpreter = Interpreter(model_path=model_path)\ninterpreter.allocate_tensors()\n\n# 1.5 Get Model Details\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\n# Correctly unpack the shape, considering batch dimension\nbatch_size, height, width, channels = input_details[0]['shape']\nfloating_model = (input_details[0]['dtype'] == np.float32)\n\n### Phase 2: Input Acquisition & Preprocessing Loop\n# 2.1 Acquire Input Data\ncap = cv2.VideoCapture(input_path)\nfourcc = cv2.VideoWriter_fourcc(*'mp4v')\nout = cv2.VideoWriter(output_path, fourcc, 20.0, (int(cap.get(3)), int(cap.get(4))))\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n\n    # 2.2 Preprocess Data\n    input_data = cv2.resize(frame, (width, height))\n    input_data = np.expand_dims(input_data, axis=0)  # Add batch dimension\n    \n    # 2.3 Quantization Handling\n    if floating_model:\n        input_data = (np.float32(input_data) - 127.5) / 127.5\n\n    ### Phase 3: Inference\n    # 3.1 Set Input Tensor(s)\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n\n    # 3.2 Run Inference\n    interpreter.invoke()\n\n    ### Phase 4: Output Interpretation & Handling Loop\n    # 4.1 Get Output Tensor(s)\n    boxes = interpreter.get_tensor(output_details[0]['index'])\n    classes = interpreter.get_tensor(output_details[1]['index'])\n    scores = interpreter.get_tensor(output_details[2]['index'])\n    num_detections = int(interpreter.get_tensor(output_details[3]['index']))\n\n    # 4.2 Interpret Results\n    for i in range(num_detections):\n        confidence = scores[0][i]\n        if confidence > confidence_threshold:\n            class_id = int(classes[0][i])\n            box = boxes[0][i]\n            \n            ymin, xmin, ymax, xmax = box\n            \n            # 4.3 Post-processing\n            (left, right, top, bottom) = (xmin * width, xmax * width,\n                                          ymin * height, ymax * height)\n            left, right, top, bottom = int(left), int(right), int(top), int(bottom)\n\n            cv2.rectangle(frame, (left, top), (right, bottom), (0, 255, 0), 2)\n            label = labels[class_id]\n            label_text = f'{label}: {confidence:.2f}'\n            cv2.putText(frame, label_text, (left, top - 10),\n                        cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)\n\n    # 4.4 Handle Output\n    out.write(frame)\n\n### Phase 5: Cleanup\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "qwen2.5-coder:32b_1099_psg_batch",
+      "metadata": {
+        "num_run": 14
+      },
+      "tags": [
+        "agx",
+        "benchmark",
+        "py_sketch_generator",
+        "qwen2.5-coder:32b"
+      ],
+      "latency": 304.342,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-07-38-28-631111_chatcmpl-864ec5ed-d6aa-4f1f-bee5-50632298e645",
+          "traceId": "0739cd56",
+          "type": "GENERATION",
+          "name": "0739_psg_gen_attempt#1",
+          "startTime": "2026-04-09T04:38:28.631000+00:00",
+          "endTime": "2026-04-09T04:40:46.421000+00:00",
+          "model": "qwen2.5-coder:32b",
+          "modelParameters": {},
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 137790.0,
+          "totalTokens": 2372,
+          "completionTokens": 858,
+          "environment": "default",
+          "costDetails": {},
+          "promptTokens": 1514,
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-07-40-46-562115_chatcmpl-e4852ca7-7ef2-43ac-b68b-63f820368381",
+          "traceId": "0739cd56",
+          "type": "GENERATION",
+          "name": "0739_psg_gen_attempt#2",
+          "startTime": "2026-04-09T04:40:46.562000+00:00",
+          "endTime": "2026-04-09T04:43:32.973000+00:00",
+          "model": "qwen2.5-coder:32b",
+          "modelParameters": {},
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 166411.0,
+          "totalTokens": 3509,
+          "completionTokens": 963,
+          "environment": "default",
+          "costDetails": {},
+          "promptTokens": 2546,
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "updatedAt": "2026-04-09T04:44:23.349Z",
+      "createdAt": "2026-04-09T04:38:29.149Z",
+      "environment": "default"
+    },
+    {
+      "id": "a8c60cf5",
+      "timestamp": "2026-04-09T04:35:17.282000+00:00",
+      "name": "a8c6_py_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import os\nimport time\nimport numpy as np\nimport cv2\nfrom ai_edge_litert.interpreter import Interpreter\n\n# Phase 1: Setup\nmodel_path  = \"models/ssd-mobilenet_v1/detect.tflite\"\nlabel_path  = \"models/ssd-mobilenet_v1/labelmap.txt\"\ninput_path  = \"data/object_detection/sheeps.mp4\"\noutput_path  = \"results/object_detection/test_results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# Load labels\nwith open(label_path, 'r') as f:\n    labels = [line.strip() for line in f.readlines()]\n\n# Load Interpreter\ninterpreter = Interpreter(model_path=model_path)\ninterpreter.allocate_tensors()\n\n# Get Model Details\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\nfloating_model = (input_details[0]['dtype'] == np.float32)\n\n# Phase 2: Input Acquisition & Preprocessing Loop\ncap = cv2.VideoCapture(input_path)\nframe_width = int(cap.get(3))\nframe_height = int(cap.get(4))\nout = cv2.VideoWriter(output_path, cv2.VideoWriter_fourcc(*'mp4v'), 20.0, (frame_width, frame_height))\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n\n    # Preprocess Data\n    input_data = cv2.resize(frame, (300, 300))\n    input_data = np.expand_dims(input_data, axis=0)\n    if floating_model:\n        input_data = (np.float32(input_data) - 127.5) / 127.5\n\n    # Phase 3: Inference\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n    interpreter.invoke()\n\n    # Phase 4: Output Interpretation & Handling Loop\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]  # Bounding box coordinates of detected objects\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]  # Class index of detected objects\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]   # Confidence of detected objects\n\n    for i in range(len(scores)):\n        if (scores[i] > confidence_threshold):\n            ymin, xmin, ymax, xmax = boxes[i]\n            label = labels[int(classes[i])]\n            score = scores[i]\n\n            # Scale the bounding box coordinates\n            (xminn, xmaxx, yminn, ymaxx) = (xmin * frame_width, xmax * frame_width, ymin * frame_height, ymax * frame_height)\n\n            # Draw rectangle and label on the frame\n            cv2.rectangle(frame, (int(xminn), int(yminn)), (int(xmaxx), int(ymaxx)), (10, 255, 0), 2)\n            cv2.putText(frame, f'{label}: {score:.2f}', (int(xminn), int(yminn) - 8), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (10, 255, 0), 2)\n\n    # Write the frame with detections to the output video file\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "qwen2.5-coder:32b_1099_psg_batch",
+      "metadata": {
+        "num_run": 13
+      },
+      "tags": [
+        "agx",
+        "benchmark",
+        "py_sketch_generator",
+        "qwen2.5-coder:32b"
+      ],
+      "latency": 123.725,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-07-35-17-283713_chatcmpl-1c704d6f-d642-413d-b278-f4450b805147",
+          "traceId": "a8c60cf5",
+          "type": "GENERATION",
+          "name": "a8c6_psg_gen_attempt#1",
+          "startTime": "2026-04-09T04:35:17.283000+00:00",
+          "endTime": "2026-04-09T04:37:21.008000+00:00",
+          "model": "qwen2.5-coder:32b",
+          "modelParameters": {},
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 123725.0,
+          "totalTokens": 2285,
+          "completionTokens": 771,
+          "environment": "default",
+          "costDetails": {},
+          "promptTokens": 1514,
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "updatedAt": "2026-04-09T04:38:22.994Z",
+      "createdAt": "2026-04-09T04:35:17.801Z",
+      "environment": "default"
+    },
+    {
+      "id": "fcf7dfb3",
+      "timestamp": "2026-04-09T04:32:15.966000+00:00",
+      "name": "fcf7_py_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import os\nimport numpy as np\nimport cv2\nfrom ai_edge_litert.interpreter import Interpreter\n\n# Phase 1: Setup\nmodel_path  = \"models/ssd-mobilenet_v1/detect.tflite\"\nlabel_path  = \"models/ssd-mobilenet_v1/labelmap.txt\"\ninput_path  = \"data/object_detection/sheeps.mp4\"\noutput_path  = \"results/object_detection/test_results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# Load labels\nwith open(label_path, 'r') as f:\n    labels = [line.strip() for line in f.readlines()]\n\n# Load Interpreter\ninterpreter = Interpreter(model_path=model_path)\ninterpreter.allocate_tensors()\n\n# Get Model Details\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\n# Phase 2: Input Acquisition & Preprocessing Loop\ncap = cv2.VideoCapture(input_path)\nwidth = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))\nheight = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))\nfps = cap.get(cv2.CAP_PROP_FPS)\n\nfourcc = cv2.VideoWriter_fourcc(*'mp4v')\nout = cv2.VideoWriter(output_path, fourcc, fps, (width, height))\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n\n    # Preprocess Data\n    input_data = cv2.resize(frame, (300, 300))\n    input_data = np.expand_dims(input_data, axis=0)\n    \n    # Quantization Handling\n    floating_model = (input_details[0]['dtype'] == np.float32)\n    if floating_model:\n        input_data = (np.float32(input_data) - 127.5) / 127.5\n\n    # Phase 3: Inference\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n    interpreter.invoke()\n\n    # Phase 4: Output Interpretation & Handling Loop\n    boxes = interpreter.get_tensor(output_details[0]['index'])\n    classes = interpreter.get_tensor(output_details[1]['index'])\n    scores = interpreter.get_tensor(output_details[2]['index'])\n    num_detections = int(interpreter.get_tensor(output_details[3]['index']))\n\n    # Interpret Results and Post-processing\n    for i in range(num_detections):\n        confidence = scores[0][i]\n        if confidence > confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[0][i]\n            ymin = int(max(1, ymin * height))\n            xmin = int(max(1, xmin * width))\n            ymax = int(min(height, ymax * height))\n            xmax = int(min(width, xmax * width))\n\n            label_id = int(classes[0][i])\n            label = labels[label_id - 1]  # Labels are 1-indexed\n\n            cv2.rectangle(frame, (xmin, ymin), (xmax, ymax), (0, 255, 0), 2)\n            cv2.putText(frame, f'{label}: {confidence:.2f}', (xmin, ymin - 5),\n                        cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)\n\n    # Handle Output\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()"
+      },
+      "session_id": "qwen2.5-coder:32b_1099_psg_batch",
+      "metadata": {
+        "num_run": 12
+      },
+      "tags": [
+        "agx",
+        "benchmark",
+        "py_sketch_generator",
+        "qwen2.5-coder:32b"
+      ],
+      "latency": 128.163,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-07-32-15-968235_chatcmpl-397830fd-1775-4793-b091-872d5e2412db",
+          "traceId": "fcf7dfb3",
+          "type": "GENERATION",
+          "name": "fcf7_psg_gen_attempt#1",
+          "startTime": "2026-04-09T04:32:15.968000+00:00",
+          "endTime": "2026-04-09T04:34:24.131000+00:00",
+          "model": "qwen2.5-coder:32b",
+          "modelParameters": {},
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 128163.0,
+          "totalTokens": 2280,
+          "completionTokens": 766,
+          "environment": "default",
+          "costDetails": {},
+          "promptTokens": 1514,
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "updatedAt": "2026-04-09T04:35:11.680Z",
+      "createdAt": "2026-04-09T04:32:16.486Z",
+      "environment": "default"
+    },
+    {
+      "id": "d2459300",
+      "timestamp": "2026-04-09T04:25:55.570000+00:00",
+      "name": "d245_py_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import os\nimport numpy as np\nimport cv2\nfrom ai_edge_litert.interpreter import Interpreter\n\n### Phase 1: Setup\n# 1.2 Paths/Parameters\nmodel_path  = \"models/ssd-mobilenet_v1/detect.tflite\"\nlabel_path  = \"models/ssd-mobilenet_v1/labelmap.txt\"\ninput_path  = \"data/object_detection/sheeps.mp4\"\noutput_path  = \"results/object_detection/test_results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# 1.3 Load Labels\nwith open(label_path, 'r') as f:\n    labels = [line.strip() for line in f.readlines()]\n\n# 1.4 Load Interpreter\ninterpreter = Interpreter(model_path=model_path)\ninterpreter.allocate_tensors()\n\n# 1.5 Get Model Details\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\nfloating_model = (input_details[0]['dtype'] == np.float32)\n\n### Phase 2: Input Acquisition & Preprocessing Loop\n# 2.1 Acquire Input Data\ncap = cv2.VideoCapture(input_path)\nframe_width = int(cap.get(3))\nframe_height = int(cap.get(4))\n\n# Define the codec and create VideoWriter object to save output video\nfourcc = cv2.VideoWriter_fourcc(*'mp4v')\nout = cv2.VideoWriter(output_path, fourcc, 20.0, (frame_width, frame_height))\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n\n    # 2.2 Preprocess Data\n    input_data = cv2.resize(frame, (300, 300))\n    input_data = np.expand_dims(input_data, axis=0)\n\n    # 2.3 Quantization Handling\n    if floating_model:\n        input_data = (np.float32(input_data) - 127.5) / 127.5\n\n    ### Phase 3: Inference\n    # 3.1 Set Input Tensor(s)\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n\n    # 3.2 Run Inference\n    interpreter.invoke()\n\n    ### Phase 4: Output Interpretation & Handling Loop\n    # 4.1 Get Output Tensor(s)\n    detection_boxes = interpreter.get_tensor(output_details[0]['index'])\n    detection_classes = interpreter.get_tensor(output_details[1]['index'])\n    detection_scores = interpreter.get_tensor(output_details[2]['index'])\n\n    # The number of detections is the first dimension of the scores tensor\n    num_detections = detection_scores.shape[1]\n\n    # 4.2 Interpret Results\n    for i in range(num_detections):\n        score = float(detection_scores[0][i])\n        if score > confidence_threshold:\n            class_id = int(detection_classes[0][i])\n            box = detection_boxes[0][i]\n\n            # 4.3 Post-processing\n            y1, x1, y2, x2 = box\n            height, width, _ = frame.shape\n            x1, y1, x2, y2 = int(x1 * width), int(y1 * height), int(x2 * width), int(y2 * height)\n\n            # Draw rectangle and label\n            cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 2)\n            label = f'{labels[class_id-1]}: {score:.2f}'\n            cv2.putText(frame, label, (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)\n\n    # 4.4 Handle Output\n    out.write(frame)\n\n### Phase 5: Cleanup\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "qwen2.5-coder:32b_1099_psg_batch",
+      "metadata": {
+        "num_run": 11
+      },
+      "tags": [
+        "agx",
+        "benchmark",
+        "py_sketch_generator",
+        "qwen2.5-coder:32b"
+      ],
+      "latency": 327.819,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-07-25-55-571785_chatcmpl-a0a1a438-356c-45e5-a61a-3038e5d9341a",
+          "traceId": "d2459300",
+          "type": "GENERATION",
+          "name": "d245_psg_gen_attempt#1",
+          "startTime": "2026-04-09T04:25:55.571000+00:00",
+          "endTime": "2026-04-09T04:28:15.551000+00:00",
+          "model": "qwen2.5-coder:32b",
+          "modelParameters": {},
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 139980.0,
+          "totalTokens": 2386,
+          "completionTokens": 872,
+          "environment": "default",
+          "costDetails": {},
+          "promptTokens": 1514,
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-07-28-15-739694_chatcmpl-41a6d092-1d87-47dd-9ca8-a3b611d35e10",
+          "traceId": "d2459300",
+          "type": "GENERATION",
+          "name": "d245_psg_gen_attempt#2",
+          "startTime": "2026-04-09T04:28:15.739000+00:00",
+          "endTime": "2026-04-09T04:31:23.390000+00:00",
+          "model": "qwen2.5-coder:32b",
+          "modelParameters": {},
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 187651.0,
+          "totalTokens": 3673,
+          "completionTokens": 1092,
+          "environment": "default",
+          "costDetails": {},
+          "promptTokens": 2581,
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "updatedAt": "2026-04-09T04:32:10.803Z",
+      "createdAt": "2026-04-09T04:25:56.090Z",
+      "environment": "default"
+    },
+    {
+      "id": "af13b982",
+      "timestamp": "2026-04-09T04:22:39.242000+00:00",
+      "name": "af13_py_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import os\nimport numpy as np\nimport cv2\nfrom ai_edge_litert.interpreter import Interpreter\n\n### CONFIGURATION PARAMETERS ###\nmodel_path  = \"models/ssd-mobilenet_v1/detect.tflite\"\nlabel_path  = \"models/ssd-mobilenet_v1/labelmap.txt\"\ninput_path  = \"data/object_detection/sheeps.mp4\"\noutput_path  = \"results/object_detection/test_results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n### Phase 1: Setup\n# 1.3 Load Labels\nwith open(label_path, 'r') as f:\n    labels = [line.strip() for line in f.readlines()]\n\n# 1.4 Load Interpreter\ninterpreter = Interpreter(model_path=model_path)\ninterpreter.allocate_tensors()\n\n# 1.5 Get Model Details\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\nheight = input_details[0]['shape'][1]\nwidth = input_details[0]['shape'][2]\nfloating_model = (input_details[0]['dtype'] == np.float32)\n\n### Phase 2: Input Acquisition & Preprocessing Loop\n# 2.1 Acquire Input Data\ncap = cv2.VideoCapture(input_path)\nfps = cap.get(cv2.CAP_PROP_FPS)\nframe_width = int(cap.get(3))\nframe_height = int(cap.get(4))\n\n# Define the codec and create VideoWriter object\nfourcc = cv2.VideoWriter_fourcc(*'mp4v')\nout = cv2.VideoWriter(output_path, fourcc, fps, (frame_width, frame_height))\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n\n    # 2.2 Preprocess Data\n    input_data = cv2.resize(frame, (width, height))\n    input_data = np.expand_dims(input_data, axis=0)\n    \n    # 2.3 Quantization Handling\n    if floating_model:\n        input_data = (np.float32(input_data) - 127.5) / 127.5\n\n    # Phase 3: Inference\n    # 3.1 Set Input Tensor(s)\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n\n    # 3.2 Run Inference\n    interpreter.invoke()\n\n    # Phase 4: Output Interpretation & Handling Loop\n    # 4.1 Get Output Tensor(s)\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]\n\n    # 4.2 Interpret Results\n    for i in range(len(scores)):\n        if scores[i] > confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[i]\n            label = labels[int(classes[i])]\n            \n            # 4.3 Post-processing: Apply confidence thresholding, coordinate scaling, and bounding box clipping\n            (left, right, top, bottom) = (xmin * frame_width, xmax * frame_width,\n                                          ymin * frame_height, ymax * frame_height)\n            left, right, top, bottom = int(left), int(right), int(top), int(bottom)\n\n            # Draw the rectangle on the frame\n            cv2.rectangle(frame, (left, top), (right, bottom), (0, 255, 0), 2)\n            cv2.putText(frame, f'{label}: {int(scores[i]*100)}%', (left, top - 8), \n                        cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)\n\n    # 4.4 Handle Output: Write the frame with detections to the output file\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "qwen2.5-coder:32b_1099_psg_batch",
+      "metadata": {
+        "num_run": 10
+      },
+      "tags": [
+        "agx",
+        "benchmark",
+        "py_sketch_generator",
+        "qwen2.5-coder:32b"
+      ],
+      "latency": 140.649,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-07-22-39-243397_chatcmpl-71f1ef62-ffb8-4094-8d8a-b81f33d762e8",
+          "traceId": "af13b982",
+          "type": "GENERATION",
+          "name": "af13_psg_gen_attempt#1",
+          "startTime": "2026-04-09T04:22:39.243000+00:00",
+          "endTime": "2026-04-09T04:24:59.892000+00:00",
+          "model": "qwen2.5-coder:32b",
+          "modelParameters": {},
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 140649.0,
+          "totalTokens": 2390,
+          "completionTokens": 876,
+          "environment": "default",
+          "costDetails": {},
+          "promptTokens": 1514,
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "updatedAt": "2026-04-09T04:25:49.469Z",
+      "createdAt": "2026-04-09T04:22:39.761Z",
+      "environment": "default"
+    },
+    {
+      "id": "f84bcbd8",
+      "timestamp": "2026-04-09T04:19:37.927000+00:00",
+      "name": "f84b_py_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import os\nimport numpy as np\nimport cv2\nfrom ai_edge_litert.interpreter import Interpreter\n\n### Phase 1: Setup\n# Paths/Parameters\nmodel_path  = \"models/ssd-mobilenet_v1/detect.tflite\"\nlabel_path  = \"models/ssd-mobilenet_v1/labelmap.txt\"\ninput_path  = \"data/object_detection/sheeps.mp4\"\noutput_path  = \"results/object_detection/test_results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# Load Labels\nwith open(label_path, 'r') as f:\n    labels = [line.strip() for line in f.readlines()]\n\n# Load Interpreter\ninterpreter = Interpreter(model_path=model_path)\ninterpreter.allocate_tensors()\n\n# Get Model Details\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\nfloating_model = (input_details[0]['dtype'] == np.float32)\n\n### Phase 2: Input Acquisition & Preprocessing Loop\ncap = cv2.VideoCapture(input_path)\nframe_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))\nframe_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))\nout = cv2.VideoWriter(output_path, cv2.VideoWriter_fourcc(*'mp4v'), 30, (frame_width, frame_height))\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n\n    # Preprocess Data\n    input_data = cv2.resize(frame, (input_details[0]['shape'][1], input_details[0]['shape'][2]))\n    input_data = np.expand_dims(input_data, axis=0)\n\n    if floating_model:\n        input_data = (np.float32(input_data) - 127.5) / 127.5\n\n    ### Phase 3: Inference\n    # Set Input Tensor(s)\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n\n    # Run Inference\n    interpreter.invoke()\n\n    ### Phase 4: Output Interpretation & Handling Loop\n    # Get Output Tensor(s)\n    output_boxes = interpreter.get_tensor(output_details[0]['index'])\n    output_classes = interpreter.get_tensor(output_details[1]['index'])\n    output_scores = interpreter.get_tensor(output_details[2]['index'])\n\n    # Interpret Results and Post-processing\n    for i in range(len(output_scores[0])):\n        if output_scores[0][i] > confidence_threshold:\n            box = output_boxes[0][i]\n            class_id = int(output_classes[0][i])\n            label = labels[class_id - 1]  # Adjust index since the label file is 1-indexed\n            score = output_scores[0][i]\n\n            # Scale and clip bounding boxes\n            ymin, xmin, ymax, xmax = box\n            (left, right, top, bottom) = (xmin * frame_width, xmax * frame_width,\n                                          ymin * frame_height, ymax * frame_height)\n\n            left, right, top, bottom = int(left), int(right), int(top), int(bottom)\n\n            # Draw rectangle and label\n            cv2.rectangle(frame, (left, top), (right, bottom), (0, 255, 0), 2)\n            cv2.putText(frame, f'{label}: {score:.2f}', (left, top - 10),\n                        cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)\n\n    # Handle Output\n    out.write(frame)\n\n### Phase 5: Cleanup\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "qwen2.5-coder:32b_1099_psg_batch",
+      "metadata": {
+        "num_run": 9
+      },
+      "tags": [
+        "agx",
+        "benchmark",
+        "py_sketch_generator",
+        "qwen2.5-coder:32b"
+      ],
+      "latency": 126.125,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-07-19-37-928624_chatcmpl-1e30c9bc-e867-497d-867d-8f182e0c6ec3",
+          "traceId": "f84bcbd8",
+          "type": "GENERATION",
+          "name": "f84b_psg_gen_attempt#1",
+          "startTime": "2026-04-09T04:19:37.928000+00:00",
+          "endTime": "2026-04-09T04:21:44.053000+00:00",
+          "model": "qwen2.5-coder:32b",
+          "modelParameters": {},
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 126125.0,
+          "totalTokens": 2300,
+          "completionTokens": 786,
+          "environment": "default",
+          "costDetails": {},
+          "promptTokens": 1514,
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "updatedAt": "2026-04-09T04:22:33.623Z",
+      "createdAt": "2026-04-09T04:19:38.445Z",
+      "environment": "default"
+    },
+    {
+      "id": "da137c50",
+      "timestamp": "2026-04-09T04:16:44.606000+00:00",
+      "name": "da13_py_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "from ai_edge_litert.interpreter import Interpreter\nimport numpy as np\nimport cv2\nimport os\n\n# Phase 1: Setup\nmodel_path  = \"models/ssd-mobilenet_v1/detect.tflite\"\nlabel_path  = \"models/ssd-mobilenet_v1/labelmap.txt\"\ninput_path  = \"data/object_detection/sheeps.mp4\"\noutput_path  = \"results/object_detection/test_results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# Load labels\nwith open(label_path, 'r') as f:\n    labels = [line.strip() for line in f.readlines()]\n\n# Load Interpreter\ninterpreter = Interpreter(model_path=model_path)\ninterpreter.allocate_tensors()\n\n# Get Model Details\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\nfloating_model = (input_details[0]['dtype'] == np.float32)\n\n# Phase 2: Input Acquisition & Preprocessing Loop\ncap = cv2.VideoCapture(input_path)\nif not cap.isOpened():\n    raise IOError(\"Cannot open video\")\n\nframe_width = int(cap.get(3))\nframe_height = int(cap.get(4))\nfps = cap.get(cv2.CAP_PROP_FPS)\n\nout = cv2.VideoWriter(output_path, cv2.VideoWriter_fourcc(*'mp4v'), fps, (frame_width, frame_height))\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n\n    # Preprocess Data\n    input_data = cv2.resize(frame, (300, 300))\n    input_data = np.expand_dims(input_data, axis=0)\n    \n    if floating_model:\n        input_data = (np.float32(input_data) - 127.5) / 127.5\n\n    # Phase 3: Inference\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n    interpreter.invoke()\n\n    # Phase 4: Output Interpretation & Handling Loop\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]\n\n    for i in range(len(scores)):\n        if scores[i] > confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[i]\n            (left, right, top, bottom) = (xmin * frame_width, xmax * frame_width,\n                                          ymin * frame_height, ymax * frame_height)\n\n            cv2.rectangle(frame, (int(left), int(top)), (int(right), int(bottom)), (0, 255, 0), 2)\n            label = labels[int(classes[i])] + ': {:.2f}'.format(scores[i])\n            cv2.putText(frame, label, (int(left), int(top) - 10),\n                        cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)\n\n    # Handle Output\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "qwen2.5-coder:32b_1099_psg_batch",
+      "metadata": {
+        "num_run": 8
+      },
+      "tags": [
+        "agx",
+        "benchmark",
+        "py_sketch_generator",
+        "qwen2.5-coder:32b"
+      ],
+      "latency": 118.859,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-07-16-44-608231_chatcmpl-dc6635e5-b1bc-46ca-b5c0-1ef9d52f210f",
+          "traceId": "da137c50",
+          "type": "GENERATION",
+          "name": "da13_psg_gen_attempt#1",
+          "startTime": "2026-04-09T04:16:44.608000+00:00",
+          "endTime": "2026-04-09T04:18:43.467000+00:00",
+          "model": "qwen2.5-coder:32b",
+          "modelParameters": {},
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 118859.0,
+          "totalTokens": 2222,
+          "completionTokens": 708,
+          "environment": "default",
+          "costDetails": {},
+          "promptTokens": 1514,
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "updatedAt": "2026-04-09T04:19:32.844Z",
+      "createdAt": "2026-04-09T04:16:45.126Z",
+      "environment": "default"
+    },
+    {
+      "id": "cf6de523",
+      "timestamp": "2026-04-09T04:10:38.263000+00:00",
+      "name": "cf6d_py_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import os\nimport time\nimport numpy as np\nimport cv2\nfrom ai_edge_litert.interpreter import Interpreter\n\n### Phase 1: Setup\n\n# Paths and parameters\nmodel_path  = \"models/ssd-mobilenet_v1/detect.tflite\"\nlabel_path  = \"models/ssd-mobilenet_v1/labelmap.txt\"\ninput_path  = \"data/object_detection/sheeps.mp4\"\noutput_path  = \"results/object_detection/test_results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# Load labels\nwith open(label_path, 'r') as f:\n    labels = [line.strip() for line in f.readlines()]\n\n# Load interpreter\ninterpreter = Interpreter(model_path=model_path)\ninterpreter.allocate_tensors()\n\n# Get model details\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\nfloating_model = (input_details[0]['dtype'] == np.float32)\n\n### Phase 2: Input Acquisition & Preprocessing Loop\n\n# Acquire input data\ncap = cv2.VideoCapture(input_path)\nif not cap.isOpened():\n    raise IOError(\"Cannot open video file\")\n\n# Get video properties to write output video\nwidth = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))\nheight = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))\nfps = cap.get(cv2.CAP_PROP_FPS)\n\n# Define codec and create VideoWriter object\nfourcc = cv2.VideoWriter_fourcc(*'mp4v')\nout = cv2.VideoWriter(output_path, fourcc, fps, (width, height))\n\nwhile True:\n    ret, frame = cap.read()\n    if not ret:\n        break\n\n    # Preprocess data\n    input_data = cv2.resize(frame, (input_details[0]['shape'][1], input_details[0]['shape'][2]))\n    input_data = np.expand_dims(input_data, axis=0)\n    \n    if floating_model:\n        input_data = (np.float32(input_data) - 127.5) / 127.5\n\n    ### Phase 3: Inference\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n    interpreter.invoke()\n\n    ### Phase 4: Output Interpretation & Handling Loop\n\n    # Get output tensors\n    boxes = interpreter.get_tensor(output_details[0]['index'])\n    classes = interpreter.get_tensor(output_details[1]['index'])\n    scores = interpreter.get_tensor(output_details[2]['index'])\n    num_detections = int(interpreter.get_tensor(output_details[3]['index']))\n\n    # Interpret results and apply confidence threshold\n    for i in range(num_detections):\n        if scores[0][i] > confidence_threshold:\n            # Get box coordinates and scale them to the frame dimensions\n            ymin, xmin, ymax, xmax = boxes[0][i]\n            (left, right, top, bottom) = (xmin * width, xmax * width,\n                                          ymin * height, ymax * height)\n\n            # Draw bounding box on frame\n            cv2.rectangle(frame, (int(left), int(top)), (int(right), int(bottom)), (10, 255, 0), 2)\n\n            # Get label and score\n            object_name = labels[int(classes[0][i])]\n            label = f'{object_name}: {int(scores[0][i] * 100)}%'\n            labelSize, baseLine = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.7, 2)\n            \n            # Draw label text on frame\n            left = max(left, labelSize[0])\n            top = max(top, labelSize[1])\n            cv2.putText(frame, label, (int(left), int(top - 5)), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 2)\n\n    # Write the frame with detections to the output video file\n    out.write(frame)\n\n### Phase 5: Cleanup\n\n# Release resources\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "qwen2.5-coder:32b_1099_psg_batch",
+      "metadata": {
+        "num_run": 7
+      },
+      "tags": [
+        "agx",
+        "benchmark",
+        "py_sketch_generator",
+        "qwen2.5-coder:32b"
+      ],
+      "latency": 313.147,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-07-10-38-265101_chatcmpl-f687024b-c3cd-4190-9bb3-ccb32c56720b",
+          "traceId": "cf6de523",
+          "type": "GENERATION",
+          "name": "cf6d_psg_gen_attempt#1",
+          "startTime": "2026-04-09T04:10:38.265000+00:00",
+          "endTime": "2026-04-09T04:13:00.448000+00:00",
+          "model": "qwen2.5-coder:32b",
+          "modelParameters": {},
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 142183.0,
+          "totalTokens": 2400,
+          "completionTokens": 886,
+          "environment": "default",
+          "costDetails": {},
+          "promptTokens": 1514,
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-07-13-00-593965_chatcmpl-93142edc-998f-4a42-98bc-415f414da1c8",
+          "traceId": "cf6de523",
+          "type": "GENERATION",
+          "name": "cf6d_psg_gen_attempt#2",
+          "startTime": "2026-04-09T04:13:00.593000+00:00",
+          "endTime": "2026-04-09T04:15:51.412000+00:00",
+          "model": "qwen2.5-coder:32b",
+          "modelParameters": {},
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 170819.0,
+          "totalTokens": 3588,
+          "completionTokens": 988,
+          "environment": "default",
+          "costDetails": {},
+          "promptTokens": 2600,
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "updatedAt": "2026-04-09T04:16:39.081Z",
+      "createdAt": "2026-04-09T04:10:38.783Z",
+      "environment": "default"
+    },
+    {
+      "id": "2e374335",
+      "timestamp": "2026-04-09T04:07:36.928000+00:00",
+      "name": "2e37_py_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import os\nimport time\nimport numpy as np\nimport cv2\nfrom ai_edge_litert.interpreter import Interpreter\n\n# Phase 1: Setup\n# 1.2 Paths/Parameters\nmodel_path  = \"models/ssd-mobilenet_v1/detect.tflite\"\nlabel_path  = \"models/ssd-mobilenet_v1/labelmap.txt\"\ninput_path  = \"data/object_detection/sheeps.mp4\"\noutput_path  = \"results/object_detection/test_results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# 1.3 Load Labels\nwith open(label_path, 'r') as f:\n    labels = [line.strip() for line in f.readlines()]\n\n# 1.4 Load Interpreter\ninterpreter = Interpreter(model_path=model_path)\ninterpreter.allocate_tensors()\n\n# 1.5 Get Model Details\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\nfloating_model = (input_details[0]['dtype'] == np.float32)\n\n# Phase 2: Input Acquisition & Preprocessing Loop\ncap = cv2.VideoCapture(input_path)\nif not cap.isOpened():\n    raise IOError(f\"Could not open video file {input_path}\")\n\nframe_width = int(cap.get(3))\nframe_height = int(cap.get(4))\nfps = cap.get(cv2.CAP_PROP_FPS)\n\nfourcc = cv2.VideoWriter_fourcc(*'mp4v')\nout = cv2.VideoWriter(output_path, fourcc, fps, (frame_width, frame_height))\n\nwhile True:\n    ret, frame = cap.read()\n    if not ret:\n        break\n\n    # Preprocess Data\n    input_data = cv2.resize(frame, (300, 300))\n    input_data = np.expand_dims(input_data, axis=0)\n\n    if floating_model:\n        input_data = (np.float32(input_data) - 127.5) / 127.5\n\n    # Phase 3: Inference\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n    interpreter.invoke()\n\n    # Phase 4: Output Interpretation & Handling Loop\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]\n\n    for i in range(len(scores)):\n        if scores[i] > confidence_threshold:\n            box = boxes[i]\n            class_id = int(classes[i])\n            label = labels[class_id]\n\n            # Scale bounding box coordinates\n            ymin, xmin, ymax, xmax = box\n            (left, right, top, bottom) = (xmin * frame_width, xmax * frame_width,\n                                          ymin * frame_height, ymax * frame_height)\n            \n            left, right, top, bottom = int(left), int(right), int(top), int(bottom)\n\n            # Draw bounding box and label on frame\n            cv2.rectangle(frame, (left, top), (right, bottom), (0, 255, 0), 2)\n            cv2.putText(frame, f'{label}: {scores[i]:.2f}', (left, top - 10),\n                        cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)\n\n    # Write processed frame to output video\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()"
+      },
+      "session_id": "qwen2.5-coder:32b_1099_psg_batch",
+      "metadata": {
+        "num_run": 6
+      },
+      "tags": [
+        "agx",
+        "benchmark",
+        "py_sketch_generator",
+        "qwen2.5-coder:32b"
+      ],
+      "latency": 126.116,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-07-07-36-929764_chatcmpl-189c1289-aab2-4257-9a35-058aed3be7ad",
+          "traceId": "2e374335",
+          "type": "GENERATION",
+          "name": "2e37_psg_gen_attempt#1",
+          "startTime": "2026-04-09T04:07:36.929000+00:00",
+          "endTime": "2026-04-09T04:09:43.045000+00:00",
+          "model": "qwen2.5-coder:32b",
+          "modelParameters": {},
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 126116.0,
+          "totalTokens": 2301,
+          "completionTokens": 787,
+          "environment": "default",
+          "costDetails": {},
+          "promptTokens": 1514,
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "updatedAt": "2026-04-09T04:10:32.687Z",
+      "createdAt": "2026-04-09T04:07:37.447Z",
+      "environment": "default"
+    },
+    {
+      "id": "b38ec372",
+      "timestamp": "2026-04-09T04:04:20.596000+00:00",
+      "name": "b38e_py_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import os\nimport numpy as np\nimport cv2\n\n# Phase 1: Setup\nfrom ai_edge_litert.interpreter import Interpreter\n\n# Paths/Parameters\nmodel_path  = \"models/ssd-mobilenet_v1/detect.tflite\"\nlabel_path  = \"models/ssd-mobilenet_v1/labelmap.txt\"\ninput_path  = \"data/object_detection/sheeps.mp4\"\noutput_path  = \"results/object_detection/test_results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# Load Labels\nwith open(label_path, 'r') as f:\n    labels = [line.strip() for line in f.readlines()]\n\n# Load Interpreter\ninterpreter = Interpreter(model_path=model_path)\ninterpreter.allocate_tensors()\n\n# Get Model Details\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\n# Phase 2: Input Acquisition & Preprocessing Loop\n\n# Acquire Input Data\ncap = cv2.VideoCapture(input_path)\n\n# Check if video opened successfully\nif not cap.isOpened():\n    raise IOError(\"Could not open video file\")\n\n# Get video properties to write the output file with the same properties\nframe_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))\nframe_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))\nfps = cap.get(cv2.CAP_PROP_FPS)\n\n# Define codec and create VideoWriter object\nfourcc = cv2.VideoWriter_fourcc(*'mp4v')\nout = cv2.VideoWriter(output_path, fourcc, fps, (frame_width, frame_height))\n\nwhile True:\n    ret, frame = cap.read()\n    if not ret:\n        break\n\n    # Preprocess Data\n    input_data = cv2.resize(frame, (300, 300))  # SSD MobileNet v1 expects 300x300 input\n    input_data = np.expand_dims(input_data, axis=0)\n\n    # Quantization Handling\n    floating_model = (input_details[0]['dtype'] == np.float32)\n    if floating_model:\n        input_data = (np.float32(input_data) - 127.5) / 127.5\n\n    # Phase 3: Inference\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n    interpreter.invoke()\n\n    # Phase 4: Output Interpretation & Handling Loop\n\n    # Get Output Tensor(s)\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]\n\n    # Interpret Results\n    for i in range(len(scores)):\n        if scores[i] > confidence_threshold:\n            # Get bounding box coordinates and scale them to the original frame size\n            ymin, xmin, ymax, xmax = boxes[i]\n            (left, right, top, bottom) = (xmin * frame_width, xmax * frame_width,\n                                          ymin * frame_height, ymax * frame_height)\n            \n            # Draw rectangle on the frame\n            cv2.rectangle(frame, (int(left), int(top)), (int(right), int(bottom)), (0, 255, 0), 2)\n\n            # Get label and score\n            object_name = labels[int(classes[i])]\n            label = f'{object_name}: {int(scores[i]*100)}%'\n            \n            # Draw text on the frame\n            cv2.putText(frame, label, (int(left), int(top) - 10),\n                        cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)\n\n    # Handle Output\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "qwen2.5-coder:32b_1099_psg_batch",
+      "metadata": {
+        "num_run": 5
+      },
+      "tags": [
+        "agx",
+        "benchmark",
+        "py_sketch_generator",
+        "qwen2.5-coder:32b"
+      ],
+      "latency": 141.552,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-07-04-20-598317_chatcmpl-784c2b8d-7853-4047-b7d4-014399f54c18",
+          "traceId": "b38ec372",
+          "type": "GENERATION",
+          "name": "b38e_psg_gen_attempt#1",
+          "startTime": "2026-04-09T04:04:20.598000+00:00",
+          "endTime": "2026-04-09T04:06:42.150000+00:00",
+          "model": "qwen2.5-coder:32b",
+          "modelParameters": {},
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 141552.0,
+          "totalTokens": 2397,
+          "completionTokens": 883,
+          "environment": "default",
+          "costDetails": {},
+          "promptTokens": 1514,
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "updatedAt": "2026-04-09T04:07:31.821Z",
+      "createdAt": "2026-04-09T04:04:21.116Z",
+      "environment": "default"
+    },
+    {
+      "id": "817bd084",
+      "timestamp": "2026-04-09T04:00:45.269000+00:00",
+      "name": "817b_py_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "from ai_edge_litert.interpreter import Interpreter\nimport numpy as np\nimport cv2\nimport os\n\n### Phase 1: Setup\n\n# 1.1 Imports\n# Already done above\n\n# 1.2 Paths/Parameters\nmodel_path  = \"models/ssd-mobilenet_v1/detect.tflite\"\nlabel_path  = \"models/ssd-mobilenet_v1/labelmap.txt\"\ninput_path  = \"data/object_detection/sheeps.mp4\"\noutput_path  = \"results/object_detection/test_results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# 1.3 Load Labels (Conditional)\nwith open(label_path, 'r') as f:\n    labels = [line.strip() for line in f.readlines()]\n\n# 1.4 Load Interpreter\ninterpreter = Interpreter(model_path=model_path)\ninterpreter.allocate_tensors()\n\n# 1.5 Get Model Details\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\n# Extract necessary information from the input and output details\ninput_shape = input_details[0]['shape']\nfloating_model = (input_details[0]['dtype'] == np.float32)\n\n### Phase 2: Input Acquisition & Preprocessing Loop\n\n# 2.1 Acquire Input Data\ncap = cv2.VideoCapture(input_path)\nif not cap.isOpened():\n    raise IOError(\"Cannot open video file\")\n\n# Get video properties for output video\nfps = int(cap.get(cv2.CAP_PROP_FPS))\nwidth = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))\nheight = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))\n\n# Define the codec and create VideoWriter object\nfourcc = cv2.VideoWriter_fourcc(*'mp4v')\nout = cv2.VideoWriter(output_path, fourcc, fps, (width, height))\n\n### Phase 3: Inference\n\n# Initialize variables for mAP calculation\nall_detections = []\nall_annotations = []\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n    \n    # 2.2 Preprocess Data\n    input_data = cv2.resize(frame, (input_shape[1], input_shape[2]))\n    input_data = np.expand_dims(input_data, axis=0)\n    \n    # 2.3 Quantization Handling\n    if floating_model:\n        input_data = (np.float32(input_data) - 127.5) / 127.5\n    \n    # 3.1 Set Input Tensor(s)\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n    \n    # 3.2 Run Inference\n    interpreter.invoke()\n    \n    ### Phase 4: Output Interpretation & Handling Loop\n\n    # 4.1 Get Output Tensor(s)\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]\n    num_detections = int(interpreter.get_tensor(output_details[3]['index']))\n    \n    # 4.2 Interpret Results\n    for i in range(num_detections):\n        if scores[i] > confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[i]\n            (left, right, top, bottom) = (xmin * width, xmax * width,\n                                          ymin * height, ymax * height)\n            \n            # Draw bounding box and label\n            cv2.rectangle(frame, (int(left), int(top)), (int(right), int(bottom)), (0, 255, 0), 2)\n            label = labels[int(classes[i])] if labels else f'object {int(classes[i])}'\n            label_text = f'{label}: {scores[i]:.2f}'\n            cv2.putText(frame, label_text, (int(left), int(top) - 10),\n                        cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)\n    \n    # 4.3 Post-processing: Not additional post-processing required here\n    \n    # 4.4 Handle Output\n    out.write(frame)\n\n# Release the video capture and writer objects\ncap.release()\nout.release()\n\n### Phase 5: Cleanup\n\n# Already done above with release statements"
+      },
+      "session_id": "qwen2.5-coder:32b_1099_psg_batch",
+      "metadata": {
+        "num_run": 4
+      },
+      "tags": [
+        "agx",
+        "benchmark",
+        "py_sketch_generator",
+        "qwen2.5-coder:32b"
+      ],
+      "latency": 162.243,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-07-00-45-271070_chatcmpl-f1e98fcc-f0ce-4f61-80f9-2c2803b3e1cb",
+          "traceId": "817bd084",
+          "type": "GENERATION",
+          "name": "817b_psg_gen_attempt#1",
+          "startTime": "2026-04-09T04:00:45.271000+00:00",
+          "endTime": "2026-04-09T04:03:27.514000+00:00",
+          "model": "qwen2.5-coder:32b",
+          "modelParameters": {},
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 162243.0,
+          "totalTokens": 2492,
+          "completionTokens": 978,
+          "environment": "default",
+          "costDetails": {},
+          "promptTokens": 1514,
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "updatedAt": "2026-04-09T04:04:14.988Z",
+      "createdAt": "2026-04-09T04:00:45.789Z",
+      "environment": "default"
+    },
+    {
+      "id": "78011b7a",
+      "timestamp": "2026-04-09T03:55:25.743000+00:00",
+      "name": "7801_py_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "from ai_edge_litert.interpreter import Interpreter\nimport numpy as np\nimport cv2\n\n# Phase 1: Setup\nmodel_path  = \"models/ssd-mobilenet_v1/detect.tflite\"\nlabel_path  = \"models/ssd-mobilenet_v1/labelmap.txt\"\ninput_path  = \"data/object_detection/sheeps.mp4\"\noutput_path  = \"results/object_detection/test_results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# Load labels\nwith open(label_path, 'r') as f:\n    labels = [line.strip() for line in f.readlines()]\n\n# Load interpreter and allocate tensors\ninterpreter = Interpreter(model_path=model_path)\ninterpreter.allocate_tensors()\n\n# Get model details\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\n# Determine if the input is floating point\nfloating_model = (input_details[0]['dtype'] == np.float32)\n\n# Phase 2: Input Acquisition & Preprocessing Loop\ncap = cv2.VideoCapture(input_path)\nwidth = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))\nheight = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))\nfps = cap.get(cv2.CAP_PROP_FPS)\n\nfourcc = cv2.VideoWriter_fourcc(*'mp4v')\nout = cv2.VideoWriter(output_path, fourcc, fps, (width, height))\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n\n    # Preprocess data\n    input_data = cv2.resize(frame, (input_details[0]['shape'][1], input_details[0]['shape'][2]))\n    input_data = np.expand_dims(input_data, axis=0)\n\n    if floating_model:\n        input_data = (np.float32(input_data) - 127.5) / 127.5\n\n    # Phase 3: Inference\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n    interpreter.invoke()\n\n    # Phase 4: Output Interpretation & Handling Loop\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]\n\n    for i in range(len(scores)):\n        if scores[i] > confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[i]\n            ymin = int(max(1, ymin * height))\n            xmin = int(max(1, xmin * width))\n            ymax = int(min(height, ymax * height))\n            xmax = int(min(width, xmax * width))\n\n            label = labels[int(classes[i])]\n            score = scores[i]\n\n            cv2.rectangle(frame, (xmin, ymin), (xmax, ymax), (0, 255, 0), 2)\n            cv2.putText(frame, f'{label}: {score:.2f}', (xmin, ymin - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (36, 255, 12), 2)\n\n    # Write the frame to output video\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()"
+      },
+      "session_id": "qwen2.5-coder:32b_1099_psg_batch",
+      "metadata": {
+        "num_run": 3
+      },
+      "tags": [
+        "agx",
+        "benchmark",
+        "py_sketch_generator",
+        "qwen2.5-coder:32b"
+      ],
+      "latency": 263.803,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-06-55-25-744693_chatcmpl-92f1f544-0c8b-4ff3-be57-5482f8733969",
+          "traceId": "78011b7a",
+          "type": "GENERATION",
+          "name": "7801_psg_gen_attempt#1",
+          "startTime": "2026-04-09T03:55:25.744000+00:00",
+          "endTime": "2026-04-09T03:57:26.361000+00:00",
+          "model": "qwen2.5-coder:32b",
+          "modelParameters": {},
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 120617.0,
+          "totalTokens": 2233,
+          "completionTokens": 719,
+          "environment": "default",
+          "costDetails": {},
+          "promptTokens": 1514,
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-06-57-26-506024_chatcmpl-da54f760-4039-46f9-a375-0f378875674e",
+          "traceId": "78011b7a",
+          "type": "GENERATION",
+          "name": "7801_psg_gen_attempt#2",
+          "startTime": "2026-04-09T03:57:26.506000+00:00",
+          "endTime": "2026-04-09T03:59:49.547000+00:00",
+          "model": "qwen2.5-coder:32b",
+          "modelParameters": {},
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 143041.0,
+          "totalTokens": 3252,
+          "completionTokens": 825,
+          "environment": "default",
+          "costDetails": {},
+          "promptTokens": 2427,
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "updatedAt": "2026-04-09T04:00:39.467Z",
+      "createdAt": "2026-04-09T03:55:26.263Z",
+      "environment": "default"
+    },
+    {
+      "id": "92e3c94d",
+      "timestamp": "2026-04-09T03:49:41.379000+00:00",
+      "name": "92e3_py_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import os\nimport time\nimport numpy as np\nimport cv2\nfrom ai_edge_litert.interpreter import Interpreter\n\n# Phase 1: Setup\n# Paths/Parameters\nmodel_path  = \"models/ssd-mobilenet_v1/detect.tflite\"\nlabel_path  = \"models/ssd-mobilenet_v1/labelmap.txt\"\ninput_path  = \"data/object_detection/sheeps.mp4\"\noutput_path  = \"results/object_detection/test_results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# Load Labels\nwith open(label_path, 'r') as f:\n    labels = [line.strip() for line in f.readlines()]\n\n# Load Interpreter\ninterpreter = Interpreter(model_path=model_path)\ninterpreter.allocate_tensors()\n\n# Get Model Details\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\nfloating_model = (input_details[0]['dtype'] == np.float32)\n\n# Phase 2: Input Acquisition & Preprocessing Loop\ncap = cv2.VideoCapture(input_path)\nwidth = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))\nheight = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))\nfps = cap.get(cv2.CAP_PROP_FPS)\n\nfourcc = cv2.VideoWriter_fourcc(*'mp4v')\nout = cv2.VideoWriter(output_path, fourcc, fps, (width, height))\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n\n    # Preprocess Data\n    input_data = cv2.resize(frame, (input_details[0]['shape'][1], input_details[0]['shape'][2]))\n    input_data = np.expand_dims(input_data, axis=0)\n\n    if floating_model:\n        input_data = (np.float32(input_data) - 127.5) / 127.5\n\n    # Phase 3: Inference\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n    interpreter.invoke()\n\n    # Phase 4: Output Interpretation & Handling Loop\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]\n\n    for i in range(len(scores)):\n        if scores[i] > confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[i]\n            (left, right, top, bottom) = (xmin * width, xmax * width,\n                                          ymin * height, ymax * height)\n            \n            cv2.rectangle(frame, (int(left), int(top)), (int(right), int(bottom)), (0, 255, 0), 2)\n\n            object_name = labels[int(classes[i])]\n            label = f'{object_name}: {int(scores[i] * 100)}%'\n            labelSize, baseLine = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.7, 2)\n            \n            left = max(left, labelSize[0])\n            top = max(top, labelSize[1])\n            cv2.rectangle(frame, (int(left - labelSize[0]), int(top - labelSize[1] - baseLine)),\n                          (int(left), int(top)), (255, 255, 255), cv2.FILLED)\n            \n            cv2.putText(frame, label, (int(left - labelSize[0]), int(top - baseLine)),\n                        cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0), 2)\n\n    # Handle Output\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "qwen2.5-coder:32b_1099_psg_batch",
+      "metadata": {
+        "num_run": 2
+      },
+      "tags": [
+        "agx",
+        "benchmark",
+        "py_sketch_generator",
+        "qwen2.5-coder:32b"
+      ],
+      "latency": 290.895,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-06-49-41-380687_chatcmpl-346082f5-ea44-4a03-82bb-20129d68adaa",
+          "traceId": "92e3c94d",
+          "type": "GENERATION",
+          "name": "92e3_psg_gen_attempt#1",
+          "startTime": "2026-04-09T03:49:41.380000+00:00",
+          "endTime": "2026-04-09T03:51:51.617000+00:00",
+          "model": "qwen2.5-coder:32b",
+          "modelParameters": {},
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 130237.0,
+          "totalTokens": 2293,
+          "completionTokens": 779,
+          "environment": "default",
+          "costDetails": {},
+          "promptTokens": 1514,
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-06-51-51-762632_chatcmpl-3e11f37d-c4f1-4c25-8261-09fdea531b50",
+          "traceId": "92e3c94d",
+          "type": "GENERATION",
+          "name": "92e3_psg_gen_attempt#2",
+          "startTime": "2026-04-09T03:51:51.762000+00:00",
+          "endTime": "2026-04-09T03:54:32.275000+00:00",
+          "model": "qwen2.5-coder:32b",
+          "modelParameters": {},
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 160513.0,
+          "totalTokens": 3459,
+          "completionTokens": 928,
+          "environment": "default",
+          "costDetails": {},
+          "promptTokens": 2531,
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "updatedAt": "2026-04-09T03:55:20.249Z",
+      "createdAt": "2026-04-09T03:49:41.900Z",
+      "environment": "default"
+    },
+    {
+      "id": "ef4dbf26",
+      "timestamp": "2026-04-09T03:44:03.052000+00:00",
+      "name": "ef4d_py_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "from ai_edge_litert.interpreter import Interpreter\nimport os\nimport numpy as np\nimport cv2\n\n# Phase 1: Setup\n## Paths/Parameters\nmodel_path  = \"models/ssd-mobilenet_v1/detect.tflite\"\nlabel_path  = \"models/ssd-mobilenet_v1/labelmap.txt\"\ninput_path  = \"data/object_detection/sheeps.mp4\"\noutput_path  = \"results/object_detection/test_results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n## Load Labels\nwith open(label_path, 'r') as f:\n    labels = [line.strip() for line in f.readlines()]\n\n## Load Interpreter\ninterpreter = Interpreter(model_path=model_path)\ninterpreter.allocate_tensors()\n\n## Get Model Details\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\n# Extracting necessary information about input and output tensors\ninput_shape = input_details[0]['shape']\nfloating_model = (input_details[0]['dtype'] == np.float32)\n\n# Phase 2: Input Acquisition & Preprocessing Loop\n## Acquire Input Data\ncap = cv2.VideoCapture(input_path)\nif not cap.isOpened():\n    raise IOError(\"Cannot open video file\")\n\nwidth = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))\nheight = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))\nfps = cap.get(cv2.CAP_PROP_FPS)\n\n## Prepare Output Video\nfourcc = cv2.VideoWriter_fourcc(*'mp4v')\nout = cv2.VideoWriter(output_path, fourcc, fps, (width, height))\n\nwhile True:\n    ret, frame = cap.read()\n    if not ret:\n        break\n\n    ## Preprocess Data\n    input_data = cv2.resize(frame, (input_shape[1], input_shape[2]))\n    input_data = np.expand_dims(input_data, axis=0)\n\n    if floating_model:\n        input_data = (np.float32(input_data) - 127.5) / 127.5\n\n    # Phase 3: Inference\n    ## Set Input Tensor(s)\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n\n    ## Run Inference\n    interpreter.invoke()\n\n    # Phase 4: Output Interpretation & Handling Loop\n    ## Get Output Tensor(s)\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]\n\n    ## Interpret Results\n    for i in range(len(scores)):\n        if scores[i] > confidence_threshold:\n            ymin = int(max(1, (boxes[i][0] * height)))\n            xmin = int(max(1, (boxes[i][1] * width)))\n            ymax = int(min(height, (boxes[i][2] * height)))\n            xmax = int(min(width, (boxes[i][3] * width)))\n\n            label = labels[int(classes[i])]\n            cv2.rectangle(frame, (xmin, ymin), (xmax, ymax), (0, 255, 0), 2)\n            cv2.putText(frame, f'{label}: {scores[i]:.2f}', (xmin, ymin - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (36, 255, 12), 2)\n\n    ## Handle Output\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "qwen2.5-coder:32b_1099_psg_batch",
+      "metadata": {
+        "num_run": 1
+      },
+      "tags": [
+        "agx",
+        "benchmark",
+        "py_sketch_generator",
+        "qwen2.5-coder:32b"
+      ],
+      "latency": 281.976,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-06-44-03-123911_chatcmpl-d3eb0a2b-e251-47d1-8568-febc9160e7a4",
+          "traceId": "ef4dbf26",
+          "type": "GENERATION",
+          "name": "ef4d_psg_gen_attempt#1",
+          "startTime": "2026-04-09T03:44:03.123000+00:00",
+          "endTime": "2026-04-09T03:46:18.630000+00:00",
+          "model": "qwen2.5-coder:32b",
+          "modelParameters": {},
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 135507.0,
+          "totalTokens": 2322,
+          "completionTokens": 808,
+          "environment": "default",
+          "costDetails": {},
+          "promptTokens": 1514,
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        },
+        {
+          "id": "time-06-46-22-748571_chatcmpl-d517aaef-dfff-4826-a0b2-a769dc681f30",
+          "traceId": "ef4dbf26",
+          "type": "GENERATION",
+          "name": "ef4d_psg_gen_attempt#2",
+          "startTime": "2026-04-09T03:46:22.748000+00:00",
+          "endTime": "2026-04-09T03:48:45.099000+00:00",
+          "model": "qwen2.5-coder:32b",
+          "modelParameters": {},
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 142351.0,
+          "totalTokens": 3304,
+          "completionTokens": 817,
+          "environment": "default",
+          "costDetails": {},
+          "promptTokens": 2487,
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "updatedAt": "2026-04-09T03:49:35.840Z",
+      "createdAt": "2026-04-09T03:44:03.573Z",
+      "environment": "default"
+    }
+  ],
+  "meta": {
+    "total_items": 30
+  }
+}

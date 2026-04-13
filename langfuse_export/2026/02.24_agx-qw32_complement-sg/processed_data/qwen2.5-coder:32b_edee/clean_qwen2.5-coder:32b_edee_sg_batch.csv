@@ -1,0 +1,13 @@
+num_run,name,trace_id,batch_id,status,latency,total_tokens,prompt_tokens,completion_tokens,total_cost,parameters,generation_count,prompt_cost,completion_cost,tags,timestamp
+1,72f8_sketch_generator,72f8c237,qwen2.5-coder:32b_edee_sg_batch,failure,987.08,23944,18496,5448,0.0,N/A,6,0,0,"['agx', 'benchmark', 'qwen2.5-coder:32b', 'sketch_generator']",1775770655
+2,a044_sketch_generator,a044a5e1,qwen2.5-coder:32b_edee_sg_batch,failure,1051.89,25561,19699,5862,0.0,N/A,6,0,0,"['agx', 'benchmark', 'qwen2.5-coder:32b', 'sketch_generator']",1775771762
+3,8907_sketch_generator,89076314,qwen2.5-coder:32b_edee_sg_batch,failure,1075.96,24672,18619,6053,0.0,N/A,6,0,0,"['agx', 'benchmark', 'qwen2.5-coder:32b', 'sketch_generator']",1775772933
+4,92a4_sketch_generator,92a45568,qwen2.5-coder:32b_edee_sg_batch,failure,1108.32,24922,18665,6257,0.0,N/A,6,0,0,"['agx', 'benchmark', 'qwen2.5-coder:32b', 'sketch_generator']",1775774101
+5,f2cd_sketch_generator,f2cd605c,qwen2.5-coder:32b_edee_sg_batch,failure,919.95,23530,18423,5107,0.0,N/A,6,0,0,"['agx', 'benchmark', 'qwen2.5-coder:32b', 'sketch_generator']",1775775327
+6,cf8d_sketch_generator,cf8d710b,qwen2.5-coder:32b_edee_sg_batch,failure,1001.68,24184,18587,5597,0.0,N/A,6,0,0,"['agx', 'benchmark', 'qwen2.5-coder:32b', 'sketch_generator']",1775776365
+7,dcb4_sketch_generator,dcb4c431,qwen2.5-coder:32b_edee_sg_batch,failure,1298.45,27078,19701,7377,0.0,N/A,6,0,0,"['agx', 'benchmark', 'qwen2.5-coder:32b', 'sketch_generator']",1775777485
+8,8663_sketch_generator,8663f87d,qwen2.5-coder:32b_edee_sg_batch,failure,921.48,22304,17132,5172,0.0,N/A,6,0,0,"['agx', 'benchmark', 'qwen2.5-coder:32b', 'sketch_generator']",1775778927
+9,42ff_sketch_generator,42ffe72d,qwen2.5-coder:32b_edee_sg_batch,failure,891.45,23534,18583,4951,0.0,N/A,6,0,0,"['agx', 'benchmark', 'qwen2.5-coder:32b', 'sketch_generator']",1775779930
+10,1a89_sketch_generator,1a890b4d,qwen2.5-coder:32b_edee_sg_batch,failure,1134.72,25138,18727,6411,0.0,N/A,6,0,0,"['agx', 'benchmark', 'qwen2.5-coder:32b', 'sketch_generator']",1775780968
+11,1df4_sketch_generator,1df4d411,qwen2.5-coder:32b_edee_sg_batch,failure,1040.3,23445,17571,5874,0.0,N/A,6,0,0,"['agx', 'benchmark', 'qwen2.5-coder:32b', 'sketch_generator']",1775782196
+12,5956_sketch_generator,5956f37a,qwen2.5-coder:32b_edee_sg_batch,failure,884.82,20570,15602,4968,0.0,N/A,5,0,0,"['agx', 'benchmark', 'qwen2.5-coder:32b', 'sketch_generator']",1775783330
