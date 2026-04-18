@@ -1,0 +1,1507 @@
+{
+  "data": [
+    {
+      "id": "7ebdc64c",
+      "timestamp": "2025-08-05T13:17:50.968000+00:00",
+      "name": "7ebd_tpu_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import cv2\nimport numpy as np\nfrom tflite_runtime.interpreter import Interpreter, load_delegate\n\n# Configuration Parameters\nmodel_path  = \"/home/mendel/tinyml_autopilot/models/edgetpu_detect.tflite\"\nlabel_path  = \"/home/mendel/tinyml_autopilot/models/labelmap.txt\"\ninput_path  = \"/home/mendel/tinyml_autopilot/data//sheeps.mp4\"\noutput_path  = \"/home/mendel/tinyml_autopilot/results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# Phase 1: Setup\ndef load_labels(label_file):\n    with open(label_file, 'r') as file:\n        return [line.strip() for line in file.readlines()]\n\nlabels = load_labels(label_path)\n\ntry:\n    interpreter = Interpreter(\n        model_path=model_path,\n        experimental_delegates=[load_delegate('libedgetpu.so.1.0')]\n    )\nexcept ValueError:\n    interpreter = Interpreter(\n        model_path=model_path,\n        experimental_delegates=[load_delegate('/usr/lib/aarch64-linux-gnu/libedgetpu.so.1.0')]\n    )\n\ninterpreter.allocate_tensors()\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\n# Phase 2: Input Acquisition & Preprocessing Loop\ncap = cv2.VideoCapture(input_path)\nframe_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))\nframe_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))\n\nout = cv2.VideoWriter(output_path, cv2.VideoWriter_fourcc(*'mp4v'), 30, (frame_width, frame_height))\n\nfloating_model = input_details[0]['dtype'] == np.float32\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n    \n    # Preprocess the frame\n    frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)\n    frame_resized = cv2.resize(frame_rgb, (input_details[0]['shape'][2], input_details[0]['shape'][1]))\n    \n    input_data = np.expand_dims(frame_resized, axis=0)\n\n    if floating_model:\n        input_data = (np.float32(input_data) - 127.5) / 127.5\n\n    # Phase 3: Inference\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n    interpreter.invoke()\n\n    # Phase 4: Output Interpretation & Handling Loop\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]  # Bounding box coordinates of detected objects\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]  # Class index of detected objects\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]  # Confidence of detected objects\n\n    for i in range(len(scores)):\n        if scores[i] >= confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[i]\n            (left, right, top, bottom) = (xmin * frame_width, xmax * frame_width,\n                                          ymin * frame_height, ymax * frame_height)\n            \n            # Draw bounding box and label on the frame\n            cv2.rectangle(frame, (int(left), int(top)), (int(right), int(bottom)), (0, 255, 0), 2)\n            object_name = labels[int(classes[i])]\n            label = f'{object_name}: {int(scores[i] * 100)}%'\n            label_size, base_line = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.7, 2)\n            top = max(top, label_size[1])\n            cv2.rectangle(frame, (int(left), int(top - round(1.5 * label_size[1]))),\n                          (int(left + round(1.5 * label_size[0])), int(top + base_line)),\n                          (255, 255, 255), cv2.FILLED)\n            cv2.putText(frame, label, (int(left), int(top)), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0), 2)\n\n    # Write the frame with detections\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "phi4_3b43_tpusg_batch",
+      "metadata": {
+        "num_run": 30
+      },
+      "tags": [
+        "benchmark",
+        "phi4:latest",
+        "tpu_sketch_generator"
+      ],
+      "latency": 20.257,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-16-17-50-969972_chatcmpl-b35b5984-711c-40f0-9f5c-7d303fcfb5ae",
+          "traceId": "7ebdc64c",
+          "type": "GENERATION",
+          "name": "7ebd_tpusg_gen_attempt#1",
+          "startTime": "2025-08-05T13:17:50.969000+00:00",
+          "endTime": "2025-08-05T13:18:11.226000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 20257.0,
+          "costDetails": {},
+          "promptTokens": 1806,
+          "totalTokens": 2756,
+          "completionTokens": 950,
+          "environment": "default",
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "environment": "default",
+      "updatedAt": "2025-08-05T13:19:09.096Z",
+      "createdAt": "2025-08-05T13:17:51.487Z"
+    },
+    {
+      "id": "54ec841a",
+      "timestamp": "2025-08-05T13:16:32.317000+00:00",
+      "name": "54ec_tpu_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import cv2\nimport numpy as np\nfrom tflite_runtime.interpreter import Interpreter, load_delegate\n\n# Configuration Parameters\nmodel_path  = \"/home/mendel/tinyml_autopilot/models/edgetpu_detect.tflite\"\nlabel_path  = \"/home/mendel/tinyml_autopilot/models/labelmap.txt\"\ninput_path  = \"/home/mendel/tinyml_autopilot/data//sheeps.mp4\"\noutput_path  = \"/home/mendel/tinyml_autopilot/results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# Phase 1: Setup\ndef load_labels(label_file):\n    with open(label_file, 'r') as file:\n        return [line.strip() for line in file.readlines()]\n\nlabels = load_labels(label_path)\n\ntry:\n    interpreter = Interpreter(\n        model_path=model_path,\n        experimental_delegates=[load_delegate('libedgetpu.so.1.0')]\n    )\nexcept ValueError:\n    interpreter = Interpreter(\n        model_path=model_path,\n        experimental_delegates=[load_delegate('/usr/lib/aarch64-linux-gnu/libedgetpu.so.1.0')]\n    )\n\ninterpreter.allocate_tensors()\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\n# Phase 2: Input Acquisition & Preprocessing Loop\ncap = cv2.VideoCapture(input_path)\nframe_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))\nframe_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))\n\nout = cv2.VideoWriter(output_path, cv2.VideoWriter_fourcc(*'mp4v'), 30, (frame_width, frame_height))\n\nfloating_model = input_details[0]['dtype'] == np.float32\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n    \n    # Preprocess the frame\n    frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)\n    frame_resized = cv2.resize(frame_rgb, (input_details[0]['shape'][2], input_details[0]['shape'][1]))\n    \n    input_data = np.expand_dims(frame_resized, axis=0)\n\n    if floating_model:\n        input_data = (np.float32(input_data) - 127.5) / 127.5\n\n    # Phase 3: Inference\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n    interpreter.invoke()\n\n    # Phase 4: Output Interpretation & Handling Loop\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]  # Bounding box coordinates of detected objects\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]  # Class index of detected objects\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]  # Confidence of detected objects\n\n    for i in range(len(scores)):\n        if scores[i] >= confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[i]\n            (left, right, top, bottom) = (xmin * frame_width, xmax * frame_width,\n                                          ymin * frame_height, ymax * frame_height)\n            \n            # Draw bounding box and label on the frame\n            cv2.rectangle(frame, (int(left), int(top)), (int(right), int(bottom)), (0, 255, 0), 2)\n            object_name = labels[int(classes[i])]\n            label = f'{object_name}: {int(scores[i] * 100)}%'\n            label_size, base_line = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.7, 2)\n            top = max(top, label_size[1])\n            cv2.rectangle(frame, (int(left), int(top - round(1.5 * label_size[1]))),\n                          (int(left + round(1.5 * label_size[0])), int(top + base_line)),\n                          (255, 255, 255), cv2.FILLED)\n            cv2.putText(frame, label, (int(left), int(top)), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0), 2)\n\n    # Write the frame with detections\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "phi4_3b43_tpusg_batch",
+      "metadata": {
+        "num_run": 29
+      },
+      "tags": [
+        "benchmark",
+        "phi4:latest",
+        "tpu_sketch_generator"
+      ],
+      "latency": 20.017,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-16-16-32-318795_chatcmpl-1da533b6-9707-4573-96e9-8a40d8c8504f",
+          "traceId": "54ec841a",
+          "type": "GENERATION",
+          "name": "54ec_tpusg_gen_attempt#1",
+          "startTime": "2025-08-05T13:16:32.318000+00:00",
+          "endTime": "2025-08-05T13:16:52.335000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 20017.0,
+          "costDetails": {},
+          "promptTokens": 1806,
+          "totalTokens": 2750,
+          "completionTokens": 944,
+          "environment": "default",
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "environment": "default",
+      "updatedAt": "2025-08-05T13:17:50.530Z",
+      "createdAt": "2025-08-05T13:16:32.835Z"
+    },
+    {
+      "id": "0181bb76",
+      "timestamp": "2025-08-05T13:15:13.710000+00:00",
+      "name": "0181_tpu_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import cv2\nimport numpy as np\nfrom tflite_runtime.interpreter import Interpreter, load_delegate\n\n# Configuration Parameters\nmodel_path  = \"/home/mendel/tinyml_autopilot/models/edgetpu_detect.tflite\"\nlabel_path  = \"/home/mendel/tinyml_autopilot/models/labelmap.txt\"\ninput_path  = \"/home/mendel/tinyml_autopilot/data//sheeps.mp4\"\noutput_path  = \"/home/mendel/tinyml_autopilot/results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# Phase 1: Setup\ndef load_labels(label_file):\n    with open(label_file, 'r') as file:\n        return [line.strip() for line in file.readlines()]\n\nlabels = load_labels(label_path)\n\ntry:\n    interpreter = Interpreter(\n        model_path=model_path,\n        experimental_delegates=[load_delegate('libedgetpu.so.1.0')]\n    )\nexcept ValueError:\n    interpreter = Interpreter(\n        model_path=model_path,\n        experimental_delegates=[load_delegate('/usr/lib/aarch64-linux-gnu/libedgetpu.so.1.0')]\n    )\n\ninterpreter.allocate_tensors()\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\n# Phase 2: Input Acquisition & Preprocessing Loop\ncap = cv2.VideoCapture(input_path)\nframe_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))\nframe_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))\n\nout = cv2.VideoWriter(output_path, cv2.VideoWriter_fourcc(*'mp4v'), 30, (frame_width, frame_height))\n\nfloating_model = input_details[0]['dtype'] == np.float32\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n    \n    # Preprocess the frame\n    frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)\n    frame_resized = cv2.resize(frame_rgb, (input_details[0]['shape'][2], input_details[0]['shape'][1]))\n    \n    input_data = np.expand_dims(frame_resized, axis=0)\n\n    if floating_model:\n        input_data = (np.float32(input_data) - 127.5) / 127.5\n\n    # Phase 3: Inference\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n    interpreter.invoke()\n\n    # Phase 4: Output Interpretation & Handling Loop\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]  # Bounding box coordinates of detected objects\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]  # Class index of detected objects\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]  # Confidence of detected objects\n\n    for i in range(len(scores)):\n        if scores[i] >= confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[i]\n            (left, right, top, bottom) = (xmin * frame_width, xmax * frame_width,\n                                          ymin * frame_height, ymax * frame_height)\n            \n            # Draw bounding box and label on the frame\n            cv2.rectangle(frame, (int(left), int(top)), (int(right), int(bottom)), (0, 255, 0), 2)\n            object_name = labels[int(classes[i])]\n            label = f'{object_name}: {int(scores[i] * 100)}%'\n            label_size, base_line = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.7, 2)\n            top = max(top, label_size[1])\n            cv2.rectangle(frame, (int(left), int(top - round(1.5 * label_size[1]))),\n                          (int(left + round(1.5 * label_size[0])), int(top + base_line)),\n                          (255, 255, 255), cv2.FILLED)\n            cv2.putText(frame, label, (int(left), int(top)), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0), 2)\n\n    # Write the frame with detections\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "phi4_3b43_tpusg_batch",
+      "metadata": {
+        "num_run": 28
+      },
+      "tags": [
+        "benchmark",
+        "phi4:latest",
+        "tpu_sketch_generator"
+      ],
+      "latency": 20.162,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-16-15-13-711933_chatcmpl-14fa0060-e16c-4334-9bdf-08a55dac2a0e",
+          "traceId": "0181bb76",
+          "type": "GENERATION",
+          "name": "0181_tpusg_gen_attempt#1",
+          "startTime": "2025-08-05T13:15:13.711000+00:00",
+          "endTime": "2025-08-05T13:15:33.873000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 20162.0,
+          "costDetails": {},
+          "promptTokens": 1806,
+          "totalTokens": 2756,
+          "completionTokens": 950,
+          "environment": "default",
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "environment": "default",
+      "updatedAt": "2025-08-05T13:16:31.857Z",
+      "createdAt": "2025-08-05T13:15:14.232Z"
+    },
+    {
+      "id": "93c3d0f1",
+      "timestamp": "2025-08-05T13:13:54.430000+00:00",
+      "name": "93c3_tpu_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import cv2\nimport numpy as np\nfrom tflite_runtime.interpreter import Interpreter, load_delegate\n\n# Configuration Parameters\nmodel_path  = \"/home/mendel/tinyml_autopilot/models/edgetpu_detect.tflite\"\nlabel_path  = \"/home/mendel/tinyml_autopilot/models/labelmap.txt\"\ninput_path  = \"/home/mendel/tinyml_autopilot/data//sheeps.mp4\"\noutput_path  = \"/home/mendel/tinyml_autopilot/results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# Phase 1: Setup\ndef load_labels(label_file):\n    with open(label_file, 'r') as file:\n        return [line.strip() for line in file.readlines()]\n\nlabels = load_labels(label_path)\n\ntry:\n    interpreter = Interpreter(\n        model_path=model_path,\n        experimental_delegates=[load_delegate('libedgetpu.so.1.0')]\n    )\nexcept ValueError:\n    interpreter = Interpreter(\n        model_path=model_path,\n        experimental_delegates=[load_delegate('/usr/lib/aarch64-linux-gnu/libedgetpu.so.1.0')]\n    )\n\ninterpreter.allocate_tensors()\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\n# Phase 2: Input Acquisition & Preprocessing Loop\ncap = cv2.VideoCapture(input_path)\nframe_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))\nframe_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))\n\nout = cv2.VideoWriter(output_path, cv2.VideoWriter_fourcc(*'mp4v'), 30, (frame_width, frame_height))\n\nfloating_model = input_details[0]['dtype'] == np.float32\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n    \n    # Preprocess the frame\n    frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)\n    frame_resized = cv2.resize(frame_rgb, (input_details[0]['shape'][2], input_details[0]['shape'][1]))\n    \n    input_data = np.expand_dims(frame_resized, axis=0)\n\n    if floating_model:\n        input_data = (np.float32(input_data) - 127.5) / 127.5\n\n    # Phase 3: Inference\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n    interpreter.invoke()\n\n    # Phase 4: Output Interpretation & Handling Loop\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]  # Bounding box coordinates of detected objects\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]  # Class index of detected objects\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]  # Confidence of detected objects\n\n    for i in range(len(scores)):\n        if scores[i] >= confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[i]\n            (left, right, top, bottom) = (xmin * frame_width, xmax * frame_width,\n                                          ymin * frame_height, ymax * frame_height)\n            \n            # Draw bounding box and label on the frame\n            cv2.rectangle(frame, (int(left), int(top)), (int(right), int(bottom)), (0, 255, 0), 2)\n            object_name = labels[int(classes[i])]\n            label = f'{object_name}: {int(scores[i] * 100)}%'\n            label_size, base_line = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.7, 2)\n            top = max(top, label_size[1])\n            cv2.rectangle(frame, (int(left), int(top - round(1.5 * label_size[1]))),\n                          (int(left + round(1.5 * label_size[0])), int(top + base_line)),\n                          (255, 255, 255), cv2.FILLED)\n            cv2.putText(frame, label, (int(left), int(top)), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0), 2)\n\n    # Write the frame with detections\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "phi4_3b43_tpusg_batch",
+      "metadata": {
+        "num_run": 27
+      },
+      "tags": [
+        "benchmark",
+        "phi4:latest",
+        "tpu_sketch_generator"
+      ],
+      "latency": 20.21,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-16-13-54-431753_chatcmpl-99bbc660-0a61-4f03-9d7c-03d2eb74a17b",
+          "traceId": "93c3d0f1",
+          "type": "GENERATION",
+          "name": "93c3_tpusg_gen_attempt#1",
+          "startTime": "2025-08-05T13:13:54.431000+00:00",
+          "endTime": "2025-08-05T13:14:14.641000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 20210.0,
+          "costDetails": {},
+          "promptTokens": 1806,
+          "totalTokens": 2750,
+          "completionTokens": 944,
+          "environment": "default",
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "environment": "default",
+      "updatedAt": "2025-08-05T13:15:12.580Z",
+      "createdAt": "2025-08-05T13:13:54.951Z"
+    },
+    {
+      "id": "bc9cbdbd",
+      "timestamp": "2025-08-05T13:12:35.823000+00:00",
+      "name": "bc9c_tpu_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import cv2\nimport numpy as np\nfrom tflite_runtime.interpreter import Interpreter, load_delegate\n\n# Configuration Parameters\nmodel_path  = \"/home/mendel/tinyml_autopilot/models/edgetpu_detect.tflite\"\nlabel_path  = \"/home/mendel/tinyml_autopilot/models/labelmap.txt\"\ninput_path  = \"/home/mendel/tinyml_autopilot/data//sheeps.mp4\"\noutput_path  = \"/home/mendel/tinyml_autopilot/results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# Phase 1: Setup\ndef load_labels(label_file):\n    with open(label_file, 'r') as file:\n        return [line.strip() for line in file.readlines()]\n\nlabels = load_labels(label_path)\n\ntry:\n    interpreter = Interpreter(\n        model_path=model_path,\n        experimental_delegates=[load_delegate('libedgetpu.so.1.0')]\n    )\nexcept ValueError:\n    interpreter = Interpreter(\n        model_path=model_path,\n        experimental_delegates=[load_delegate('/usr/lib/aarch64-linux-gnu/libedgetpu.so.1.0')]\n    )\n\ninterpreter.allocate_tensors()\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\n# Phase 2: Input Acquisition & Preprocessing Loop\ncap = cv2.VideoCapture(input_path)\nframe_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))\nframe_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))\n\nout = cv2.VideoWriter(output_path, cv2.VideoWriter_fourcc(*'mp4v'), 30, (frame_width, frame_height))\n\nfloating_model = input_details[0]['dtype'] == np.float32\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n    \n    # Preprocess the frame\n    frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)\n    frame_resized = cv2.resize(frame_rgb, (input_details[0]['shape'][2], input_details[0]['shape'][1]))\n    \n    input_data = np.expand_dims(frame_resized, axis=0)\n\n    if floating_model:\n        input_data = (np.float32(input_data) - 127.5) / 127.5\n\n    # Phase 3: Inference\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n    interpreter.invoke()\n\n    # Phase 4: Output Interpretation & Handling Loop\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]  # Bounding box coordinates of detected objects\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]  # Class index of detected objects\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]  # Confidence of detected objects\n\n    for i in range(len(scores)):\n        if scores[i] >= confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[i]\n            (left, right, top, bottom) = (xmin * frame_width, xmax * frame_width,\n                                          ymin * frame_height, ymax * frame_height)\n            \n            # Draw bounding box and label on the frame\n            cv2.rectangle(frame, (int(left), int(top)), (int(right), int(bottom)), (0, 255, 0), 2)\n            object_name = labels[int(classes[i])]\n            label = f'{object_name}: {int(scores[i] * 100)}%'\n            label_size, base_line = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.7, 2)\n            top = max(top, label_size[1])\n            cv2.rectangle(frame, (int(left), int(top - round(1.5 * label_size[1]))),\n                          (int(left + round(1.5 * label_size[0])), int(top + base_line)),\n                          (255, 255, 255), cv2.FILLED)\n            cv2.putText(frame, label, (int(left), int(top)), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0), 2)\n\n    # Write the frame with detections\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "phi4_3b43_tpusg_batch",
+      "metadata": {
+        "num_run": 26
+      },
+      "tags": [
+        "benchmark",
+        "phi4:latest",
+        "tpu_sketch_generator"
+      ],
+      "latency": 20.082,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-16-12-35-825612_chatcmpl-d7731a8c-1bf7-47ac-9b77-edfd29a44359",
+          "traceId": "bc9cbdbd",
+          "type": "GENERATION",
+          "name": "bc9c_tpusg_gen_attempt#1",
+          "startTime": "2025-08-05T13:12:35.825000+00:00",
+          "endTime": "2025-08-05T13:12:55.907000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 20082.0,
+          "costDetails": {},
+          "promptTokens": 1806,
+          "totalTokens": 2750,
+          "completionTokens": 944,
+          "environment": "default",
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "environment": "default",
+      "updatedAt": "2025-08-05T13:13:54.009Z",
+      "createdAt": "2025-08-05T13:12:36.342Z"
+    },
+    {
+      "id": "e2257b5f",
+      "timestamp": "2025-08-05T13:11:17.135000+00:00",
+      "name": "e225_tpu_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import cv2\nimport numpy as np\nfrom tflite_runtime.interpreter import Interpreter, load_delegate\n\n# Configuration Parameters\nmodel_path  = \"/home/mendel/tinyml_autopilot/models/edgetpu_detect.tflite\"\nlabel_path  = \"/home/mendel/tinyml_autopilot/models/labelmap.txt\"\ninput_path  = \"/home/mendel/tinyml_autopilot/data//sheeps.mp4\"\noutput_path  = \"/home/mendel/tinyml_autopilot/results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# Phase 1: Setup\ndef load_labels(label_file):\n    with open(label_file, 'r') as file:\n        return [line.strip() for line in file.readlines()]\n\nlabels = load_labels(label_path)\n\ntry:\n    interpreter = Interpreter(\n        model_path=model_path,\n        experimental_delegates=[load_delegate('libedgetpu.so.1.0')]\n    )\nexcept ValueError:\n    interpreter = Interpreter(\n        model_path=model_path,\n        experimental_delegates=[load_delegate('/usr/lib/aarch64-linux-gnu/libedgetpu.so.1.0')]\n    )\n\ninterpreter.allocate_tensors()\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\n# Phase 2: Input Acquisition & Preprocessing Loop\ncap = cv2.VideoCapture(input_path)\nframe_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))\nframe_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))\n\nout = cv2.VideoWriter(output_path, cv2.VideoWriter_fourcc(*'mp4v'), 30, (frame_width, frame_height))\n\nfloating_model = input_details[0]['dtype'] == np.float32\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n    \n    # Preprocess the frame\n    frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)\n    frame_resized = cv2.resize(frame_rgb, (input_details[0]['shape'][2], input_details[0]['shape'][1]))\n    \n    input_data = np.expand_dims(frame_resized, axis=0)\n\n    if floating_model:\n        input_data = (np.float32(input_data) - 127.5) / 127.5\n\n    # Phase 3: Inference\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n    interpreter.invoke()\n\n    # Phase 4: Output Interpretation & Handling Loop\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]  # Bounding box coordinates of detected objects\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]  # Class index of detected objects\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]  # Confidence of detected objects\n\n    for i in range(len(scores)):\n        if scores[i] >= confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[i]\n            (left, right, top, bottom) = (xmin * frame_width, xmax * frame_width,\n                                          ymin * frame_height, ymax * frame_height)\n            \n            # Draw bounding box and label on the frame\n            cv2.rectangle(frame, (int(left), int(top)), (int(right), int(bottom)), (0, 255, 0), 2)\n            object_name = labels[int(classes[i])]\n            label = f'{object_name}: {int(scores[i] * 100)}%'\n            label_size, base_line = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.7, 2)\n            top = max(top, label_size[1])\n            cv2.rectangle(frame, (int(left), int(top - round(1.5 * label_size[1]))),\n                          (int(left + round(1.5 * label_size[0])), int(top + base_line)),\n                          (255, 255, 255), cv2.FILLED)\n            cv2.putText(frame, label, (int(left), int(top)), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0), 2)\n\n    # Write the frame with detections\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "phi4_3b43_tpusg_batch",
+      "metadata": {
+        "num_run": 25
+      },
+      "tags": [
+        "benchmark",
+        "phi4:latest",
+        "tpu_sketch_generator"
+      ],
+      "latency": 19.857,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-16-11-17-139914_chatcmpl-c91a6b85-6ce6-419e-afa0-6d1801ad96e8",
+          "traceId": "e2257b5f",
+          "type": "GENERATION",
+          "name": "e225_tpusg_gen_attempt#1",
+          "startTime": "2025-08-05T13:11:17.139000+00:00",
+          "endTime": "2025-08-05T13:11:36.996000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 19857.0,
+          "costDetails": {},
+          "promptTokens": 1806,
+          "totalTokens": 2732,
+          "completionTokens": 926,
+          "environment": "default",
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "environment": "default",
+      "updatedAt": "2025-08-05T13:12:35.336Z",
+      "createdAt": "2025-08-05T13:11:17.659Z"
+    },
+    {
+      "id": "97d74c6f",
+      "timestamp": "2025-08-05T13:09:55.710000+00:00",
+      "name": "97d7_tpu_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import cv2\nimport numpy as np\nfrom tflite_runtime.interpreter import Interpreter, load_delegate\n\n# Configuration Parameters\nmodel_path  = \"/home/mendel/tinyml_autopilot/models/edgetpu_detect.tflite\"\nlabel_path  = \"/home/mendel/tinyml_autopilot/models/labelmap.txt\"\ninput_path  = \"/home/mendel/tinyml_autopilot/data//sheeps.mp4\"\noutput_path  = \"/home/mendel/tinyml_autopilot/results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# Phase 1: Setup\ndef load_labels(label_file):\n    with open(label_file, 'r') as file:\n        return [line.strip() for line in file.readlines()]\n\nlabels = load_labels(label_path)\n\ntry:\n    interpreter = Interpreter(\n        model_path=model_path,\n        experimental_delegates=[load_delegate('libedgetpu.so.1.0')]\n    )\nexcept ValueError:\n    interpreter = Interpreter(\n        model_path=model_path,\n        experimental_delegates=[load_delegate('/usr/lib/aarch64-linux-gnu/libedgetpu.so.1.0')]\n    )\n\ninterpreter.allocate_tensors()\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\n# Phase 2: Input Acquisition & Preprocessing Loop\ncap = cv2.VideoCapture(input_path)\nframe_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))\nframe_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))\n\nout = cv2.VideoWriter(output_path, cv2.VideoWriter_fourcc(*'mp4v'), 30, (frame_width, frame_height))\n\nfloating_model = input_details[0]['dtype'] == np.float32\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n    \n    # Preprocess the frame\n    frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)\n    frame_resized = cv2.resize(frame_rgb, (input_details[0]['shape'][2], input_details[0]['shape'][1]))\n    \n    input_data = np.expand_dims(frame_resized, axis=0)\n\n    if floating_model:\n        input_data = (np.float32(input_data) - 127.5) / 127.5\n\n    # Phase 3: Inference\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n    interpreter.invoke()\n\n    # Phase 4: Output Interpretation & Handling Loop\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]  # Bounding box coordinates of detected objects\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]  # Class index of detected objects\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]  # Confidence of detected objects\n\n    for i in range(len(scores)):\n        if scores[i] >= confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[i]\n            (left, right, top, bottom) = (xmin * frame_width, xmax * frame_width,\n                                          ymin * frame_height, ymax * frame_height)\n            \n            # Draw bounding box and label on the frame\n            cv2.rectangle(frame, (int(left), int(top)), (int(right), int(bottom)), (0, 255, 0), 2)\n            object_name = labels[int(classes[i])]\n            label = f'{object_name}: {int(scores[i] * 100)}%'\n            label_size, base_line = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.7, 2)\n            top = max(top, label_size[1])\n            cv2.rectangle(frame, (int(left), int(top - round(1.5 * label_size[1]))),\n                          (int(left + round(1.5 * label_size[0])), int(top + base_line)),\n                          (255, 255, 255), cv2.FILLED)\n            cv2.putText(frame, label, (int(left), int(top)), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0), 2)\n\n    # Write the frame with detections\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "phi4_3b43_tpusg_batch",
+      "metadata": {
+        "num_run": 24
+      },
+      "tags": [
+        "benchmark",
+        "phi4:latest",
+        "tpu_sketch_generator"
+      ],
+      "latency": 20.975,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-16-09-55-712832_chatcmpl-fa5fb40b-d9e7-4a33-bc4c-cc9ab78f628b",
+          "traceId": "97d74c6f",
+          "type": "GENERATION",
+          "name": "97d7_tpusg_gen_attempt#1",
+          "startTime": "2025-08-05T13:09:55.712000+00:00",
+          "endTime": "2025-08-05T13:10:16.687000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 20975.0,
+          "costDetails": {},
+          "promptTokens": 1806,
+          "totalTokens": 2750,
+          "completionTokens": 944,
+          "environment": "default",
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "environment": "default",
+      "updatedAt": "2025-08-05T13:11:14.854Z",
+      "createdAt": "2025-08-05T13:09:56.231Z"
+    },
+    {
+      "id": "04deea5e",
+      "timestamp": "2025-08-05T13:08:36.906000+00:00",
+      "name": "04de_tpu_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import cv2\nimport numpy as np\nfrom tflite_runtime.interpreter import Interpreter, load_delegate\n\n# Configuration Parameters\nmodel_path  = \"/home/mendel/tinyml_autopilot/models/edgetpu_detect.tflite\"\nlabel_path  = \"/home/mendel/tinyml_autopilot/models/labelmap.txt\"\ninput_path  = \"/home/mendel/tinyml_autopilot/data//sheeps.mp4\"\noutput_path  = \"/home/mendel/tinyml_autopilot/results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# Phase 1: Setup\ndef load_labels(label_file):\n    with open(label_file, 'r') as file:\n        return [line.strip() for line in file.readlines()]\n\nlabels = load_labels(label_path)\n\ntry:\n    interpreter = Interpreter(\n        model_path=model_path,\n        experimental_delegates=[load_delegate('libedgetpu.so.1.0')]\n    )\nexcept ValueError:\n    interpreter = Interpreter(\n        model_path=model_path,\n        experimental_delegates=[load_delegate('/usr/lib/aarch64-linux-gnu/libedgetpu.so.1.0')]\n    )\n\ninterpreter.allocate_tensors()\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\n# Phase 2: Input Acquisition & Preprocessing Loop\ncap = cv2.VideoCapture(input_path)\nframe_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))\nframe_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))\n\nout = cv2.VideoWriter(output_path, cv2.VideoWriter_fourcc(*'mp4v'), 30, (frame_width, frame_height))\n\nfloating_model = input_details[0]['dtype'] == np.float32\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n    \n    # Preprocess the frame\n    frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)\n    frame_resized = cv2.resize(frame_rgb, (input_details[0]['shape'][2], input_details[0]['shape'][1]))\n    \n    input_data = np.expand_dims(frame_resized, axis=0)\n\n    if floating_model:\n        input_data = (np.float32(input_data) - 127.5) / 127.5\n\n    # Phase 3: Inference\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n    interpreter.invoke()\n\n    # Phase 4: Output Interpretation & Handling Loop\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]  # Bounding box coordinates of detected objects\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]  # Class index of detected objects\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]  # Confidence of detected objects\n\n    for i in range(len(scores)):\n        if scores[i] >= confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[i]\n            (left, right, top, bottom) = (xmin * frame_width, xmax * frame_width,\n                                          ymin * frame_height, ymax * frame_height)\n            \n            # Draw bounding box and label on the frame\n            cv2.rectangle(frame, (int(left), int(top)), (int(right), int(bottom)), (0, 255, 0), 2)\n            object_name = labels[int(classes[i])]\n            label = f'{object_name}: {int(scores[i] * 100)}%'\n            label_size, base_line = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.7, 2)\n            top = max(top, label_size[1])\n            cv2.rectangle(frame, (int(left), int(top - round(1.5 * label_size[1]))),\n                          (int(left + round(1.5 * label_size[0])), int(top + base_line)),\n                          (255, 255, 255), cv2.FILLED)\n            cv2.putText(frame, label, (int(left), int(top)), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0), 2)\n\n    # Write the frame with detections\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "phi4_3b43_tpusg_batch",
+      "metadata": {
+        "num_run": 23
+      },
+      "tags": [
+        "benchmark",
+        "phi4:latest",
+        "tpu_sketch_generator"
+      ],
+      "latency": 20.163,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-16-08-36-908075_chatcmpl-808d2c64-042e-4246-95ca-cb5632505ef9",
+          "traceId": "04deea5e",
+          "type": "GENERATION",
+          "name": "04de_tpusg_gen_attempt#1",
+          "startTime": "2025-08-05T13:08:36.908000+00:00",
+          "endTime": "2025-08-05T13:08:57.071000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 20163.0,
+          "costDetails": {},
+          "promptTokens": 1806,
+          "totalTokens": 2756,
+          "completionTokens": 950,
+          "environment": "default",
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "environment": "default",
+      "updatedAt": "2025-08-05T13:09:55.084Z",
+      "createdAt": "2025-08-05T13:08:37.425Z"
+    },
+    {
+      "id": "5f8eb9ed",
+      "timestamp": "2025-08-05T13:07:18.075000+00:00",
+      "name": "5f8e_tpu_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import cv2\nimport numpy as np\nfrom tflite_runtime.interpreter import Interpreter, load_delegate\n\n# Configuration Parameters\nmodel_path  = \"/home/mendel/tinyml_autopilot/models/edgetpu_detect.tflite\"\nlabel_path  = \"/home/mendel/tinyml_autopilot/models/labelmap.txt\"\ninput_path  = \"/home/mendel/tinyml_autopilot/data//sheeps.mp4\"\noutput_path  = \"/home/mendel/tinyml_autopilot/results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# Phase 1: Setup\ndef load_labels(label_file):\n    with open(label_file, 'r') as file:\n        return [line.strip() for line in file.readlines()]\n\nlabels = load_labels(label_path)\n\ntry:\n    interpreter = Interpreter(\n        model_path=model_path,\n        experimental_delegates=[load_delegate('libedgetpu.so.1.0')]\n    )\nexcept ValueError:\n    interpreter = Interpreter(\n        model_path=model_path,\n        experimental_delegates=[load_delegate('/usr/lib/aarch64-linux-gnu/libedgetpu.so.1.0')]\n    )\n\ninterpreter.allocate_tensors()\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\n# Phase 2: Input Acquisition & Preprocessing Loop\ncap = cv2.VideoCapture(input_path)\nframe_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))\nframe_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))\n\nout = cv2.VideoWriter(output_path, cv2.VideoWriter_fourcc(*'mp4v'), 30, (frame_width, frame_height))\n\nfloating_model = input_details[0]['dtype'] == np.float32\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n    \n    # Preprocess the frame\n    frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)\n    frame_resized = cv2.resize(frame_rgb, (input_details[0]['shape'][2], input_details[0]['shape'][1]))\n    \n    input_data = np.expand_dims(frame_resized, axis=0)\n\n    if floating_model:\n        input_data = (np.float32(input_data) - 127.5) / 127.5\n\n    # Phase 3: Inference\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n    interpreter.invoke()\n\n    # Phase 4: Output Interpretation & Handling Loop\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]  # Bounding box coordinates of detected objects\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]  # Class index of detected objects\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]  # Confidence of detected objects\n\n    for i in range(len(scores)):\n        if scores[i] >= confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[i]\n            (left, right, top, bottom) = (xmin * frame_width, xmax * frame_width,\n                                          ymin * frame_height, ymax * frame_height)\n            \n            # Draw bounding box and label on the frame\n            cv2.rectangle(frame, (int(left), int(top)), (int(right), int(bottom)), (0, 255, 0), 2)\n            object_name = labels[int(classes[i])]\n            label = f'{object_name}: {int(scores[i] * 100)}%'\n            label_size, base_line = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.7, 2)\n            top = max(top, label_size[1])\n            cv2.rectangle(frame, (int(left), int(top - round(1.5 * label_size[1]))),\n                          (int(left + round(1.5 * label_size[0])), int(top + base_line)),\n                          (255, 255, 255), cv2.FILLED)\n            cv2.putText(frame, label, (int(left), int(top)), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0), 2)\n\n    # Write the frame with detections\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "phi4_3b43_tpusg_batch",
+      "metadata": {
+        "num_run": 22
+      },
+      "tags": [
+        "benchmark",
+        "phi4:latest",
+        "tpu_sketch_generator"
+      ],
+      "latency": 20.159,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-16-07-18-081516_chatcmpl-86675f78-88f5-4b27-9a1d-fb60247edf04",
+          "traceId": "5f8eb9ed",
+          "type": "GENERATION",
+          "name": "5f8e_tpusg_gen_attempt#1",
+          "startTime": "2025-08-05T13:07:18.081000+00:00",
+          "endTime": "2025-08-05T13:07:38.240000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 20159.0,
+          "costDetails": {},
+          "promptTokens": 1806,
+          "totalTokens": 2750,
+          "completionTokens": 944,
+          "environment": "default",
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "environment": "default",
+      "updatedAt": "2025-08-05T13:08:36.215Z",
+      "createdAt": "2025-08-05T13:07:18.606Z"
+    },
+    {
+      "id": "1fe7f8dc",
+      "timestamp": "2025-08-05T13:05:58.005000+00:00",
+      "name": "1fe7_tpu_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import cv2\nimport numpy as np\nfrom tflite_runtime.interpreter import Interpreter, load_delegate\n\n# Configuration Parameters\nmodel_path  = \"/home/mendel/tinyml_autopilot/models/edgetpu_detect.tflite\"\nlabel_path  = \"/home/mendel/tinyml_autopilot/models/labelmap.txt\"\ninput_path  = \"/home/mendel/tinyml_autopilot/data//sheeps.mp4\"\noutput_path  = \"/home/mendel/tinyml_autopilot/results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# Phase 1: Setup\ndef load_labels(label_file):\n    with open(label_file, 'r') as file:\n        return [line.strip() for line in file.readlines()]\n\nlabels = load_labels(label_path)\n\ntry:\n    interpreter = Interpreter(\n        model_path=model_path,\n        experimental_delegates=[load_delegate('libedgetpu.so.1.0')]\n    )\nexcept ValueError:\n    interpreter = Interpreter(\n        model_path=model_path,\n        experimental_delegates=[load_delegate('/usr/lib/aarch64-linux-gnu/libedgetpu.so.1.0')]\n    )\n\ninterpreter.allocate_tensors()\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\n# Phase 2: Input Acquisition & Preprocessing Loop\ncap = cv2.VideoCapture(input_path)\nframe_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))\nframe_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))\n\nout = cv2.VideoWriter(output_path, cv2.VideoWriter_fourcc(*'mp4v'), 30, (frame_width, frame_height))\n\nfloating_model = input_details[0]['dtype'] == np.float32\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n    \n    # Preprocess the frame\n    frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)\n    frame_resized = cv2.resize(frame_rgb, (input_details[0]['shape'][2], input_details[0]['shape'][1]))\n    \n    input_data = np.expand_dims(frame_resized, axis=0)\n\n    if floating_model:\n        input_data = (np.float32(input_data) - 127.5) / 127.5\n\n    # Phase 3: Inference\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n    interpreter.invoke()\n\n    # Phase 4: Output Interpretation & Handling Loop\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]  # Bounding box coordinates of detected objects\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]  # Class index of detected objects\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]  # Confidence of detected objects\n\n    for i in range(len(scores)):\n        if scores[i] >= confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[i]\n            (left, right, top, bottom) = (xmin * frame_width, xmax * frame_width,\n                                          ymin * frame_height, ymax * frame_height)\n            \n            # Draw bounding box and label on the frame\n            cv2.rectangle(frame, (int(left), int(top)), (int(right), int(bottom)), (0, 255, 0), 2)\n            object_name = labels[int(classes[i])]\n            label = f'{object_name}: {int(scores[i] * 100)}%'\n            label_size, base_line = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.7, 2)\n            top = max(top, label_size[1])\n            cv2.rectangle(frame, (int(left), int(top - round(1.5 * label_size[1]))),\n                          (int(left + round(1.5 * label_size[0])), int(top + base_line)),\n                          (255, 255, 255), cv2.FILLED)\n            cv2.putText(frame, label, (int(left), int(top)), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0), 2)\n\n    # Write the frame with detections\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "phi4_3b43_tpusg_batch",
+      "metadata": {
+        "num_run": 21
+      },
+      "tags": [
+        "benchmark",
+        "phi4:latest",
+        "tpu_sketch_generator"
+      ],
+      "latency": 19.748,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-16-05-58-007177_chatcmpl-c4493094-efe6-40e9-9f02-0dba938b6ef9",
+          "traceId": "1fe7f8dc",
+          "type": "GENERATION",
+          "name": "1fe7_tpusg_gen_attempt#1",
+          "startTime": "2025-08-05T13:05:58.007000+00:00",
+          "endTime": "2025-08-05T13:06:17.755000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 19748.0,
+          "costDetails": {},
+          "promptTokens": 1806,
+          "totalTokens": 2732,
+          "completionTokens": 926,
+          "environment": "default",
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "environment": "default",
+      "updatedAt": "2025-08-05T13:07:15.747Z",
+      "createdAt": "2025-08-05T13:05:58.526Z"
+    },
+    {
+      "id": "9b178a93",
+      "timestamp": "2025-08-05T13:04:39.176000+00:00",
+      "name": "9b17_tpu_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import cv2\nimport numpy as np\nfrom tflite_runtime.interpreter import Interpreter, load_delegate\n\n# Configuration Parameters\nmodel_path  = \"/home/mendel/tinyml_autopilot/models/edgetpu_detect.tflite\"\nlabel_path  = \"/home/mendel/tinyml_autopilot/models/labelmap.txt\"\ninput_path  = \"/home/mendel/tinyml_autopilot/data//sheeps.mp4\"\noutput_path  = \"/home/mendel/tinyml_autopilot/results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# Phase 1: Setup\ndef load_labels(label_file):\n    with open(label_file, 'r') as file:\n        return [line.strip() for line in file.readlines()]\n\nlabels = load_labels(label_path)\n\ntry:\n    interpreter = Interpreter(\n        model_path=model_path,\n        experimental_delegates=[load_delegate('libedgetpu.so.1.0')]\n    )\nexcept ValueError:\n    interpreter = Interpreter(\n        model_path=model_path,\n        experimental_delegates=[load_delegate('/usr/lib/aarch64-linux-gnu/libedgetpu.so.1.0')]\n    )\n\ninterpreter.allocate_tensors()\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\n# Phase 2: Input Acquisition & Preprocessing Loop\ncap = cv2.VideoCapture(input_path)\nframe_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))\nframe_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))\n\nout = cv2.VideoWriter(output_path, cv2.VideoWriter_fourcc(*'mp4v'), 30, (frame_width, frame_height))\n\nfloating_model = input_details[0]['dtype'] == np.float32\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n    \n    # Preprocess the frame\n    frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)\n    frame_resized = cv2.resize(frame_rgb, (input_details[0]['shape'][2], input_details[0]['shape'][1]))\n    \n    input_data = np.expand_dims(frame_resized, axis=0)\n\n    if floating_model:\n        input_data = (np.float32(input_data) - 127.5) / 127.5\n\n    # Phase 3: Inference\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n    interpreter.invoke()\n\n    # Phase 4: Output Interpretation & Handling Loop\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]  # Bounding box coordinates of detected objects\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]  # Class index of detected objects\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]  # Confidence of detected objects\n\n    for i in range(len(scores)):\n        if scores[i] >= confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[i]\n            (left, right, top, bottom) = (xmin * frame_width, xmax * frame_width,\n                                          ymin * frame_height, ymax * frame_height)\n            \n            # Draw bounding box and label on the frame\n            cv2.rectangle(frame, (int(left), int(top)), (int(right), int(bottom)), (0, 255, 0), 2)\n            object_name = labels[int(classes[i])]\n            label = f'{object_name}: {int(scores[i] * 100)}%'\n            label_size, base_line = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.7, 2)\n            top = max(top, label_size[1])\n            cv2.rectangle(frame, (int(left), int(top - round(1.5 * label_size[1]))),\n                          (int(left + round(1.5 * label_size[0])), int(top + base_line)),\n                          (255, 255, 255), cv2.FILLED)\n            cv2.putText(frame, label, (int(left), int(top)), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0), 2)\n\n    # Write the frame with detections\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "phi4_3b43_tpusg_batch",
+      "metadata": {
+        "num_run": 20
+      },
+      "tags": [
+        "benchmark",
+        "phi4:latest",
+        "tpu_sketch_generator"
+      ],
+      "latency": 20.167,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-16-04-39-178159_chatcmpl-e7fb4999-26f2-49e9-ad63-a927395748a0",
+          "traceId": "9b178a93",
+          "type": "GENERATION",
+          "name": "9b17_tpusg_gen_attempt#1",
+          "startTime": "2025-08-05T13:04:39.178000+00:00",
+          "endTime": "2025-08-05T13:04:59.345000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 20167.0,
+          "costDetails": {},
+          "promptTokens": 1806,
+          "totalTokens": 2756,
+          "completionTokens": 950,
+          "environment": "default",
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "environment": "default",
+      "updatedAt": "2025-08-05T13:05:57.379Z",
+      "createdAt": "2025-08-05T13:04:39.696Z"
+    },
+    {
+      "id": "ec39ef3b",
+      "timestamp": "2025-08-05T13:03:20.363000+00:00",
+      "name": "ec39_tpu_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import cv2\nimport numpy as np\nfrom tflite_runtime.interpreter import Interpreter, load_delegate\n\n# Configuration Parameters\nmodel_path  = \"/home/mendel/tinyml_autopilot/models/edgetpu_detect.tflite\"\nlabel_path  = \"/home/mendel/tinyml_autopilot/models/labelmap.txt\"\ninput_path  = \"/home/mendel/tinyml_autopilot/data//sheeps.mp4\"\noutput_path  = \"/home/mendel/tinyml_autopilot/results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# Phase 1: Setup\ndef load_labels(label_file):\n    with open(label_file, 'r') as file:\n        return [line.strip() for line in file.readlines()]\n\nlabels = load_labels(label_path)\n\ntry:\n    interpreter = Interpreter(\n        model_path=model_path,\n        experimental_delegates=[load_delegate('libedgetpu.so.1.0')]\n    )\nexcept ValueError:\n    interpreter = Interpreter(\n        model_path=model_path,\n        experimental_delegates=[load_delegate('/usr/lib/aarch64-linux-gnu/libedgetpu.so.1.0')]\n    )\n\ninterpreter.allocate_tensors()\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\n# Phase 2: Input Acquisition & Preprocessing Loop\ncap = cv2.VideoCapture(input_path)\nframe_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))\nframe_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))\n\nout = cv2.VideoWriter(output_path, cv2.VideoWriter_fourcc(*'mp4v'), 30, (frame_width, frame_height))\n\nfloating_model = input_details[0]['dtype'] == np.float32\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n    \n    # Preprocess the frame\n    frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)\n    frame_resized = cv2.resize(frame_rgb, (input_details[0]['shape'][2], input_details[0]['shape'][1]))\n    \n    input_data = np.expand_dims(frame_resized, axis=0)\n\n    if floating_model:\n        input_data = (np.float32(input_data) - 127.5) / 127.5\n\n    # Phase 3: Inference\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n    interpreter.invoke()\n\n    # Phase 4: Output Interpretation & Handling Loop\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]  # Bounding box coordinates of detected objects\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]  # Class index of detected objects\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]  # Confidence of detected objects\n\n    for i in range(len(scores)):\n        if scores[i] >= confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[i]\n            (left, right, top, bottom) = (xmin * frame_width, xmax * frame_width,\n                                          ymin * frame_height, ymax * frame_height)\n            \n            # Draw bounding box and label on the frame\n            cv2.rectangle(frame, (int(left), int(top)), (int(right), int(bottom)), (0, 255, 0), 2)\n            object_name = labels[int(classes[i])]\n            label = f'{object_name}: {int(scores[i] * 100)}%'\n            label_size, base_line = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.7, 2)\n            top = max(top, label_size[1])\n            cv2.rectangle(frame, (int(left), int(top - round(1.5 * label_size[1]))),\n                          (int(left + round(1.5 * label_size[0])), int(top + base_line)),\n                          (255, 255, 255), cv2.FILLED)\n            cv2.putText(frame, label, (int(left), int(top)), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0), 2)\n\n    # Write the frame with detections\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "phi4_3b43_tpusg_batch",
+      "metadata": {
+        "num_run": 19
+      },
+      "tags": [
+        "benchmark",
+        "phi4:latest",
+        "tpu_sketch_generator"
+      ],
+      "latency": 20.011,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-16-03-20-364804_chatcmpl-3a93bc1c-f0ae-4818-a895-39fb1891dfad",
+          "traceId": "ec39ef3b",
+          "type": "GENERATION",
+          "name": "ec39_tpusg_gen_attempt#1",
+          "startTime": "2025-08-05T13:03:20.364000+00:00",
+          "endTime": "2025-08-05T13:03:40.375000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 20011.0,
+          "costDetails": {},
+          "promptTokens": 1806,
+          "totalTokens": 2750,
+          "completionTokens": 944,
+          "environment": "default",
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "environment": "default",
+      "updatedAt": "2025-08-05T13:04:38.617Z",
+      "createdAt": "2025-08-05T13:03:20.884Z"
+    },
+    {
+      "id": "42981e86",
+      "timestamp": "2025-08-05T13:02:00.306000+00:00",
+      "name": "4298_tpu_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import cv2\nimport numpy as np\nfrom tflite_runtime.interpreter import Interpreter, load_delegate\n\n# Configuration Parameters\nmodel_path  = \"/home/mendel/tinyml_autopilot/models/edgetpu_detect.tflite\"\nlabel_path  = \"/home/mendel/tinyml_autopilot/models/labelmap.txt\"\ninput_path  = \"/home/mendel/tinyml_autopilot/data//sheeps.mp4\"\noutput_path  = \"/home/mendel/tinyml_autopilot/results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# Phase 1: Setup\ndef load_labels(label_file):\n    with open(label_file, 'r') as file:\n        return [line.strip() for line in file.readlines()]\n\nlabels = load_labels(label_path)\n\ntry:\n    interpreter = Interpreter(\n        model_path=model_path,\n        experimental_delegates=[load_delegate('libedgetpu.so.1.0')]\n    )\nexcept ValueError:\n    interpreter = Interpreter(\n        model_path=model_path,\n        experimental_delegates=[load_delegate('/usr/lib/aarch64-linux-gnu/libedgetpu.so.1.0')]\n    )\n\ninterpreter.allocate_tensors()\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\n# Phase 2: Input Acquisition & Preprocessing Loop\ncap = cv2.VideoCapture(input_path)\nframe_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))\nframe_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))\n\nout = cv2.VideoWriter(output_path, cv2.VideoWriter_fourcc(*'mp4v'), 30, (frame_width, frame_height))\n\nfloating_model = input_details[0]['dtype'] == np.float32\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n    \n    # Preprocess the frame\n    frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)\n    frame_resized = cv2.resize(frame_rgb, (input_details[0]['shape'][2], input_details[0]['shape'][1]))\n    \n    input_data = np.expand_dims(frame_resized, axis=0)\n\n    if floating_model:\n        input_data = (np.float32(input_data) - 127.5) / 127.5\n\n    # Phase 3: Inference\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n    interpreter.invoke()\n\n    # Phase 4: Output Interpretation & Handling Loop\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]  # Bounding box coordinates of detected objects\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]  # Class index of detected objects\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]  # Confidence of detected objects\n\n    for i in range(len(scores)):\n        if scores[i] >= confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[i]\n            (left, right, top, bottom) = (xmin * frame_width, xmax * frame_width,\n                                          ymin * frame_height, ymax * frame_height)\n            \n            # Draw bounding box and label on the frame\n            cv2.rectangle(frame, (int(left), int(top)), (int(right), int(bottom)), (0, 255, 0), 2)\n            object_name = labels[int(classes[i])]\n            label = f'{object_name}: {int(scores[i] * 100)}%'\n            label_size, base_line = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.7, 2)\n            top = max(top, label_size[1])\n            cv2.rectangle(frame, (int(left), int(top - round(1.5 * label_size[1]))),\n                          (int(left + round(1.5 * label_size[0])), int(top + base_line)),\n                          (255, 255, 255), cv2.FILLED)\n            cv2.putText(frame, label, (int(left), int(top)), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0), 2)\n\n    # Write the frame with detections\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "phi4_3b43_tpusg_batch",
+      "metadata": {
+        "num_run": 18
+      },
+      "tags": [
+        "benchmark",
+        "phi4:latest",
+        "tpu_sketch_generator"
+      ],
+      "latency": 21.165,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-16-02-00-310338_chatcmpl-ad60c928-9bbf-484b-91dd-0fe100912f32",
+          "traceId": "42981e86",
+          "type": "GENERATION",
+          "name": "4298_tpusg_gen_attempt#1",
+          "startTime": "2025-08-05T13:02:00.310000+00:00",
+          "endTime": "2025-08-05T13:02:21.475000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 21165.0,
+          "costDetails": {},
+          "promptTokens": 1806,
+          "totalTokens": 2750,
+          "completionTokens": 944,
+          "environment": "default",
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "environment": "default",
+      "updatedAt": "2025-08-05T13:03:19.443Z",
+      "createdAt": "2025-08-05T13:02:00.829Z"
+    },
+    {
+      "id": "a4d3959d",
+      "timestamp": "2025-08-05T13:00:41.389000+00:00",
+      "name": "a4d3_tpu_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import cv2\nimport numpy as np\nfrom tflite_runtime.interpreter import Interpreter, load_delegate\n\n# Configuration Parameters\nmodel_path  = \"/home/mendel/tinyml_autopilot/models/edgetpu_detect.tflite\"\nlabel_path  = \"/home/mendel/tinyml_autopilot/models/labelmap.txt\"\ninput_path  = \"/home/mendel/tinyml_autopilot/data//sheeps.mp4\"\noutput_path  = \"/home/mendel/tinyml_autopilot/results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# Phase 1: Setup\ndef load_labels(label_file):\n    with open(label_file, 'r') as file:\n        return [line.strip() for line in file.readlines()]\n\nlabels = load_labels(label_path)\n\ntry:\n    interpreter = Interpreter(\n        model_path=model_path,\n        experimental_delegates=[load_delegate('libedgetpu.so.1.0')]\n    )\nexcept ValueError:\n    interpreter = Interpreter(\n        model_path=model_path,\n        experimental_delegates=[load_delegate('/usr/lib/aarch64-linux-gnu/libedgetpu.so.1.0')]\n    )\n\ninterpreter.allocate_tensors()\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\n# Phase 2: Input Acquisition & Preprocessing Loop\ncap = cv2.VideoCapture(input_path)\nframe_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))\nframe_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))\n\nout = cv2.VideoWriter(output_path, cv2.VideoWriter_fourcc(*'mp4v'), 30, (frame_width, frame_height))\n\nfloating_model = input_details[0]['dtype'] == np.float32\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n    \n    # Preprocess the frame\n    frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)\n    frame_resized = cv2.resize(frame_rgb, (input_details[0]['shape'][2], input_details[0]['shape'][1]))\n    \n    input_data = np.expand_dims(frame_resized, axis=0)\n\n    if floating_model:\n        input_data = (np.float32(input_data) - 127.5) / 127.5\n\n    # Phase 3: Inference\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n    interpreter.invoke()\n\n    # Phase 4: Output Interpretation & Handling Loop\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]  # Bounding box coordinates of detected objects\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]  # Class index of detected objects\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]  # Confidence of detected objects\n\n    for i in range(len(scores)):\n        if scores[i] >= confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[i]\n            (left, right, top, bottom) = (xmin * frame_width, xmax * frame_width,\n                                          ymin * frame_height, ymax * frame_height)\n            \n            # Draw bounding box and label on the frame\n            cv2.rectangle(frame, (int(left), int(top)), (int(right), int(bottom)), (0, 255, 0), 2)\n            object_name = labels[int(classes[i])]\n            label = f'{object_name}: {int(scores[i] * 100)}%'\n            label_size, base_line = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.7, 2)\n            top = max(top, label_size[1])\n            cv2.rectangle(frame, (int(left), int(top - round(1.5 * label_size[1]))),\n                          (int(left + round(1.5 * label_size[0])), int(top + base_line)),\n                          (255, 255, 255), cv2.FILLED)\n            cv2.putText(frame, label, (int(left), int(top)), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0), 2)\n\n    # Write the frame with detections\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "phi4_3b43_tpusg_batch",
+      "metadata": {
+        "num_run": 17
+      },
+      "tags": [
+        "benchmark",
+        "phi4:latest",
+        "tpu_sketch_generator"
+      ],
+      "latency": 20.023,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-16-00-41-391241_chatcmpl-49288332-c4b0-4fb7-986d-d23ce085cd79",
+          "traceId": "a4d3959d",
+          "type": "GENERATION",
+          "name": "a4d3_tpusg_gen_attempt#1",
+          "startTime": "2025-08-05T13:00:41.391000+00:00",
+          "endTime": "2025-08-05T13:01:01.414000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 20023.0,
+          "costDetails": {},
+          "promptTokens": 1806,
+          "totalTokens": 2750,
+          "completionTokens": 944,
+          "environment": "default",
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "environment": "default",
+      "updatedAt": "2025-08-05T13:01:59.574Z",
+      "createdAt": "2025-08-05T13:00:41.910Z"
+    },
+    {
+      "id": "059b057c",
+      "timestamp": "2025-08-05T12:59:22.645000+00:00",
+      "name": "059b_tpu_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import cv2\nimport numpy as np\nfrom tflite_runtime.interpreter import Interpreter, load_delegate\n\n# Configuration Parameters\nmodel_path  = \"/home/mendel/tinyml_autopilot/models/edgetpu_detect.tflite\"\nlabel_path  = \"/home/mendel/tinyml_autopilot/models/labelmap.txt\"\ninput_path  = \"/home/mendel/tinyml_autopilot/data//sheeps.mp4\"\noutput_path  = \"/home/mendel/tinyml_autopilot/results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# Phase 1: Setup\ndef load_labels(label_file):\n    with open(label_file, 'r') as file:\n        return [line.strip() for line in file.readlines()]\n\nlabels = load_labels(label_path)\n\ntry:\n    interpreter = Interpreter(\n        model_path=model_path,\n        experimental_delegates=[load_delegate('libedgetpu.so.1.0')]\n    )\nexcept ValueError:\n    interpreter = Interpreter(\n        model_path=model_path,\n        experimental_delegates=[load_delegate('/usr/lib/aarch64-linux-gnu/libedgetpu.so.1.0')]\n    )\n\ninterpreter.allocate_tensors()\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\n# Phase 2: Input Acquisition & Preprocessing Loop\ncap = cv2.VideoCapture(input_path)\nframe_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))\nframe_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))\n\nout = cv2.VideoWriter(output_path, cv2.VideoWriter_fourcc(*'mp4v'), 30, (frame_width, frame_height))\n\nfloating_model = input_details[0]['dtype'] == np.float32\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n    \n    # Preprocess the frame\n    frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)\n    frame_resized = cv2.resize(frame_rgb, (input_details[0]['shape'][2], input_details[0]['shape'][1]))\n    \n    input_data = np.expand_dims(frame_resized, axis=0)\n\n    if floating_model:\n        input_data = (np.float32(input_data) - 127.5) / 127.5\n\n    # Phase 3: Inference\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n    interpreter.invoke()\n\n    # Phase 4: Output Interpretation & Handling Loop\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]  # Bounding box coordinates of detected objects\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]  # Class index of detected objects\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]  # Confidence of detected objects\n\n    for i in range(len(scores)):\n        if scores[i] >= confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[i]\n            (left, right, top, bottom) = (xmin * frame_width, xmax * frame_width,\n                                          ymin * frame_height, ymax * frame_height)\n            \n            # Draw bounding box and label on the frame\n            cv2.rectangle(frame, (int(left), int(top)), (int(right), int(bottom)), (0, 255, 0), 2)\n            object_name = labels[int(classes[i])]\n            label = f'{object_name}: {int(scores[i] * 100)}%'\n            label_size, base_line = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.7, 2)\n            top = max(top, label_size[1])\n            cv2.rectangle(frame, (int(left), int(top - round(1.5 * label_size[1]))),\n                          (int(left + round(1.5 * label_size[0])), int(top + base_line)),\n                          (255, 255, 255), cv2.FILLED)\n            cv2.putText(frame, label, (int(left), int(top)), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0), 2)\n\n    # Write the frame with detections\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "phi4_3b43_tpusg_batch",
+      "metadata": {
+        "num_run": 16
+      },
+      "tags": [
+        "benchmark",
+        "phi4:latest",
+        "tpu_sketch_generator"
+      ],
+      "latency": 20.026,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-15-59-22-647655_chatcmpl-eab498a7-17c3-45b8-86f6-0d2dbc9f7975",
+          "traceId": "059b057c",
+          "type": "GENERATION",
+          "name": "059b_tpusg_gen_attempt#1",
+          "startTime": "2025-08-05T12:59:22.647000+00:00",
+          "endTime": "2025-08-05T12:59:42.673000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 20026.0,
+          "costDetails": {},
+          "promptTokens": 1806,
+          "totalTokens": 2750,
+          "completionTokens": 944,
+          "environment": "default",
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "environment": "default",
+      "updatedAt": "2025-08-05T13:00:40.802Z",
+      "createdAt": "2025-08-05T12:59:23.166Z"
+    },
+    {
+      "id": "e677c801",
+      "timestamp": "2025-08-05T12:58:02.566000+00:00",
+      "name": "e677_tpu_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import cv2\nimport numpy as np\nfrom tflite_runtime.interpreter import Interpreter, load_delegate\n\n# Configuration Parameters\nmodel_path  = \"/home/mendel/tinyml_autopilot/models/edgetpu_detect.tflite\"\nlabel_path  = \"/home/mendel/tinyml_autopilot/models/labelmap.txt\"\ninput_path  = \"/home/mendel/tinyml_autopilot/data//sheeps.mp4\"\noutput_path  = \"/home/mendel/tinyml_autopilot/results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# Phase 1: Setup\ndef load_labels(label_file):\n    with open(label_file, 'r') as file:\n        return [line.strip() for line in file.readlines()]\n\nlabels = load_labels(label_path)\n\ntry:\n    interpreter = Interpreter(\n        model_path=model_path,\n        experimental_delegates=[load_delegate('libedgetpu.so.1.0')]\n    )\nexcept ValueError:\n    interpreter = Interpreter(\n        model_path=model_path,\n        experimental_delegates=[load_delegate('/usr/lib/aarch64-linux-gnu/libedgetpu.so.1.0')]\n    )\n\ninterpreter.allocate_tensors()\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\n# Phase 2: Input Acquisition & Preprocessing Loop\ncap = cv2.VideoCapture(input_path)\nframe_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))\nframe_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))\n\nout = cv2.VideoWriter(output_path, cv2.VideoWriter_fourcc(*'mp4v'), 30, (frame_width, frame_height))\n\nfloating_model = input_details[0]['dtype'] == np.float32\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n    \n    # Preprocess the frame\n    frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)\n    frame_resized = cv2.resize(frame_rgb, (input_details[0]['shape'][2], input_details[0]['shape'][1]))\n    \n    input_data = np.expand_dims(frame_resized, axis=0)\n\n    if floating_model:\n        input_data = (np.float32(input_data) - 127.5) / 127.5\n\n    # Phase 3: Inference\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n    interpreter.invoke()\n\n    # Phase 4: Output Interpretation & Handling Loop\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]  # Bounding box coordinates of detected objects\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]  # Class index of detected objects\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]  # Confidence of detected objects\n\n    for i in range(len(scores)):\n        if scores[i] >= confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[i]\n            (left, right, top, bottom) = (xmin * frame_width, xmax * frame_width,\n                                          ymin * frame_height, ymax * frame_height)\n            \n            # Draw bounding box and label on the frame\n            cv2.rectangle(frame, (int(left), int(top)), (int(right), int(bottom)), (0, 255, 0), 2)\n            object_name = labels[int(classes[i])]\n            label = f'{object_name}: {int(scores[i] * 100)}%'\n            label_size, base_line = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.7, 2)\n            top = max(top, label_size[1])\n            cv2.rectangle(frame, (int(left), int(top - round(1.5 * label_size[1]))),\n                          (int(left + round(1.5 * label_size[0])), int(top + base_line)),\n                          (255, 255, 255), cv2.FILLED)\n            cv2.putText(frame, label, (int(left), int(top)), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0), 2)\n\n    # Write the frame with detections\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "phi4_3b43_tpusg_batch",
+      "metadata": {
+        "num_run": 15
+      },
+      "tags": [
+        "benchmark",
+        "phi4:latest",
+        "tpu_sketch_generator"
+      ],
+      "latency": 20.222,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-15-58-02-567905_chatcmpl-b501b979-7915-47af-927e-043797f1adb7",
+          "traceId": "e677c801",
+          "type": "GENERATION",
+          "name": "e677_tpusg_gen_attempt#1",
+          "startTime": "2025-08-05T12:58:02.567000+00:00",
+          "endTime": "2025-08-05T12:58:22.789000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 20222.0,
+          "costDetails": {},
+          "promptTokens": 1806,
+          "totalTokens": 2750,
+          "completionTokens": 944,
+          "environment": "default",
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "environment": "default",
+      "updatedAt": "2025-08-05T12:59:21.325Z",
+      "createdAt": "2025-08-05T12:58:03.086Z"
+    },
+    {
+      "id": "729f8a64",
+      "timestamp": "2025-08-05T12:56:43.692000+00:00",
+      "name": "729f_tpu_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import cv2\nimport numpy as np\nfrom tflite_runtime.interpreter import Interpreter, load_delegate\n\n# Configuration Parameters\nmodel_path  = \"/home/mendel/tinyml_autopilot/models/edgetpu_detect.tflite\"\nlabel_path  = \"/home/mendel/tinyml_autopilot/models/labelmap.txt\"\ninput_path  = \"/home/mendel/tinyml_autopilot/data//sheeps.mp4\"\noutput_path  = \"/home/mendel/tinyml_autopilot/results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# Phase 1: Setup\ndef load_labels(label_file):\n    with open(label_file, 'r') as file:\n        return [line.strip() for line in file.readlines()]\n\nlabels = load_labels(label_path)\n\ntry:\n    interpreter = Interpreter(\n        model_path=model_path,\n        experimental_delegates=[load_delegate('libedgetpu.so.1.0')]\n    )\nexcept ValueError:\n    interpreter = Interpreter(\n        model_path=model_path,\n        experimental_delegates=[load_delegate('/usr/lib/aarch64-linux-gnu/libedgetpu.so.1.0')]\n    )\n\ninterpreter.allocate_tensors()\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\n# Phase 2: Input Acquisition & Preprocessing Loop\ncap = cv2.VideoCapture(input_path)\nframe_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))\nframe_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))\n\nout = cv2.VideoWriter(output_path, cv2.VideoWriter_fourcc(*'mp4v'), 30, (frame_width, frame_height))\n\nfloating_model = input_details[0]['dtype'] == np.float32\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n    \n    # Preprocess the frame\n    frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)\n    frame_resized = cv2.resize(frame_rgb, (input_details[0]['shape'][2], input_details[0]['shape'][1]))\n    \n    input_data = np.expand_dims(frame_resized, axis=0)\n\n    if floating_model:\n        input_data = (np.float32(input_data) - 127.5) / 127.5\n\n    # Phase 3: Inference\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n    interpreter.invoke()\n\n    # Phase 4: Output Interpretation & Handling Loop\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]  # Bounding box coordinates of detected objects\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]  # Class index of detected objects\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]  # Confidence of detected objects\n\n    for i in range(len(scores)):\n        if scores[i] >= confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[i]\n            (left, right, top, bottom) = (xmin * frame_width, xmax * frame_width,\n                                          ymin * frame_height, ymax * frame_height)\n            \n            # Draw bounding box and label on the frame\n            cv2.rectangle(frame, (int(left), int(top)), (int(right), int(bottom)), (0, 255, 0), 2)\n            object_name = labels[int(classes[i])]\n            label = f'{object_name}: {int(scores[i] * 100)}%'\n            label_size, base_line = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.7, 2)\n            top = max(top, label_size[1])\n            cv2.rectangle(frame, (int(left), int(top - round(1.5 * label_size[1]))),\n                          (int(left + round(1.5 * label_size[0])), int(top + base_line)),\n                          (255, 255, 255), cv2.FILLED)\n            cv2.putText(frame, label, (int(left), int(top)), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0), 2)\n\n    # Write the frame with detections\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "phi4_3b43_tpusg_batch",
+      "metadata": {
+        "num_run": 14
+      },
+      "tags": [
+        "benchmark",
+        "phi4:latest",
+        "tpu_sketch_generator"
+      ],
+      "latency": 19.971,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-15-56-43-694373_chatcmpl-51ef0054-5e98-4b5b-bc20-1187624fac5c",
+          "traceId": "729f8a64",
+          "type": "GENERATION",
+          "name": "729f_tpusg_gen_attempt#1",
+          "startTime": "2025-08-05T12:56:43.694000+00:00",
+          "endTime": "2025-08-05T12:57:03.665000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 19971.0,
+          "costDetails": {},
+          "promptTokens": 1806,
+          "totalTokens": 2750,
+          "completionTokens": 944,
+          "environment": "default",
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "environment": "default",
+      "updatedAt": "2025-08-05T12:58:01.837Z",
+      "createdAt": "2025-08-05T12:56:44.214Z"
+    },
+    {
+      "id": "773abb8f",
+      "timestamp": "2025-08-05T12:55:24.732000+00:00",
+      "name": "773a_tpu_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import cv2\nimport numpy as np\nfrom tflite_runtime.interpreter import Interpreter, load_delegate\n\n# Configuration Parameters\nmodel_path  = \"/home/mendel/tinyml_autopilot/models/edgetpu_detect.tflite\"\nlabel_path  = \"/home/mendel/tinyml_autopilot/models/labelmap.txt\"\ninput_path  = \"/home/mendel/tinyml_autopilot/data//sheeps.mp4\"\noutput_path  = \"/home/mendel/tinyml_autopilot/results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# Phase 1: Setup\ndef load_labels(label_file):\n    with open(label_file, 'r') as file:\n        return [line.strip() for line in file.readlines()]\n\nlabels = load_labels(label_path)\n\ntry:\n    interpreter = Interpreter(\n        model_path=model_path,\n        experimental_delegates=[load_delegate('libedgetpu.so.1.0')]\n    )\nexcept ValueError:\n    interpreter = Interpreter(\n        model_path=model_path,\n        experimental_delegates=[load_delegate('/usr/lib/aarch64-linux-gnu/libedgetpu.so.1.0')]\n    )\n\ninterpreter.allocate_tensors()\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\n# Phase 2: Input Acquisition & Preprocessing Loop\ncap = cv2.VideoCapture(input_path)\nframe_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))\nframe_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))\n\nout = cv2.VideoWriter(output_path, cv2.VideoWriter_fourcc(*'mp4v'), 30, (frame_width, frame_height))\n\nfloating_model = input_details[0]['dtype'] == np.float32\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n    \n    # Preprocess the frame\n    frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)\n    frame_resized = cv2.resize(frame_rgb, (input_details[0]['shape'][2], input_details[0]['shape'][1]))\n    \n    input_data = np.expand_dims(frame_resized, axis=0)\n\n    if floating_model:\n        input_data = (np.float32(input_data) - 127.5) / 127.5\n\n    # Phase 3: Inference\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n    interpreter.invoke()\n\n    # Phase 4: Output Interpretation & Handling Loop\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]  # Bounding box coordinates of detected objects\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]  # Class index of detected objects\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]  # Confidence of detected objects\n\n    for i in range(len(scores)):\n        if scores[i] >= confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[i]\n            (left, right, top, bottom) = (xmin * frame_width, xmax * frame_width,\n                                          ymin * frame_height, ymax * frame_height)\n            \n            # Draw bounding box and label on the frame\n            cv2.rectangle(frame, (int(left), int(top)), (int(right), int(bottom)), (0, 255, 0), 2)\n            object_name = labels[int(classes[i])]\n            label = f'{object_name}: {int(scores[i] * 100)}%'\n            label_size, base_line = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.7, 2)\n            top = max(top, label_size[1])\n            cv2.rectangle(frame, (int(left), int(top - round(1.5 * label_size[1]))),\n                          (int(left + round(1.5 * label_size[0])), int(top + base_line)),\n                          (255, 255, 255), cv2.FILLED)\n            cv2.putText(frame, label, (int(left), int(top)), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0), 2)\n\n    # Write the frame with detections\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "phi4_3b43_tpusg_batch",
+      "metadata": {
+        "num_run": 13
+      },
+      "tags": [
+        "benchmark",
+        "phi4:latest",
+        "tpu_sketch_generator"
+      ],
+      "latency": 20.178,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-15-55-24-733576_chatcmpl-5febf3d1-9845-4a78-bc7e-683784dfb929",
+          "traceId": "773abb8f",
+          "type": "GENERATION",
+          "name": "773a_tpusg_gen_attempt#1",
+          "startTime": "2025-08-05T12:55:24.733000+00:00",
+          "endTime": "2025-08-05T12:55:44.911000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 20178.0,
+          "costDetails": {},
+          "promptTokens": 1806,
+          "totalTokens": 2750,
+          "completionTokens": 944,
+          "environment": "default",
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "environment": "default",
+      "updatedAt": "2025-08-05T12:56:42.978Z",
+      "createdAt": "2025-08-05T12:55:25.253Z"
+    },
+    {
+      "id": "39d9844a",
+      "timestamp": "2025-08-05T12:54:04.955000+00:00",
+      "name": "39d9_tpu_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import cv2\nimport numpy as np\nfrom tflite_runtime.interpreter import Interpreter, load_delegate\n\n# Configuration Parameters\nmodel_path  = \"/home/mendel/tinyml_autopilot/models/edgetpu_detect.tflite\"\nlabel_path  = \"/home/mendel/tinyml_autopilot/models/labelmap.txt\"\ninput_path  = \"/home/mendel/tinyml_autopilot/data//sheeps.mp4\"\noutput_path  = \"/home/mendel/tinyml_autopilot/results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# Phase 1: Setup\ndef load_labels(label_file):\n    with open(label_file, 'r') as file:\n        return [line.strip() for line in file.readlines()]\n\nlabels = load_labels(label_path)\n\ntry:\n    interpreter = Interpreter(\n        model_path=model_path,\n        experimental_delegates=[load_delegate('libedgetpu.so.1.0')]\n    )\nexcept ValueError:\n    interpreter = Interpreter(\n        model_path=model_path,\n        experimental_delegates=[load_delegate('/usr/lib/aarch64-linux-gnu/libedgetpu.so.1.0')]\n    )\n\ninterpreter.allocate_tensors()\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\n# Phase 2: Input Acquisition & Preprocessing Loop\ncap = cv2.VideoCapture(input_path)\nframe_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))\nframe_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))\n\nout = cv2.VideoWriter(output_path, cv2.VideoWriter_fourcc(*'mp4v'), 30, (frame_width, frame_height))\n\nfloating_model = input_details[0]['dtype'] == np.float32\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n    \n    # Preprocess the frame\n    frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)\n    frame_resized = cv2.resize(frame_rgb, (input_details[0]['shape'][2], input_details[0]['shape'][1]))\n    \n    input_data = np.expand_dims(frame_resized, axis=0)\n\n    if floating_model:\n        input_data = (np.float32(input_data) - 127.5) / 127.5\n\n    # Phase 3: Inference\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n    interpreter.invoke()\n\n    # Phase 4: Output Interpretation & Handling Loop\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]  # Bounding box coordinates of detected objects\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]  # Class index of detected objects\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]  # Confidence of detected objects\n\n    for i in range(len(scores)):\n        if scores[i] >= confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[i]\n            (left, right, top, bottom) = (xmin * frame_width, xmax * frame_width,\n                                          ymin * frame_height, ymax * frame_height)\n            \n            # Draw bounding box and label on the frame\n            cv2.rectangle(frame, (int(left), int(top)), (int(right), int(bottom)), (0, 255, 0), 2)\n            object_name = labels[int(classes[i])]\n            label = f'{object_name}: {int(scores[i] * 100)}%'\n            label_size, base_line = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.7, 2)\n            top = max(top, label_size[1])\n            cv2.rectangle(frame, (int(left), int(top - round(1.5 * label_size[1]))),\n                          (int(left + round(1.5 * label_size[0])), int(top + base_line)),\n                          (255, 255, 255), cv2.FILLED)\n            cv2.putText(frame, label, (int(left), int(top)), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0), 2)\n\n    # Write the frame with detections\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "phi4_3b43_tpusg_batch",
+      "metadata": {
+        "num_run": 12
+      },
+      "tags": [
+        "benchmark",
+        "phi4:latest",
+        "tpu_sketch_generator"
+      ],
+      "latency": 20.323,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-15-54-04-956767_chatcmpl-b166b5b4-5c03-46f8-97db-b34cfa2ff629",
+          "traceId": "39d9844a",
+          "type": "GENERATION",
+          "name": "39d9_tpusg_gen_attempt#1",
+          "startTime": "2025-08-05T12:54:04.956000+00:00",
+          "endTime": "2025-08-05T12:54:25.279000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 20323.0,
+          "costDetails": {},
+          "promptTokens": 1806,
+          "totalTokens": 2756,
+          "completionTokens": 950,
+          "environment": "default",
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "environment": "default",
+      "updatedAt": "2025-08-05T12:55:23.608Z",
+      "createdAt": "2025-08-05T12:54:05.476Z"
+    },
+    {
+      "id": "3df7abdb",
+      "timestamp": "2025-08-05T12:52:46.171000+00:00",
+      "name": "3df7_tpu_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import cv2\nimport numpy as np\nfrom tflite_runtime.interpreter import Interpreter, load_delegate\n\n# Configuration Parameters\nmodel_path  = \"/home/mendel/tinyml_autopilot/models/edgetpu_detect.tflite\"\nlabel_path  = \"/home/mendel/tinyml_autopilot/models/labelmap.txt\"\ninput_path  = \"/home/mendel/tinyml_autopilot/data//sheeps.mp4\"\noutput_path  = \"/home/mendel/tinyml_autopilot/results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# Phase 1: Setup\ndef load_labels(label_file):\n    with open(label_file, 'r') as file:\n        return [line.strip() for line in file.readlines()]\n\nlabels = load_labels(label_path)\n\ntry:\n    interpreter = Interpreter(\n        model_path=model_path,\n        experimental_delegates=[load_delegate('libedgetpu.so.1.0')]\n    )\nexcept ValueError:\n    interpreter = Interpreter(\n        model_path=model_path,\n        experimental_delegates=[load_delegate('/usr/lib/aarch64-linux-gnu/libedgetpu.so.1.0')]\n    )\n\ninterpreter.allocate_tensors()\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\n# Phase 2: Input Acquisition & Preprocessing Loop\ncap = cv2.VideoCapture(input_path)\nframe_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))\nframe_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))\n\nout = cv2.VideoWriter(output_path, cv2.VideoWriter_fourcc(*'mp4v'), 30, (frame_width, frame_height))\n\nfloating_model = input_details[0]['dtype'] == np.float32\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n    \n    # Preprocess the frame\n    frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)\n    frame_resized = cv2.resize(frame_rgb, (input_details[0]['shape'][2], input_details[0]['shape'][1]))\n    \n    input_data = np.expand_dims(frame_resized, axis=0)\n\n    if floating_model:\n        input_data = (np.float32(input_data) - 127.5) / 127.5\n\n    # Phase 3: Inference\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n    interpreter.invoke()\n\n    # Phase 4: Output Interpretation & Handling Loop\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]  # Bounding box coordinates of detected objects\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]  # Class index of detected objects\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]  # Confidence of detected objects\n\n    for i in range(len(scores)):\n        if scores[i] >= confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[i]\n            (left, right, top, bottom) = (xmin * frame_width, xmax * frame_width,\n                                          ymin * frame_height, ymax * frame_height)\n            \n            # Draw bounding box and label on the frame\n            cv2.rectangle(frame, (int(left), int(top)), (int(right), int(bottom)), (0, 255, 0), 2)\n            object_name = labels[int(classes[i])]\n            label = f'{object_name}: {int(scores[i] * 100)}%'\n            label_size, base_line = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.7, 2)\n            top = max(top, label_size[1])\n            cv2.rectangle(frame, (int(left), int(top - round(1.5 * label_size[1]))),\n                          (int(left + round(1.5 * label_size[0])), int(top + base_line)),\n                          (255, 255, 255), cv2.FILLED)\n            cv2.putText(frame, label, (int(left), int(top)), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0), 2)\n\n    # Write the frame with detections\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "phi4_3b43_tpusg_batch",
+      "metadata": {
+        "num_run": 11
+      },
+      "tags": [
+        "benchmark",
+        "phi4:latest",
+        "tpu_sketch_generator"
+      ],
+      "latency": 21.099,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-15-52-46-173727_chatcmpl-82b09646-2b8b-4565-8b8b-5fe4fd4dff3e",
+          "traceId": "3df7abdb",
+          "type": "GENERATION",
+          "name": "3df7_tpusg_gen_attempt#1",
+          "startTime": "2025-08-05T12:52:46.173000+00:00",
+          "endTime": "2025-08-05T12:53:07.272000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 21099.0,
+          "costDetails": {},
+          "promptTokens": 1806,
+          "totalTokens": 2750,
+          "completionTokens": 944,
+          "environment": "default",
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "environment": "default",
+      "updatedAt": "2025-08-05T12:54:05.438Z",
+      "createdAt": "2025-08-05T12:52:46.693Z"
+    },
+    {
+      "id": "21e64a85",
+      "timestamp": "2025-08-05T12:51:27.392000+00:00",
+      "name": "21e6_tpu_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import cv2\nimport numpy as np\nfrom tflite_runtime.interpreter import Interpreter, load_delegate\n\n# Configuration Parameters\nmodel_path  = \"/home/mendel/tinyml_autopilot/models/edgetpu_detect.tflite\"\nlabel_path  = \"/home/mendel/tinyml_autopilot/models/labelmap.txt\"\ninput_path  = \"/home/mendel/tinyml_autopilot/data//sheeps.mp4\"\noutput_path  = \"/home/mendel/tinyml_autopilot/results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# Phase 1: Setup\ndef load_labels(label_file):\n    with open(label_file, 'r') as file:\n        return [line.strip() for line in file.readlines()]\n\nlabels = load_labels(label_path)\n\ntry:\n    interpreter = Interpreter(\n        model_path=model_path,\n        experimental_delegates=[load_delegate('libedgetpu.so.1.0')]\n    )\nexcept ValueError:\n    interpreter = Interpreter(\n        model_path=model_path,\n        experimental_delegates=[load_delegate('/usr/lib/aarch64-linux-gnu/libedgetpu.so.1.0')]\n    )\n\ninterpreter.allocate_tensors()\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\n# Phase 2: Input Acquisition & Preprocessing Loop\ncap = cv2.VideoCapture(input_path)\nframe_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))\nframe_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))\n\nout = cv2.VideoWriter(output_path, cv2.VideoWriter_fourcc(*'mp4v'), 30, (frame_width, frame_height))\n\nfloating_model = input_details[0]['dtype'] == np.float32\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n    \n    # Preprocess the frame\n    frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)\n    frame_resized = cv2.resize(frame_rgb, (input_details[0]['shape'][2], input_details[0]['shape'][1]))\n    \n    input_data = np.expand_dims(frame_resized, axis=0)\n\n    if floating_model:\n        input_data = (np.float32(input_data) - 127.5) / 127.5\n\n    # Phase 3: Inference\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n    interpreter.invoke()\n\n    # Phase 4: Output Interpretation & Handling Loop\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]  # Bounding box coordinates of detected objects\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]  # Class index of detected objects\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]  # Confidence of detected objects\n\n    for i in range(len(scores)):\n        if scores[i] >= confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[i]\n            (left, right, top, bottom) = (xmin * frame_width, xmax * frame_width,\n                                          ymin * frame_height, ymax * frame_height)\n            \n            # Draw bounding box and label on the frame\n            cv2.rectangle(frame, (int(left), int(top)), (int(right), int(bottom)), (0, 255, 0), 2)\n            object_name = labels[int(classes[i])]\n            label = f'{object_name}: {int(scores[i] * 100)}%'\n            label_size, base_line = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.7, 2)\n            top = max(top, label_size[1])\n            cv2.rectangle(frame, (int(left), int(top - round(1.5 * label_size[1]))),\n                          (int(left + round(1.5 * label_size[0])), int(top + base_line)),\n                          (255, 255, 255), cv2.FILLED)\n            cv2.putText(frame, label, (int(left), int(top)), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0), 2)\n\n    # Write the frame with detections\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "phi4_3b43_tpusg_batch",
+      "metadata": {
+        "num_run": 10
+      },
+      "tags": [
+        "benchmark",
+        "phi4:latest",
+        "tpu_sketch_generator"
+      ],
+      "latency": 20.322,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-15-51-27-393906_chatcmpl-8925793d-5017-42e4-887b-4ebdc4509b0e",
+          "traceId": "21e64a85",
+          "type": "GENERATION",
+          "name": "21e6_tpusg_gen_attempt#1",
+          "startTime": "2025-08-05T12:51:27.393000+00:00",
+          "endTime": "2025-08-05T12:51:47.715000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 20322.0,
+          "costDetails": {},
+          "promptTokens": 1806,
+          "totalTokens": 2756,
+          "completionTokens": 950,
+          "environment": "default",
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "environment": "default",
+      "updatedAt": "2025-08-05T12:52:45.563Z",
+      "createdAt": "2025-08-05T12:51:27.914Z"
+    },
+    {
+      "id": "b14929b5",
+      "timestamp": "2025-08-05T12:50:08.561000+00:00",
+      "name": "b149_tpu_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import cv2\nimport numpy as np\nfrom tflite_runtime.interpreter import Interpreter, load_delegate\n\n# Configuration Parameters\nmodel_path  = \"/home/mendel/tinyml_autopilot/models/edgetpu_detect.tflite\"\nlabel_path  = \"/home/mendel/tinyml_autopilot/models/labelmap.txt\"\ninput_path  = \"/home/mendel/tinyml_autopilot/data//sheeps.mp4\"\noutput_path  = \"/home/mendel/tinyml_autopilot/results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# Phase 1: Setup\ndef load_labels(label_file):\n    with open(label_file, 'r') as file:\n        return [line.strip() for line in file.readlines()]\n\nlabels = load_labels(label_path)\n\ntry:\n    interpreter = Interpreter(\n        model_path=model_path,\n        experimental_delegates=[load_delegate('libedgetpu.so.1.0')]\n    )\nexcept ValueError:\n    interpreter = Interpreter(\n        model_path=model_path,\n        experimental_delegates=[load_delegate('/usr/lib/aarch64-linux-gnu/libedgetpu.so.1.0')]\n    )\n\ninterpreter.allocate_tensors()\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\n# Phase 2: Input Acquisition & Preprocessing Loop\ncap = cv2.VideoCapture(input_path)\nframe_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))\nframe_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))\n\nout = cv2.VideoWriter(output_path, cv2.VideoWriter_fourcc(*'mp4v'), 30, (frame_width, frame_height))\n\nfloating_model = input_details[0]['dtype'] == np.float32\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n    \n    # Preprocess the frame\n    frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)\n    frame_resized = cv2.resize(frame_rgb, (input_details[0]['shape'][2], input_details[0]['shape'][1]))\n    \n    input_data = np.expand_dims(frame_resized, axis=0)\n\n    if floating_model:\n        input_data = (np.float32(input_data) - 127.5) / 127.5\n\n    # Phase 3: Inference\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n    interpreter.invoke()\n\n    # Phase 4: Output Interpretation & Handling Loop\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]  # Bounding box coordinates of detected objects\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]  # Class index of detected objects\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]  # Confidence of detected objects\n\n    for i in range(len(scores)):\n        if scores[i] >= confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[i]\n            (left, right, top, bottom) = (xmin * frame_width, xmax * frame_width,\n                                          ymin * frame_height, ymax * frame_height)\n            \n            # Draw bounding box and label on the frame\n            cv2.rectangle(frame, (int(left), int(top)), (int(right), int(bottom)), (0, 255, 0), 2)\n            object_name = labels[int(classes[i])]\n            label = f'{object_name}: {int(scores[i] * 100)}%'\n            label_size, base_line = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.7, 2)\n            top = max(top, label_size[1])\n            cv2.rectangle(frame, (int(left), int(top - round(1.5 * label_size[1]))),\n                          (int(left + round(1.5 * label_size[0])), int(top + base_line)),\n                          (255, 255, 255), cv2.FILLED)\n            cv2.putText(frame, label, (int(left), int(top)), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0), 2)\n\n    # Write the frame with detections\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "phi4_3b43_tpusg_batch",
+      "metadata": {
+        "num_run": 9
+      },
+      "tags": [
+        "benchmark",
+        "phi4:latest",
+        "tpu_sketch_generator"
+      ],
+      "latency": 19.677,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-15-50-08-563357_chatcmpl-a12c9c36-eede-41c8-aea1-11050e7ad1eb",
+          "traceId": "b14929b5",
+          "type": "GENERATION",
+          "name": "b149_tpusg_gen_attempt#1",
+          "startTime": "2025-08-05T12:50:08.563000+00:00",
+          "endTime": "2025-08-05T12:50:28.240000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 19677.0,
+          "costDetails": {},
+          "promptTokens": 1806,
+          "totalTokens": 2732,
+          "completionTokens": 926,
+          "environment": "default",
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "environment": "default",
+      "updatedAt": "2025-08-05T12:51:26.288Z",
+      "createdAt": "2025-08-05T12:50:09.082Z"
+    },
+    {
+      "id": "c9cd1c2d",
+      "timestamp": "2025-08-05T12:48:49.622000+00:00",
+      "name": "c9cd_tpu_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import cv2\nimport numpy as np\nfrom tflite_runtime.interpreter import Interpreter, load_delegate\n\n# Configuration Parameters\nmodel_path  = \"/home/mendel/tinyml_autopilot/models/edgetpu_detect.tflite\"\nlabel_path  = \"/home/mendel/tinyml_autopilot/models/labelmap.txt\"\ninput_path  = \"/home/mendel/tinyml_autopilot/data//sheeps.mp4\"\noutput_path  = \"/home/mendel/tinyml_autopilot/results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# Phase 1: Setup\ndef load_labels(label_file):\n    with open(label_file, 'r') as file:\n        return [line.strip() for line in file.readlines()]\n\nlabels = load_labels(label_path)\n\ntry:\n    interpreter = Interpreter(\n        model_path=model_path,\n        experimental_delegates=[load_delegate('libedgetpu.so.1.0')]\n    )\nexcept ValueError:\n    interpreter = Interpreter(\n        model_path=model_path,\n        experimental_delegates=[load_delegate('/usr/lib/aarch64-linux-gnu/libedgetpu.so.1.0')]\n    )\n\ninterpreter.allocate_tensors()\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\n# Phase 2: Input Acquisition & Preprocessing Loop\ncap = cv2.VideoCapture(input_path)\nframe_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))\nframe_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))\n\nout = cv2.VideoWriter(output_path, cv2.VideoWriter_fourcc(*'mp4v'), 30, (frame_width, frame_height))\n\nfloating_model = input_details[0]['dtype'] == np.float32\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n    \n    # Preprocess the frame\n    frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)\n    frame_resized = cv2.resize(frame_rgb, (input_details[0]['shape'][2], input_details[0]['shape'][1]))\n    \n    input_data = np.expand_dims(frame_resized, axis=0)\n\n    if floating_model:\n        input_data = (np.float32(input_data) - 127.5) / 127.5\n\n    # Phase 3: Inference\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n    interpreter.invoke()\n\n    # Phase 4: Output Interpretation & Handling Loop\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]  # Bounding box coordinates of detected objects\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]  # Class index of detected objects\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]  # Confidence of detected objects\n\n    for i in range(len(scores)):\n        if scores[i] >= confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[i]\n            (left, right, top, bottom) = (xmin * frame_width, xmax * frame_width,\n                                          ymin * frame_height, ymax * frame_height)\n            \n            # Draw bounding box and label on the frame\n            cv2.rectangle(frame, (int(left), int(top)), (int(right), int(bottom)), (0, 255, 0), 2)\n            object_name = labels[int(classes[i])]\n            label = f'{object_name}: {int(scores[i] * 100)}%'\n            label_size, base_line = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.7, 2)\n            top = max(top, label_size[1])\n            cv2.rectangle(frame, (int(left), int(top - round(1.5 * label_size[1]))),\n                          (int(left + round(1.5 * label_size[0])), int(top + base_line)),\n                          (255, 255, 255), cv2.FILLED)\n            cv2.putText(frame, label, (int(left), int(top)), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0), 2)\n\n    # Write the frame with detections\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "phi4_3b43_tpusg_batch",
+      "metadata": {
+        "num_run": 8
+      },
+      "tags": [
+        "benchmark",
+        "phi4:latest",
+        "tpu_sketch_generator"
+      ],
+      "latency": 20.055,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-15-48-49-625468_chatcmpl-4330b994-9492-4bce-9b19-dd3bb5c67b15",
+          "traceId": "c9cd1c2d",
+          "type": "GENERATION",
+          "name": "c9cd_tpusg_gen_attempt#1",
+          "startTime": "2025-08-05T12:48:49.625000+00:00",
+          "endTime": "2025-08-05T12:49:09.680000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 20055.0,
+          "costDetails": {},
+          "promptTokens": 1806,
+          "totalTokens": 2750,
+          "completionTokens": 944,
+          "environment": "default",
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "environment": "default",
+      "updatedAt": "2025-08-05T12:50:07.818Z",
+      "createdAt": "2025-08-05T12:48:50.145Z"
+    },
+    {
+      "id": "7cea88b2",
+      "timestamp": "2025-08-05T12:47:30.155000+00:00",
+      "name": "7cea_tpu_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import cv2\nimport numpy as np\nfrom tflite_runtime.interpreter import Interpreter, load_delegate\n\n# Configuration Parameters\nmodel_path  = \"/home/mendel/tinyml_autopilot/models/edgetpu_detect.tflite\"\nlabel_path  = \"/home/mendel/tinyml_autopilot/models/labelmap.txt\"\ninput_path  = \"/home/mendel/tinyml_autopilot/data//sheeps.mp4\"\noutput_path  = \"/home/mendel/tinyml_autopilot/results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# Phase 1: Setup\ndef load_labels(label_file):\n    with open(label_file, 'r') as file:\n        return [line.strip() for line in file.readlines()]\n\nlabels = load_labels(label_path)\n\ntry:\n    interpreter = Interpreter(\n        model_path=model_path,\n        experimental_delegates=[load_delegate('libedgetpu.so.1.0')]\n    )\nexcept ValueError:\n    interpreter = Interpreter(\n        model_path=model_path,\n        experimental_delegates=[load_delegate('/usr/lib/aarch64-linux-gnu/libedgetpu.so.1.0')]\n    )\n\ninterpreter.allocate_tensors()\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\n# Phase 2: Input Acquisition & Preprocessing Loop\ncap = cv2.VideoCapture(input_path)\nframe_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))\nframe_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))\n\nout = cv2.VideoWriter(output_path, cv2.VideoWriter_fourcc(*'mp4v'), 30, (frame_width, frame_height))\n\nfloating_model = input_details[0]['dtype'] == np.float32\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n    \n    # Preprocess the frame\n    frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)\n    frame_resized = cv2.resize(frame_rgb, (input_details[0]['shape'][2], input_details[0]['shape'][1]))\n    \n    input_data = np.expand_dims(frame_resized, axis=0)\n\n    if floating_model:\n        input_data = (np.float32(input_data) - 127.5) / 127.5\n\n    # Phase 3: Inference\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n    interpreter.invoke()\n\n    # Phase 4: Output Interpretation & Handling Loop\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]  # Bounding box coordinates of detected objects\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]  # Class index of detected objects\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]  # Confidence of detected objects\n\n    for i in range(len(scores)):\n        if scores[i] >= confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[i]\n            (left, right, top, bottom) = (xmin * frame_width, xmax * frame_width,\n                                          ymin * frame_height, ymax * frame_height)\n            \n            # Draw bounding box and label on the frame\n            cv2.rectangle(frame, (int(left), int(top)), (int(right), int(bottom)), (0, 255, 0), 2)\n            object_name = labels[int(classes[i])]\n            label = f'{object_name}: {int(scores[i] * 100)}%'\n            label_size, base_line = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.7, 2)\n            top = max(top, label_size[1])\n            cv2.rectangle(frame, (int(left), int(top - round(1.5 * label_size[1]))),\n                          (int(left + round(1.5 * label_size[0])), int(top + base_line)),\n                          (255, 255, 255), cv2.FILLED)\n            cv2.putText(frame, label, (int(left), int(top)), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0), 2)\n\n    # Write the frame with detections\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "phi4_3b43_tpusg_batch",
+      "metadata": {
+        "num_run": 7
+      },
+      "tags": [
+        "benchmark",
+        "phi4:latest",
+        "tpu_sketch_generator"
+      ],
+      "latency": 20.012,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-15-47-30-157183_chatcmpl-d1dcf671-6742-412c-a5d5-d9ac1f82afd0",
+          "traceId": "7cea88b2",
+          "type": "GENERATION",
+          "name": "7cea_tpusg_gen_attempt#1",
+          "startTime": "2025-08-05T12:47:30.157000+00:00",
+          "endTime": "2025-08-05T12:47:50.169000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 20012.0,
+          "costDetails": {},
+          "promptTokens": 1806,
+          "totalTokens": 2750,
+          "completionTokens": 944,
+          "environment": "default",
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "environment": "default",
+      "updatedAt": "2025-08-05T12:48:48.352Z",
+      "createdAt": "2025-08-05T12:47:30.675Z"
+    },
+    {
+      "id": "c39e4f3c",
+      "timestamp": "2025-08-05T12:46:11.112000+00:00",
+      "name": "c39e_tpu_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import cv2\nimport numpy as np\nfrom tflite_runtime.interpreter import Interpreter, load_delegate\n\n# Configuration Parameters\nmodel_path  = \"/home/mendel/tinyml_autopilot/models/edgetpu_detect.tflite\"\nlabel_path  = \"/home/mendel/tinyml_autopilot/models/labelmap.txt\"\ninput_path  = \"/home/mendel/tinyml_autopilot/data//sheeps.mp4\"\noutput_path  = \"/home/mendel/tinyml_autopilot/results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# Phase 1: Setup\ndef load_labels(label_file):\n    with open(label_file, 'r') as file:\n        return [line.strip() for line in file.readlines()]\n\nlabels = load_labels(label_path)\n\ntry:\n    interpreter = Interpreter(\n        model_path=model_path,\n        experimental_delegates=[load_delegate('libedgetpu.so.1.0')]\n    )\nexcept ValueError:\n    interpreter = Interpreter(\n        model_path=model_path,\n        experimental_delegates=[load_delegate('/usr/lib/aarch64-linux-gnu/libedgetpu.so.1.0')]\n    )\n\ninterpreter.allocate_tensors()\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\n# Phase 2: Input Acquisition & Preprocessing Loop\ncap = cv2.VideoCapture(input_path)\nframe_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))\nframe_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))\n\nout = cv2.VideoWriter(output_path, cv2.VideoWriter_fourcc(*'mp4v'), 30, (frame_width, frame_height))\n\nfloating_model = input_details[0]['dtype'] == np.float32\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n    \n    # Preprocess the frame\n    frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)\n    frame_resized = cv2.resize(frame_rgb, (input_details[0]['shape'][2], input_details[0]['shape'][1]))\n    \n    input_data = np.expand_dims(frame_resized, axis=0)\n\n    if floating_model:\n        input_data = (np.float32(input_data) - 127.5) / 127.5\n\n    # Phase 3: Inference\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n    interpreter.invoke()\n\n    # Phase 4: Output Interpretation & Handling Loop\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]  # Bounding box coordinates of detected objects\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]  # Class index of detected objects\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]  # Confidence of detected objects\n\n    for i in range(len(scores)):\n        if scores[i] >= confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[i]\n            (left, right, top, bottom) = (xmin * frame_width, xmax * frame_width,\n                                          ymin * frame_height, ymax * frame_height)\n            \n            # Draw bounding box and label on the frame\n            cv2.rectangle(frame, (int(left), int(top)), (int(right), int(bottom)), (0, 255, 0), 2)\n            object_name = labels[int(classes[i])]\n            label = f'{object_name}: {int(scores[i] * 100)}%'\n            label_size, base_line = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.7, 2)\n            top = max(top, label_size[1])\n            cv2.rectangle(frame, (int(left), int(top - round(1.5 * label_size[1]))),\n                          (int(left + round(1.5 * label_size[0])), int(top + base_line)),\n                          (255, 255, 255), cv2.FILLED)\n            cv2.putText(frame, label, (int(left), int(top)), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0), 2)\n\n    # Write the frame with detections\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "phi4_3b43_tpusg_batch",
+      "metadata": {
+        "num_run": 6
+      },
+      "tags": [
+        "benchmark",
+        "phi4:latest",
+        "tpu_sketch_generator"
+      ],
+      "latency": 19.986,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-15-46-11-114881_chatcmpl-02a171e4-85df-4f10-ae5e-c1f9e3f0086f",
+          "traceId": "c39e4f3c",
+          "type": "GENERATION",
+          "name": "c39e_tpusg_gen_attempt#1",
+          "startTime": "2025-08-05T12:46:11.114000+00:00",
+          "endTime": "2025-08-05T12:46:31.100000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 19986.0,
+          "costDetails": {},
+          "promptTokens": 1806,
+          "totalTokens": 2750,
+          "completionTokens": 944,
+          "environment": "default",
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "environment": "default",
+      "updatedAt": "2025-08-05T12:47:28.776Z",
+      "createdAt": "2025-08-05T12:46:11.633Z"
+    },
+    {
+      "id": "ef78447d",
+      "timestamp": "2025-08-05T12:44:51.741000+00:00",
+      "name": "ef78_tpu_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import cv2\nimport numpy as np\nfrom tflite_runtime.interpreter import Interpreter, load_delegate\n\n# Configuration Parameters\nmodel_path  = \"/home/mendel/tinyml_autopilot/models/edgetpu_detect.tflite\"\nlabel_path  = \"/home/mendel/tinyml_autopilot/models/labelmap.txt\"\ninput_path  = \"/home/mendel/tinyml_autopilot/data//sheeps.mp4\"\noutput_path  = \"/home/mendel/tinyml_autopilot/results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# Phase 1: Setup\ndef load_labels(label_file):\n    with open(label_file, 'r') as file:\n        return [line.strip() for line in file.readlines()]\n\nlabels = load_labels(label_path)\n\ntry:\n    interpreter = Interpreter(\n        model_path=model_path,\n        experimental_delegates=[load_delegate('libedgetpu.so.1.0')]\n    )\nexcept ValueError:\n    interpreter = Interpreter(\n        model_path=model_path,\n        experimental_delegates=[load_delegate('/usr/lib/aarch64-linux-gnu/libedgetpu.so.1.0')]\n    )\n\ninterpreter.allocate_tensors()\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\n# Phase 2: Input Acquisition & Preprocessing Loop\ncap = cv2.VideoCapture(input_path)\nframe_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))\nframe_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))\n\nout = cv2.VideoWriter(output_path, cv2.VideoWriter_fourcc(*'mp4v'), 30, (frame_width, frame_height))\n\nfloating_model = input_details[0]['dtype'] == np.float32\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n    \n    # Preprocess the frame\n    frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)\n    frame_resized = cv2.resize(frame_rgb, (input_details[0]['shape'][2], input_details[0]['shape'][1]))\n    \n    input_data = np.expand_dims(frame_resized, axis=0)\n\n    if floating_model:\n        input_data = (np.float32(input_data) - 127.5) / 127.5\n\n    # Phase 3: Inference\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n    interpreter.invoke()\n\n    # Phase 4: Output Interpretation & Handling Loop\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]  # Bounding box coordinates of detected objects\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]  # Class index of detected objects\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]  # Confidence of detected objects\n\n    for i in range(len(scores)):\n        if scores[i] >= confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[i]\n            (left, right, top, bottom) = (xmin * frame_width, xmax * frame_width,\n                                          ymin * frame_height, ymax * frame_height)\n            \n            # Draw bounding box and label on the frame\n            cv2.rectangle(frame, (int(left), int(top)), (int(right), int(bottom)), (0, 255, 0), 2)\n            object_name = labels[int(classes[i])]\n            label = f'{object_name}: {int(scores[i] * 100)}%'\n            label_size, base_line = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.7, 2)\n            top = max(top, label_size[1])\n            cv2.rectangle(frame, (int(left), int(top - round(1.5 * label_size[1]))),\n                          (int(left + round(1.5 * label_size[0])), int(top + base_line)),\n                          (255, 255, 255), cv2.FILLED)\n            cv2.putText(frame, label, (int(left), int(top)), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0), 2)\n\n    # Write the frame with detections\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "phi4_3b43_tpusg_batch",
+      "metadata": {
+        "num_run": 5
+      },
+      "tags": [
+        "benchmark",
+        "phi4:latest",
+        "tpu_sketch_generator"
+      ],
+      "latency": 19.747,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-15-44-51-743152_chatcmpl-5d55b65f-56ac-4899-b45e-ff7f9feb86f6",
+          "traceId": "ef78447d",
+          "type": "GENERATION",
+          "name": "ef78_tpusg_gen_attempt#1",
+          "startTime": "2025-08-05T12:44:51.743000+00:00",
+          "endTime": "2025-08-05T12:45:11.490000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 19747.0,
+          "costDetails": {},
+          "promptTokens": 1806,
+          "totalTokens": 2732,
+          "completionTokens": 926,
+          "environment": "default",
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "environment": "default",
+      "updatedAt": "2025-08-05T12:46:09.498Z",
+      "createdAt": "2025-08-05T12:44:52.263Z"
+    },
+    {
+      "id": "0f429cab",
+      "timestamp": "2025-08-05T12:43:33.061000+00:00",
+      "name": "0f42_tpu_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import cv2\nimport numpy as np\nfrom tflite_runtime.interpreter import Interpreter, load_delegate\n\n# Configuration Parameters\nmodel_path  = \"/home/mendel/tinyml_autopilot/models/edgetpu_detect.tflite\"\nlabel_path  = \"/home/mendel/tinyml_autopilot/models/labelmap.txt\"\ninput_path  = \"/home/mendel/tinyml_autopilot/data//sheeps.mp4\"\noutput_path  = \"/home/mendel/tinyml_autopilot/results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# Phase 1: Setup\ndef load_labels(label_file):\n    with open(label_file, 'r') as file:\n        return [line.strip() for line in file.readlines()]\n\nlabels = load_labels(label_path)\n\ntry:\n    interpreter = Interpreter(\n        model_path=model_path,\n        experimental_delegates=[load_delegate('libedgetpu.so.1.0')]\n    )\nexcept ValueError:\n    interpreter = Interpreter(\n        model_path=model_path,\n        experimental_delegates=[load_delegate('/usr/lib/aarch64-linux-gnu/libedgetpu.so.1.0')]\n    )\n\ninterpreter.allocate_tensors()\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\n# Phase 2: Input Acquisition & Preprocessing Loop\ncap = cv2.VideoCapture(input_path)\nframe_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))\nframe_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))\n\nout = cv2.VideoWriter(output_path, cv2.VideoWriter_fourcc(*'mp4v'), 30, (frame_width, frame_height))\n\nfloating_model = input_details[0]['dtype'] == np.float32\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n    \n    # Preprocess the frame\n    frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)\n    frame_resized = cv2.resize(frame_rgb, (input_details[0]['shape'][2], input_details[0]['shape'][1]))\n    \n    input_data = np.expand_dims(frame_resized, axis=0)\n\n    if floating_model:\n        input_data = (np.float32(input_data) - 127.5) / 127.5\n\n    # Phase 3: Inference\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n    interpreter.invoke()\n\n    # Phase 4: Output Interpretation & Handling Loop\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]  # Bounding box coordinates of detected objects\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]  # Class index of detected objects\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]  # Confidence of detected objects\n\n    for i in range(len(scores)):\n        if scores[i] >= confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[i]\n            (left, right, top, bottom) = (xmin * frame_width, xmax * frame_width,\n                                          ymin * frame_height, ymax * frame_height)\n            \n            # Draw bounding box and label on the frame\n            cv2.rectangle(frame, (int(left), int(top)), (int(right), int(bottom)), (0, 255, 0), 2)\n            object_name = labels[int(classes[i])]\n            label = f'{object_name}: {int(scores[i] * 100)}%'\n            label_size, base_line = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.7, 2)\n            top = max(top, label_size[1])\n            cv2.rectangle(frame, (int(left), int(top - round(1.5 * label_size[1]))),\n                          (int(left + round(1.5 * label_size[0])), int(top + base_line)),\n                          (255, 255, 255), cv2.FILLED)\n            cv2.putText(frame, label, (int(left), int(top)), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0), 2)\n\n    # Write the frame with detections\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "phi4_3b43_tpusg_batch",
+      "metadata": {
+        "num_run": 4
+      },
+      "tags": [
+        "benchmark",
+        "phi4:latest",
+        "tpu_sketch_generator"
+      ],
+      "latency": 20.059,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-15-43-33-063452_chatcmpl-a9d6c73e-9782-4d10-abbb-eaf652ec173f",
+          "traceId": "0f429cab",
+          "type": "GENERATION",
+          "name": "0f42_tpusg_gen_attempt#1",
+          "startTime": "2025-08-05T12:43:33.063000+00:00",
+          "endTime": "2025-08-05T12:43:53.122000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 20059.0,
+          "costDetails": {},
+          "promptTokens": 1806,
+          "totalTokens": 2750,
+          "completionTokens": 944,
+          "environment": "default",
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "environment": "default",
+      "updatedAt": "2025-08-05T12:44:51.228Z",
+      "createdAt": "2025-08-05T12:43:33.583Z"
+    },
+    {
+      "id": "23f093d7",
+      "timestamp": "2025-08-05T12:42:14.392000+00:00",
+      "name": "23f0_tpu_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import cv2\nimport numpy as np\nfrom tflite_runtime.interpreter import Interpreter, load_delegate\n\n# Configuration Parameters\nmodel_path  = \"/home/mendel/tinyml_autopilot/models/edgetpu_detect.tflite\"\nlabel_path  = \"/home/mendel/tinyml_autopilot/models/labelmap.txt\"\ninput_path  = \"/home/mendel/tinyml_autopilot/data//sheeps.mp4\"\noutput_path  = \"/home/mendel/tinyml_autopilot/results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# Phase 1: Setup\ndef load_labels(label_file):\n    with open(label_file, 'r') as file:\n        return [line.strip() for line in file.readlines()]\n\nlabels = load_labels(label_path)\n\ntry:\n    interpreter = Interpreter(\n        model_path=model_path,\n        experimental_delegates=[load_delegate('libedgetpu.so.1.0')]\n    )\nexcept ValueError:\n    interpreter = Interpreter(\n        model_path=model_path,\n        experimental_delegates=[load_delegate('/usr/lib/aarch64-linux-gnu/libedgetpu.so.1.0')]\n    )\n\ninterpreter.allocate_tensors()\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\n# Phase 2: Input Acquisition & Preprocessing Loop\ncap = cv2.VideoCapture(input_path)\nframe_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))\nframe_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))\n\nout = cv2.VideoWriter(output_path, cv2.VideoWriter_fourcc(*'mp4v'), 30, (frame_width, frame_height))\n\nfloating_model = input_details[0]['dtype'] == np.float32\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n    \n    # Preprocess the frame\n    frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)\n    frame_resized = cv2.resize(frame_rgb, (input_details[0]['shape'][2], input_details[0]['shape'][1]))\n    \n    input_data = np.expand_dims(frame_resized, axis=0)\n\n    if floating_model:\n        input_data = (np.float32(input_data) - 127.5) / 127.5\n\n    # Phase 3: Inference\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n    interpreter.invoke()\n\n    # Phase 4: Output Interpretation & Handling Loop\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]  # Bounding box coordinates of detected objects\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]  # Class index of detected objects\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]  # Confidence of detected objects\n\n    for i in range(len(scores)):\n        if scores[i] >= confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[i]\n            (left, right, top, bottom) = (xmin * frame_width, xmax * frame_width,\n                                          ymin * frame_height, ymax * frame_height)\n            \n            # Draw bounding box and label on the frame\n            cv2.rectangle(frame, (int(left), int(top)), (int(right), int(bottom)), (0, 255, 0), 2)\n            object_name = labels[int(classes[i])]\n            label = f'{object_name}: {int(scores[i] * 100)}%'\n            label_size, base_line = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.7, 2)\n            top = max(top, label_size[1])\n            cv2.rectangle(frame, (int(left), int(top - round(1.5 * label_size[1]))),\n                          (int(left + round(1.5 * label_size[0])), int(top + base_line)),\n                          (255, 255, 255), cv2.FILLED)\n            cv2.putText(frame, label, (int(left), int(top)), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0), 2)\n\n    # Write the frame with detections\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "phi4_3b43_tpusg_batch",
+      "metadata": {
+        "num_run": 3
+      },
+      "tags": [
+        "benchmark",
+        "phi4:latest",
+        "tpu_sketch_generator"
+      ],
+      "latency": 20.23,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-15-42-14-395737_chatcmpl-f6331d7b-4d9e-4c90-9b2f-56d3c5f097de",
+          "traceId": "23f093d7",
+          "type": "GENERATION",
+          "name": "23f0_tpusg_gen_attempt#1",
+          "startTime": "2025-08-05T12:42:14.395000+00:00",
+          "endTime": "2025-08-05T12:42:34.625000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 20230.0,
+          "costDetails": {},
+          "promptTokens": 1806,
+          "totalTokens": 2750,
+          "completionTokens": 944,
+          "environment": "default",
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "environment": "default",
+      "updatedAt": "2025-08-05T12:43:32.654Z",
+      "createdAt": "2025-08-05T12:42:14.920Z"
+    },
+    {
+      "id": "7ba56093",
+      "timestamp": "2025-08-05T12:40:55.070000+00:00",
+      "name": "7ba5_tpu_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import cv2\nimport numpy as np\nfrom tflite_runtime.interpreter import Interpreter, load_delegate\n\n# Configuration Parameters\nmodel_path  = \"/home/mendel/tinyml_autopilot/models/edgetpu_detect.tflite\"\nlabel_path  = \"/home/mendel/tinyml_autopilot/models/labelmap.txt\"\ninput_path  = \"/home/mendel/tinyml_autopilot/data//sheeps.mp4\"\noutput_path  = \"/home/mendel/tinyml_autopilot/results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# Phase 1: Setup\ndef load_labels(label_file):\n    with open(label_file, 'r') as file:\n        return [line.strip() for line in file.readlines()]\n\nlabels = load_labels(label_path)\n\ntry:\n    interpreter = Interpreter(\n        model_path=model_path,\n        experimental_delegates=[load_delegate('libedgetpu.so.1.0')]\n    )\nexcept ValueError:\n    interpreter = Interpreter(\n        model_path=model_path,\n        experimental_delegates=[load_delegate('/usr/lib/aarch64-linux-gnu/libedgetpu.so.1.0')]\n    )\n\ninterpreter.allocate_tensors()\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\n# Phase 2: Input Acquisition & Preprocessing Loop\ncap = cv2.VideoCapture(input_path)\nframe_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))\nframe_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))\n\nout = cv2.VideoWriter(output_path, cv2.VideoWriter_fourcc(*'mp4v'), 30, (frame_width, frame_height))\n\nfloating_model = input_details[0]['dtype'] == np.float32\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n    \n    # Preprocess the frame\n    frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)\n    frame_resized = cv2.resize(frame_rgb, (input_details[0]['shape'][2], input_details[0]['shape'][1]))\n    \n    input_data = np.expand_dims(frame_resized, axis=0)\n\n    if floating_model:\n        input_data = (np.float32(input_data) - 127.5) / 127.5\n\n    # Phase 3: Inference\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n    interpreter.invoke()\n\n    # Phase 4: Output Interpretation & Handling Loop\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]  # Bounding box coordinates of detected objects\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]  # Class index of detected objects\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]  # Confidence of detected objects\n\n    for i in range(len(scores)):\n        if scores[i] >= confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[i]\n            (left, right, top, bottom) = (xmin * frame_width, xmax * frame_width,\n                                          ymin * frame_height, ymax * frame_height)\n            \n            # Draw bounding box and label on the frame\n            cv2.rectangle(frame, (int(left), int(top)), (int(right), int(bottom)), (0, 255, 0), 2)\n            object_name = labels[int(classes[i])]\n            label = f'{object_name}: {int(scores[i] * 100)}%'\n            label_size, base_line = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.7, 2)\n            top = max(top, label_size[1])\n            cv2.rectangle(frame, (int(left), int(top - round(1.5 * label_size[1]))),\n                          (int(left + round(1.5 * label_size[0])), int(top + base_line)),\n                          (255, 255, 255), cv2.FILLED)\n            cv2.putText(frame, label, (int(left), int(top)), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0), 2)\n\n    # Write the frame with detections\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "phi4_3b43_tpusg_batch",
+      "metadata": {
+        "num_run": 2
+      },
+      "tags": [
+        "benchmark",
+        "phi4:latest",
+        "tpu_sketch_generator"
+      ],
+      "latency": 19.69,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-15-40-55-071140_chatcmpl-83fbf64e-f5df-44b1-b366-19d8d9914d6b",
+          "traceId": "7ba56093",
+          "type": "GENERATION",
+          "name": "7ba5_tpusg_gen_attempt#1",
+          "startTime": "2025-08-05T12:40:55.071000+00:00",
+          "endTime": "2025-08-05T12:41:14.761000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 19690.0,
+          "costDetails": {},
+          "promptTokens": 1806,
+          "totalTokens": 2732,
+          "completionTokens": 926,
+          "environment": "default",
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "environment": "default",
+      "updatedAt": "2025-08-05T12:42:12.777Z",
+      "createdAt": "2025-08-05T12:40:55.592Z"
+    },
+    {
+      "id": "d82c8f72",
+      "timestamp": "2025-08-05T12:38:55.931000+00:00",
+      "name": "d82c_tpu_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import cv2\nimport numpy as np\nfrom tflite_runtime.interpreter import Interpreter, load_delegate\n\n# Configuration Parameters\nmodel_path  = \"/home/mendel/tinyml_autopilot/models/edgetpu_detect.tflite\"\nlabel_path  = \"/home/mendel/tinyml_autopilot/models/labelmap.txt\"\ninput_path  = \"/home/mendel/tinyml_autopilot/data//sheeps.mp4\"\noutput_path  = \"/home/mendel/tinyml_autopilot/results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# Phase 1: Setup\ndef load_labels(label_file):\n    with open(label_file, 'r') as file:\n        return [line.strip() for line in file.readlines()]\n\nlabels = load_labels(label_path)\n\ntry:\n    interpreter = Interpreter(\n        model_path=model_path,\n        experimental_delegates=[load_delegate('libedgetpu.so.1.0')]\n    )\nexcept ValueError:\n    interpreter = Interpreter(\n        model_path=model_path,\n        experimental_delegates=[load_delegate('/usr/lib/aarch64-linux-gnu/libedgetpu.so.1.0')]\n    )\n\ninterpreter.allocate_tensors()\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\n# Phase 2: Input Acquisition & Preprocessing Loop\ncap = cv2.VideoCapture(input_path)\nframe_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))\nframe_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))\n\nout = cv2.VideoWriter(output_path, cv2.VideoWriter_fourcc(*'mp4v'), 30, (frame_width, frame_height))\n\nfloating_model = input_details[0]['dtype'] == np.float32\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n    \n    # Preprocess the frame\n    frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)\n    frame_resized = cv2.resize(frame_rgb, (input_details[0]['shape'][2], input_details[0]['shape'][1]))\n    \n    input_data = np.expand_dims(frame_resized, axis=0)\n\n    if floating_model:\n        input_data = (np.float32(input_data) - 127.5) / 127.5\n\n    # Phase 3: Inference\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n    interpreter.invoke()\n\n    # Phase 4: Output Interpretation & Handling Loop\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]  # Bounding box coordinates of detected objects\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]  # Class index of detected objects\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]  # Confidence of detected objects\n\n    for i in range(len(scores)):\n        if scores[i] >= confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[i]\n            (left, right, top, bottom) = (xmin * frame_width, xmax * frame_width,\n                                          ymin * frame_height, ymax * frame_height)\n            \n            # Draw bounding box and label on the frame\n            cv2.rectangle(frame, (int(left), int(top)), (int(right), int(bottom)), (0, 255, 0), 2)\n            object_name = labels[int(classes[i])]\n            label = f'{object_name}: {int(scores[i] * 100)}%'\n            label_size, base_line = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.7, 2)\n            top = max(top, label_size[1])\n            cv2.rectangle(frame, (int(left), int(top - round(1.5 * label_size[1]))),\n                          (int(left + round(1.5 * label_size[0])), int(top + base_line)),\n                          (255, 255, 255), cv2.FILLED)\n            cv2.putText(frame, label, (int(left), int(top)), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0), 2)\n\n    # Write the frame with detections\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "phi4_3b43_tpusg_batch",
+      "metadata": {
+        "num_run": 1
+      },
+      "tags": [
+        "benchmark",
+        "phi4:latest",
+        "tpu_sketch_generator"
+      ],
+      "latency": 59.68,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-15-38-55-933223_chatcmpl-0313fa9d-0060-4316-bb1f-9f275e12c22a",
+          "traceId": "d82c8f72",
+          "type": "GENERATION",
+          "name": "d82c_tpusg_gen_attempt#1",
+          "startTime": "2025-08-05T12:38:55.933000+00:00",
+          "endTime": "2025-08-05T12:39:55.613000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 59680.0,
+          "costDetails": {},
+          "promptTokens": 1806,
+          "totalTokens": 2787,
+          "completionTokens": 981,
+          "environment": "default",
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "environment": "default",
+      "updatedAt": "2025-08-05T12:40:53.605Z",
+      "createdAt": "2025-08-05T12:38:56.452Z"
+    }
+  ],
+  "meta": {
+    "total_items": 30
+  }
+}

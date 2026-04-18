@@ -1,0 +1,27 @@
+
+    \begin{table}[!h]
+        \centering
+        \resizebox{\textwidth}{!}{%
+        \begin{tabular}{|l|r|r|r|r|r|r|r|}
+        \hline
+        \multicolumn{1}{|c|}{} &
+          \multicolumn{3}{c|}{Execution Time (s)} &
+          \multicolumn{3}{c|}{Token Consumption} &
+          \multicolumn{1}{c|}{} \\ \cline{2-7}
+        \multicolumn{1}{|c|}{\multirow{-2}{*}{Stages}} &
+          \multicolumn{1}{c|}{Ave} &
+          \multicolumn{1}{c|}{Max} &
+          \multicolumn{1}{c|}{Min} &
+          \multicolumn{1}{c|}{Ave} &
+          \multicolumn{1}{c|}{Max} &
+          \multicolumn{1}{c|}{Min} &
+          \multicolumn{1}{|c|}{\multirow{-2}{*}{\shortstack{Success\\Rate}}} \\ \hline
+    PSG & 14.10 & 16.04 & 13.82 & 2242 & 2245 & 2242 & 1.000 \\ \hline
+TPUSG & 21.48 & 59.68 & 19.68 & 2749 & 2787 & 2732 & 1.000 \\ \hline
+
+        \end{tabular}%
+        }
+        \caption{Performance metrics including execution time, token consumption, and success rate in three stages. Batch ID: 3b43, Model: phi4:14b, Date: 08.07, Parameters: temperature=0.1, top-p=0.3}
+        \label{tab:performance_metrics_3b43_phi4:14b_08.07}
+        \end{table}
+    

@@ -1,0 +1,1507 @@
+{
+  "data": [
+    {
+      "id": "b486b57f",
+      "timestamp": "2025-08-05T13:44:57.358000+00:00",
+      "name": "b486_py_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import cv2\nimport numpy as np\n\n# Configuration Parameters\nmodel_path  = \"models/ssd-mobilenet_v1/detect.tflite\"\nlabel_path  = \"models/ssd-mobilenet_v1/labelmap.txt\"\ninput_path  = \"data/object_detection/sheeps.mp4\"\noutput_path  = \"results/object_detection/test_results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# Phase 1: Setup\nfrom tflite_runtime.interpreter import Interpreter\n\n# Load Labels\nwith open(label_path, 'r') as f:\n    labels = [line.strip() for line in f.readlines()]\n\n# Load Interpreter\ninterpreter = Interpreter(model_path=model_path)\ninterpreter.allocate_tensors()\n\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\ninput_shape = input_details[0]['shape']\ninput_dtype = input_details[0]['dtype']\n\n# Phase 2: Input Acquisition & Preprocessing Loop\ncap = cv2.VideoCapture(input_path)\n\n# Define the codec and create VideoWriter object\nfourcc = cv2.VideoWriter_fourcc(*'mp4v')\nout = cv2.VideoWriter(output_path, fourcc, 20.0, (int(cap.get(3)), int(cap.get(4))))\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n\n    # Preprocess Data\n    input_data = cv2.resize(frame, (input_shape[1], input_shape[2]))\n    input_data = np.expand_dims(input_data, axis=0).astype(input_dtype)\n\n    # Phase 3: Inference\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n    interpreter.invoke()\n\n    # Phase 4: Output Interpretation & Handling Loop\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]  # Bounding box coordinates of detected objects\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]  # Class index of detected objects\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]  # Confidence of detected objects\n\n    height, width, _ = frame.shape\n\n    for i in range(len(scores)):\n        if scores[i] > confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[i]\n            (left, right, top, bottom) = (xmin * width, xmax * width, ymin * height, ymax * height)\n            object_name = labels[int(classes[i])]\n            \n            # Draw bounding box and label on the frame\n            cv2.rectangle(frame, (int(left), int(top)), (int(right), int(bottom)), (0, 255, 0), 2)\n            label = f'{object_name}: {scores[i]:.2f}'\n            cv2.putText(frame, label, (int(left), int(top) - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)\n\n    # Handle Output\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "phi4_3b43_psg_batch",
+      "metadata": {
+        "num_run": 30
+      },
+      "tags": [
+        "benchmark",
+        "phi4:latest",
+        "py_sketch_generator"
+      ],
+      "latency": 13.954,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-16-44-57-359596_chatcmpl-fca08a49-6f2a-48e7-a9e7-b45d0b5ca8fd",
+          "traceId": "b486b57f",
+          "type": "GENERATION",
+          "name": "b486_psg_gen_attempt#1",
+          "startTime": "2025-08-05T13:44:57.359000+00:00",
+          "endTime": "2025-08-05T13:45:11.313000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 13954.0,
+          "costDetails": {},
+          "promptTokens": 1598,
+          "totalTokens": 2242,
+          "completionTokens": 644,
+          "environment": "default",
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "environment": "default",
+      "updatedAt": "2025-08-05T13:45:51.008Z",
+      "createdAt": "2025-08-05T13:44:57.876Z"
+    },
+    {
+      "id": "555384e9",
+      "timestamp": "2025-08-05T13:44:05.817000+00:00",
+      "name": "5553_py_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import cv2\nimport numpy as np\n\n# Configuration Parameters\nmodel_path  = \"models/ssd-mobilenet_v1/detect.tflite\"\nlabel_path  = \"models/ssd-mobilenet_v1/labelmap.txt\"\ninput_path  = \"data/object_detection/sheeps.mp4\"\noutput_path  = \"results/object_detection/test_results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# Phase 1: Setup\nfrom tflite_runtime.interpreter import Interpreter\n\n# Load Labels\nwith open(label_path, 'r') as f:\n    labels = [line.strip() for line in f.readlines()]\n\n# Load Interpreter\ninterpreter = Interpreter(model_path=model_path)\ninterpreter.allocate_tensors()\n\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\ninput_shape = input_details[0]['shape']\ninput_dtype = input_details[0]['dtype']\n\n# Phase 2: Input Acquisition & Preprocessing Loop\ncap = cv2.VideoCapture(input_path)\n\n# Define the codec and create VideoWriter object\nfourcc = cv2.VideoWriter_fourcc(*'mp4v')\nout = cv2.VideoWriter(output_path, fourcc, 20.0, (int(cap.get(3)), int(cap.get(4))))\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n\n    # Preprocess Data\n    input_data = cv2.resize(frame, (input_shape[1], input_shape[2]))\n    input_data = np.expand_dims(input_data, axis=0).astype(input_dtype)\n\n    # Phase 3: Inference\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n    interpreter.invoke()\n\n    # Phase 4: Output Interpretation & Handling Loop\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]  # Bounding box coordinates of detected objects\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]  # Class index of detected objects\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]  # Confidence of detected objects\n\n    height, width, _ = frame.shape\n\n    for i in range(len(scores)):\n        if scores[i] > confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[i]\n            (left, right, top, bottom) = (xmin * width, xmax * width, ymin * height, ymax * height)\n            class_id = int(classes[i])\n            label = f\"{labels[class_id]}: {int(scores[i] * 100)}%\"\n            \n            # Draw bounding box and label on the frame\n            cv2.rectangle(frame, (int(left), int(top)), (int(right), int(bottom)), (0, 255, 0), 2)\n            cv2.putText(frame, label, (int(left), int(top) - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)\n\n    # Handle Output\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "phi4_3b43_psg_batch",
+      "metadata": {
+        "num_run": 29
+      },
+      "tags": [
+        "benchmark",
+        "phi4:latest",
+        "py_sketch_generator"
+      ],
+      "latency": 14.165,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-16-44-05-819115_chatcmpl-0bacdcf2-8731-47e1-b8e0-edac803cf184",
+          "traceId": "555384e9",
+          "type": "GENERATION",
+          "name": "5553_psg_gen_attempt#1",
+          "startTime": "2025-08-05T13:44:05.819000+00:00",
+          "endTime": "2025-08-05T13:44:19.984000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 14165.0,
+          "costDetails": {},
+          "promptTokens": 1598,
+          "totalTokens": 2245,
+          "completionTokens": 647,
+          "environment": "default",
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "environment": "default",
+      "updatedAt": "2025-08-05T13:44:56.964Z",
+      "createdAt": "2025-08-05T13:44:06.336Z"
+    },
+    {
+      "id": "3c235447",
+      "timestamp": "2025-08-05T13:43:14.274000+00:00",
+      "name": "3c23_py_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import cv2\nimport numpy as np\n\n# Configuration Parameters\nmodel_path  = \"models/ssd-mobilenet_v1/detect.tflite\"\nlabel_path  = \"models/ssd-mobilenet_v1/labelmap.txt\"\ninput_path  = \"data/object_detection/sheeps.mp4\"\noutput_path  = \"results/object_detection/test_results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# Phase 1: Setup\nfrom tflite_runtime.interpreter import Interpreter\n\n# Load Labels\nwith open(label_path, 'r') as f:\n    labels = [line.strip() for line in f.readlines()]\n\n# Load Interpreter\ninterpreter = Interpreter(model_path=model_path)\ninterpreter.allocate_tensors()\n\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\ninput_shape = input_details[0]['shape']\ninput_dtype = input_details[0]['dtype']\n\n# Phase 2: Input Acquisition & Preprocessing Loop\ncap = cv2.VideoCapture(input_path)\n\n# Define the codec and create VideoWriter object\nfourcc = cv2.VideoWriter_fourcc(*'mp4v')\nout = cv2.VideoWriter(output_path, fourcc, 20.0, (int(cap.get(3)), int(cap.get(4))))\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n\n    # Preprocess Data\n    input_data = cv2.resize(frame, (input_shape[1], input_shape[2]))\n    input_data = np.expand_dims(input_data, axis=0).astype(input_dtype)\n\n    # Phase 3: Inference\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n    interpreter.invoke()\n\n    # Phase 4: Output Interpretation & Handling Loop\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]  # Bounding box coordinates of detected objects\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]  # Class index of detected objects\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]  # Confidence of detected objects\n\n    height, width, _ = frame.shape\n\n    for i in range(len(scores)):\n        if scores[i] > confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[i]\n            (left, right, top, bottom) = (xmin * width, xmax * width, ymin * height, ymax * height)\n            object_name = labels[int(classes[i])]\n            \n            # Draw bounding box and label on the frame\n            cv2.rectangle(frame, (int(left), int(top)), (int(right), int(bottom)), (0, 255, 0), 2)\n            label = f'{object_name}: {scores[i]:.2f}'\n            cv2.putText(frame, label, (int(left), int(top) - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)\n\n    # Handle Output\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "phi4_3b43_psg_batch",
+      "metadata": {
+        "num_run": 28
+      },
+      "tags": [
+        "benchmark",
+        "phi4:latest",
+        "py_sketch_generator"
+      ],
+      "latency": 13.863,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-16-43-14-276486_chatcmpl-2764158c-f8a7-48fc-a67d-4405139509c5",
+          "traceId": "3c235447",
+          "type": "GENERATION",
+          "name": "3c23_psg_gen_attempt#1",
+          "startTime": "2025-08-05T13:43:14.276000+00:00",
+          "endTime": "2025-08-05T13:43:28.139000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 13863.0,
+          "costDetails": {},
+          "promptTokens": 1598,
+          "totalTokens": 2242,
+          "completionTokens": 644,
+          "environment": "default",
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "environment": "default",
+      "updatedAt": "2025-08-05T13:44:05.485Z",
+      "createdAt": "2025-08-05T13:43:14.798Z"
+    },
+    {
+      "id": "44c92ceb",
+      "timestamp": "2025-08-05T13:42:22.032000+00:00",
+      "name": "44c9_py_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import cv2\nimport numpy as np\n\n# Configuration Parameters\nmodel_path  = \"models/ssd-mobilenet_v1/detect.tflite\"\nlabel_path  = \"models/ssd-mobilenet_v1/labelmap.txt\"\ninput_path  = \"data/object_detection/sheeps.mp4\"\noutput_path  = \"results/object_detection/test_results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# Phase 1: Setup\nfrom tflite_runtime.interpreter import Interpreter\n\n# Load Labels\nwith open(label_path, 'r') as f:\n    labels = [line.strip() for line in f.readlines()]\n\n# Load Interpreter\ninterpreter = Interpreter(model_path=model_path)\ninterpreter.allocate_tensors()\n\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\ninput_shape = input_details[0]['shape']\ninput_dtype = input_details[0]['dtype']\n\n# Phase 2: Input Acquisition & Preprocessing Loop\ncap = cv2.VideoCapture(input_path)\n\n# Define the codec and create VideoWriter object\nfourcc = cv2.VideoWriter_fourcc(*'mp4v')\nout = cv2.VideoWriter(output_path, fourcc, 20.0, (int(cap.get(3)), int(cap.get(4))))\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n\n    # Preprocess Data\n    input_data = cv2.resize(frame, (input_shape[1], input_shape[2]))\n    input_data = np.expand_dims(input_data, axis=0).astype(input_dtype)\n\n    # Phase 3: Inference\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n    interpreter.invoke()\n\n    # Phase 4: Output Interpretation & Handling Loop\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]  # Bounding box coordinates of detected objects\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]  # Class index of detected objects\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]  # Confidence of detected objects\n\n    height, width, _ = frame.shape\n\n    for i in range(len(scores)):\n        if scores[i] > confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[i]\n            (left, right, top, bottom) = (xmin * width, xmax * width, ymin * height, ymax * height)\n            class_id = int(classes[i])\n            label = f\"{labels[class_id]}: {int(scores[i] * 100)}%\"\n            \n            # Draw bounding box and label on the frame\n            cv2.rectangle(frame, (int(left), int(top)), (int(right), int(bottom)), (0, 255, 0), 2)\n            cv2.putText(frame, label, (int(left), int(top) - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)\n\n    # Handle Output\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "phi4_3b43_psg_batch",
+      "metadata": {
+        "num_run": 27
+      },
+      "tags": [
+        "benchmark",
+        "phi4:latest",
+        "py_sketch_generator"
+      ],
+      "latency": 14.101,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-16-42-22-033831_chatcmpl-fb61617b-d13c-46e7-b631-0c3b1c1a5d81",
+          "traceId": "44c92ceb",
+          "type": "GENERATION",
+          "name": "44c9_psg_gen_attempt#1",
+          "startTime": "2025-08-05T13:42:22.033000+00:00",
+          "endTime": "2025-08-05T13:42:36.134000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 14101.0,
+          "costDetails": {},
+          "promptTokens": 1598,
+          "totalTokens": 2245,
+          "completionTokens": 647,
+          "environment": "default",
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "environment": "default",
+      "updatedAt": "2025-08-05T13:43:13.406Z",
+      "createdAt": "2025-08-05T13:42:22.552Z"
+    },
+    {
+      "id": "ebca68a7",
+      "timestamp": "2025-08-05T13:41:28.508000+00:00",
+      "name": "ebca_py_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import cv2\nimport numpy as np\n\n# Configuration Parameters\nmodel_path  = \"models/ssd-mobilenet_v1/detect.tflite\"\nlabel_path  = \"models/ssd-mobilenet_v1/labelmap.txt\"\ninput_path  = \"data/object_detection/sheeps.mp4\"\noutput_path  = \"results/object_detection/test_results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# Phase 1: Setup\nfrom tflite_runtime.interpreter import Interpreter\n\n# Load Labels\nwith open(label_path, 'r') as f:\n    labels = [line.strip() for line in f.readlines()]\n\n# Load Interpreter\ninterpreter = Interpreter(model_path=model_path)\ninterpreter.allocate_tensors()\n\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\ninput_shape = input_details[0]['shape']\ninput_dtype = input_details[0]['dtype']\n\n# Phase 2: Input Acquisition & Preprocessing Loop\ncap = cv2.VideoCapture(input_path)\n\n# Define the codec and create VideoWriter object\nfourcc = cv2.VideoWriter_fourcc(*'mp4v')\nout = cv2.VideoWriter(output_path, fourcc, 20.0, (int(cap.get(3)), int(cap.get(4))))\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n\n    # Preprocess Data\n    input_data = cv2.resize(frame, (input_shape[1], input_shape[2]))\n    input_data = np.expand_dims(input_data, axis=0).astype(input_dtype)\n\n    # Phase 3: Inference\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n    interpreter.invoke()\n\n    # Phase 4: Output Interpretation & Handling Loop\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]  # Bounding box coordinates of detected objects\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]  # Class index of detected objects\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]  # Confidence of detected objects\n\n    height, width, _ = frame.shape\n\n    for i in range(len(scores)):\n        if scores[i] > confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[i]\n            (left, right, top, bottom) = (xmin * width, xmax * width, ymin * height, ymax * height)\n            object_name = labels[int(classes[i])]\n            \n            # Draw bounding box and label on the frame\n            cv2.rectangle(frame, (int(left), int(top)), (int(right), int(bottom)), (0, 255, 0), 2)\n            label = f'{object_name}: {scores[i]:.2f}'\n            cv2.putText(frame, label, (int(left), int(top) - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)\n\n    # Handle Output\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "phi4_3b43_psg_batch",
+      "metadata": {
+        "num_run": 26
+      },
+      "tags": [
+        "benchmark",
+        "phi4:latest",
+        "py_sketch_generator"
+      ],
+      "latency": 13.848,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-16-41-28-509540_chatcmpl-c13e5d8c-cef5-4307-bf42-179f2a15ef5d",
+          "traceId": "ebca68a7",
+          "type": "GENERATION",
+          "name": "ebca_psg_gen_attempt#1",
+          "startTime": "2025-08-05T13:41:28.509000+00:00",
+          "endTime": "2025-08-05T13:41:42.357000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 13848.0,
+          "costDetails": {},
+          "promptTokens": 1598,
+          "totalTokens": 2242,
+          "completionTokens": 644,
+          "environment": "default",
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "environment": "default",
+      "updatedAt": "2025-08-05T13:42:21.228Z",
+      "createdAt": "2025-08-05T13:41:29.027Z"
+    },
+    {
+      "id": "a01a8b3c",
+      "timestamp": "2025-08-05T13:40:33.995000+00:00",
+      "name": "a01a_py_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import cv2\nimport numpy as np\n\n# Configuration Parameters\nmodel_path  = \"models/ssd-mobilenet_v1/detect.tflite\"\nlabel_path  = \"models/ssd-mobilenet_v1/labelmap.txt\"\ninput_path  = \"data/object_detection/sheeps.mp4\"\noutput_path  = \"results/object_detection/test_results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# Phase 1: Setup\nfrom tflite_runtime.interpreter import Interpreter\n\n# Load Labels\nwith open(label_path, 'r') as f:\n    labels = [line.strip() for line in f.readlines()]\n\n# Load Interpreter\ninterpreter = Interpreter(model_path=model_path)\ninterpreter.allocate_tensors()\n\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\ninput_shape = input_details[0]['shape']\ninput_dtype = input_details[0]['dtype']\n\n# Phase 2: Input Acquisition & Preprocessing Loop\ncap = cv2.VideoCapture(input_path)\n\n# Define the codec and create VideoWriter object\nfourcc = cv2.VideoWriter_fourcc(*'mp4v')\nout = cv2.VideoWriter(output_path, fourcc, 20.0, (int(cap.get(3)), int(cap.get(4))))\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n\n    # Preprocess Data\n    input_data = cv2.resize(frame, (input_shape[1], input_shape[2]))\n    input_data = np.expand_dims(input_data, axis=0).astype(input_dtype)\n\n    # Phase 3: Inference\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n    interpreter.invoke()\n\n    # Phase 4: Output Interpretation & Handling Loop\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]  # Bounding box coordinates of detected objects\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]  # Class index of detected objects\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]  # Confidence of detected objects\n\n    height, width, _ = frame.shape\n\n    for i in range(len(scores)):\n        if scores[i] > confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[i]\n            (left, right, top, bottom) = (xmin * width, xmax * width, ymin * height, ymax * height)\n            object_name = labels[int(classes[i])]\n            \n            # Draw bounding box and label on the frame\n            cv2.rectangle(frame, (int(left), int(top)), (int(right), int(bottom)), (0, 255, 0), 2)\n            label = f'{object_name}: {scores[i]:.2f}'\n            cv2.putText(frame, label, (int(left), int(top) - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)\n\n    # Handle Output\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "phi4_3b43_psg_batch",
+      "metadata": {
+        "num_run": 25
+      },
+      "tags": [
+        "benchmark",
+        "phi4:latest",
+        "py_sketch_generator"
+      ],
+      "latency": 13.94,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-16-40-33-996896_chatcmpl-567c2c45-838a-4e4f-a231-2c1adeeff52e",
+          "traceId": "a01a8b3c",
+          "type": "GENERATION",
+          "name": "a01a_psg_gen_attempt#1",
+          "startTime": "2025-08-05T13:40:33.996000+00:00",
+          "endTime": "2025-08-05T13:40:47.936000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 13940.0,
+          "costDetails": {},
+          "promptTokens": 1598,
+          "totalTokens": 2242,
+          "completionTokens": 644,
+          "environment": "default",
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "environment": "default",
+      "updatedAt": "2025-08-05T13:41:28.141Z",
+      "createdAt": "2025-08-05T13:40:34.513Z"
+    },
+    {
+      "id": "46bc2eec",
+      "timestamp": "2025-08-05T13:39:39.426000+00:00",
+      "name": "46bc_py_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import cv2\nimport numpy as np\n\n# Configuration Parameters\nmodel_path  = \"models/ssd-mobilenet_v1/detect.tflite\"\nlabel_path  = \"models/ssd-mobilenet_v1/labelmap.txt\"\ninput_path  = \"data/object_detection/sheeps.mp4\"\noutput_path  = \"results/object_detection/test_results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# Phase 1: Setup\nfrom tflite_runtime.interpreter import Interpreter\n\n# Load Labels\nwith open(label_path, 'r') as f:\n    labels = [line.strip() for line in f.readlines()]\n\n# Load Interpreter\ninterpreter = Interpreter(model_path=model_path)\ninterpreter.allocate_tensors()\n\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\ninput_shape = input_details[0]['shape']\ninput_dtype = input_details[0]['dtype']\n\n# Phase 2: Input Acquisition & Preprocessing Loop\ncap = cv2.VideoCapture(input_path)\n\n# Define the codec and create VideoWriter object\nfourcc = cv2.VideoWriter_fourcc(*'mp4v')\nout = cv2.VideoWriter(output_path, fourcc, 20.0, (int(cap.get(3)), int(cap.get(4))))\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n\n    # Preprocess Data\n    input_data = cv2.resize(frame, (input_shape[1], input_shape[2]))\n    input_data = np.expand_dims(input_data, axis=0).astype(input_dtype)\n\n    # Phase 3: Inference\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n    interpreter.invoke()\n\n    # Phase 4: Output Interpretation & Handling Loop\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]  # Bounding box coordinates of detected objects\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]  # Class index of detected objects\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]  # Confidence of detected objects\n\n    height, width, _ = frame.shape\n\n    for i in range(len(scores)):\n        if scores[i] > confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[i]\n            (left, right, top, bottom) = (xmin * width, xmax * width, ymin * height, ymax * height)\n            object_name = labels[int(classes[i])]\n            \n            # Draw bounding box and label on the frame\n            cv2.rectangle(frame, (int(left), int(top)), (int(right), int(bottom)), (0, 255, 0), 2)\n            label = f'{object_name}: {scores[i]:.2f}'\n            cv2.putText(frame, label, (int(left), int(top) - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)\n\n    # Handle Output\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "phi4_3b43_psg_batch",
+      "metadata": {
+        "num_run": 24
+      },
+      "tags": [
+        "benchmark",
+        "phi4:latest",
+        "py_sketch_generator"
+      ],
+      "latency": 13.975,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-16-39-39-427700_chatcmpl-2bd1cb1f-6617-4b9e-8461-a8292cb695b6",
+          "traceId": "46bc2eec",
+          "type": "GENERATION",
+          "name": "46bc_psg_gen_attempt#1",
+          "startTime": "2025-08-05T13:39:39.427000+00:00",
+          "endTime": "2025-08-05T13:39:53.402000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 13975.0,
+          "costDetails": {},
+          "promptTokens": 1598,
+          "totalTokens": 2242,
+          "completionTokens": 644,
+          "environment": "default",
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "environment": "default",
+      "updatedAt": "2025-08-05T13:40:33.145Z",
+      "createdAt": "2025-08-05T13:39:39.945Z"
+    },
+    {
+      "id": "e963c4fc",
+      "timestamp": "2025-08-05T13:38:44.862000+00:00",
+      "name": "e963_py_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import cv2\nimport numpy as np\n\n# Configuration Parameters\nmodel_path  = \"models/ssd-mobilenet_v1/detect.tflite\"\nlabel_path  = \"models/ssd-mobilenet_v1/labelmap.txt\"\ninput_path  = \"data/object_detection/sheeps.mp4\"\noutput_path  = \"results/object_detection/test_results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# Phase 1: Setup\nfrom tflite_runtime.interpreter import Interpreter\n\n# Load Labels\nwith open(label_path, 'r') as f:\n    labels = [line.strip() for line in f.readlines()]\n\n# Load Interpreter\ninterpreter = Interpreter(model_path=model_path)\ninterpreter.allocate_tensors()\n\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\ninput_shape = input_details[0]['shape']\ninput_dtype = input_details[0]['dtype']\n\n# Phase 2: Input Acquisition & Preprocessing Loop\ncap = cv2.VideoCapture(input_path)\n\n# Define the codec and create VideoWriter object\nfourcc = cv2.VideoWriter_fourcc(*'mp4v')\nout = cv2.VideoWriter(output_path, fourcc, 20.0, (int(cap.get(3)), int(cap.get(4))))\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n\n    # Preprocess Data\n    input_data = cv2.resize(frame, (input_shape[1], input_shape[2]))\n    input_data = np.expand_dims(input_data, axis=0).astype(input_dtype)\n\n    # Phase 3: Inference\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n    interpreter.invoke()\n\n    # Phase 4: Output Interpretation & Handling Loop\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]  # Bounding box coordinates of detected objects\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]  # Class index of detected objects\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]  # Confidence of detected objects\n\n    height, width, _ = frame.shape\n\n    for i in range(len(scores)):\n        if scores[i] > confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[i]\n            (left, right, top, bottom) = (xmin * width, xmax * width, ymin * height, ymax * height)\n            object_name = labels[int(classes[i])]\n            \n            # Draw bounding box and label on the frame\n            cv2.rectangle(frame, (int(left), int(top)), (int(right), int(bottom)), (0, 255, 0), 2)\n            label = f'{object_name}: {scores[i]:.2f}'\n            cv2.putText(frame, label, (int(left), int(top) - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)\n\n    # Handle Output\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "phi4_3b43_psg_batch",
+      "metadata": {
+        "num_run": 23
+      },
+      "tags": [
+        "benchmark",
+        "phi4:latest",
+        "py_sketch_generator"
+      ],
+      "latency": 13.909,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-16-38-44-863821_chatcmpl-6e4337aa-2561-4b4e-9a50-00d17e734f1d",
+          "traceId": "e963c4fc",
+          "type": "GENERATION",
+          "name": "e963_psg_gen_attempt#1",
+          "startTime": "2025-08-05T13:38:44.863000+00:00",
+          "endTime": "2025-08-05T13:38:58.772000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 13909.0,
+          "costDetails": {},
+          "promptTokens": 1598,
+          "totalTokens": 2242,
+          "completionTokens": 644,
+          "environment": "default",
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "environment": "default",
+      "updatedAt": "2025-08-05T13:39:38.554Z",
+      "createdAt": "2025-08-05T13:38:45.380Z"
+    },
+    {
+      "id": "702ccd2b",
+      "timestamp": "2025-08-05T13:37:49.003000+00:00",
+      "name": "702c_py_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import cv2\nimport numpy as np\n\n# Configuration Parameters\nmodel_path  = \"models/ssd-mobilenet_v1/detect.tflite\"\nlabel_path  = \"models/ssd-mobilenet_v1/labelmap.txt\"\ninput_path  = \"data/object_detection/sheeps.mp4\"\noutput_path  = \"results/object_detection/test_results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# Phase 1: Setup\nfrom tflite_runtime.interpreter import Interpreter\n\n# Load Labels\nwith open(label_path, 'r') as f:\n    labels = [line.strip() for line in f.readlines()]\n\n# Load Interpreter\ninterpreter = Interpreter(model_path=model_path)\ninterpreter.allocate_tensors()\n\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\ninput_shape = input_details[0]['shape']\ninput_dtype = input_details[0]['dtype']\n\n# Phase 2: Input Acquisition & Preprocessing Loop\ncap = cv2.VideoCapture(input_path)\n\n# Define the codec and create VideoWriter object\nfourcc = cv2.VideoWriter_fourcc(*'mp4v')\nout = cv2.VideoWriter(output_path, fourcc, 20.0, (int(cap.get(3)), int(cap.get(4))))\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n\n    # Preprocess Data\n    input_data = cv2.resize(frame, (input_shape[1], input_shape[2]))\n    input_data = np.expand_dims(input_data, axis=0).astype(input_dtype)\n\n    # Phase 3: Inference\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n    interpreter.invoke()\n\n    # Phase 4: Output Interpretation & Handling Loop\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]  # Bounding box coordinates of detected objects\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]  # Class index of detected objects\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]  # Confidence of detected objects\n\n    height, width, _ = frame.shape\n\n    for i in range(len(scores)):\n        if scores[i] > confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[i]\n            (left, right, top, bottom) = (xmin * width, xmax * width, ymin * height, ymax * height)\n            object_name = labels[int(classes[i])]\n            \n            # Draw bounding box and label on the frame\n            cv2.rectangle(frame, (int(left), int(top)), (int(right), int(bottom)), (0, 255, 0), 2)\n            label = f'{object_name}: {scores[i]:.2f}'\n            cv2.putText(frame, label, (int(left), int(top) - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)\n\n    # Handle Output\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "phi4_3b43_psg_batch",
+      "metadata": {
+        "num_run": 22
+      },
+      "tags": [
+        "benchmark",
+        "phi4:latest",
+        "py_sketch_generator"
+      ],
+      "latency": 15.21,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-16-37-49-005309_chatcmpl-e789c609-7824-4561-ab2d-171455b5a1e4",
+          "traceId": "702ccd2b",
+          "type": "GENERATION",
+          "name": "702c_psg_gen_attempt#1",
+          "startTime": "2025-08-05T13:37:49.005000+00:00",
+          "endTime": "2025-08-05T13:38:04.215000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 15210.0,
+          "costDetails": {},
+          "promptTokens": 1598,
+          "totalTokens": 2242,
+          "completionTokens": 644,
+          "environment": "default",
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "environment": "default",
+      "updatedAt": "2025-08-05T13:38:43.667Z",
+      "createdAt": "2025-08-05T13:37:49.520Z"
+    },
+    {
+      "id": "40fd1617",
+      "timestamp": "2025-08-05T13:36:52.463000+00:00",
+      "name": "40fd_py_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import cv2\nimport numpy as np\n\n# Configuration Parameters\nmodel_path  = \"models/ssd-mobilenet_v1/detect.tflite\"\nlabel_path  = \"models/ssd-mobilenet_v1/labelmap.txt\"\ninput_path  = \"data/object_detection/sheeps.mp4\"\noutput_path  = \"results/object_detection/test_results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# Phase 1: Setup\nfrom tflite_runtime.interpreter import Interpreter\n\n# Load Labels\nwith open(label_path, 'r') as f:\n    labels = [line.strip() for line in f.readlines()]\n\n# Load Interpreter\ninterpreter = Interpreter(model_path=model_path)\ninterpreter.allocate_tensors()\n\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\ninput_shape = input_details[0]['shape']\ninput_dtype = input_details[0]['dtype']\n\n# Phase 2: Input Acquisition & Preprocessing Loop\ncap = cv2.VideoCapture(input_path)\n\n# Define the codec and create VideoWriter object\nfourcc = cv2.VideoWriter_fourcc(*'mp4v')\nout = cv2.VideoWriter(output_path, fourcc, 20.0, (int(cap.get(3)), int(cap.get(4))))\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n\n    # Preprocess Data\n    input_data = cv2.resize(frame, (input_shape[1], input_shape[2]))\n    input_data = np.expand_dims(input_data, axis=0).astype(input_dtype)\n\n    # Phase 3: Inference\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n    interpreter.invoke()\n\n    # Phase 4: Output Interpretation & Handling Loop\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]  # Bounding box coordinates of detected objects\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]  # Class index of detected objects\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]  # Confidence of detected objects\n\n    height, width, _ = frame.shape\n\n    for i in range(len(scores)):\n        if scores[i] > confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[i]\n            (left, right, top, bottom) = (xmin * width, xmax * width, ymin * height, ymax * height)\n            object_name = labels[int(classes[i])]\n            \n            # Draw bounding box and label on the frame\n            cv2.rectangle(frame, (int(left), int(top)), (int(right), int(bottom)), (0, 255, 0), 2)\n            label = f'{object_name}: {scores[i]:.2f}'\n            cv2.putText(frame, label, (int(left), int(top) - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)\n\n    # Handle Output\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "phi4_3b43_psg_batch",
+      "metadata": {
+        "num_run": 21
+      },
+      "tags": [
+        "benchmark",
+        "phi4:latest",
+        "py_sketch_generator"
+      ],
+      "latency": 16.037,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-16-36-52-464573_chatcmpl-80fe39ff-59c0-4268-8394-4ab58e750d99",
+          "traceId": "40fd1617",
+          "type": "GENERATION",
+          "name": "40fd_psg_gen_attempt#1",
+          "startTime": "2025-08-05T13:36:52.464000+00:00",
+          "endTime": "2025-08-05T13:37:08.501000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 16037.0,
+          "costDetails": {},
+          "promptTokens": 1598,
+          "totalTokens": 2242,
+          "completionTokens": 644,
+          "environment": "default",
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "environment": "default",
+      "updatedAt": "2025-08-05T13:37:48.375Z",
+      "createdAt": "2025-08-05T13:36:52.981Z"
+    },
+    {
+      "id": "af4c422d",
+      "timestamp": "2025-08-05T13:36:00.846000+00:00",
+      "name": "af4c_py_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import cv2\nimport numpy as np\n\n# Configuration Parameters\nmodel_path  = \"models/ssd-mobilenet_v1/detect.tflite\"\nlabel_path  = \"models/ssd-mobilenet_v1/labelmap.txt\"\ninput_path  = \"data/object_detection/sheeps.mp4\"\noutput_path  = \"results/object_detection/test_results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# Phase 1: Setup\nfrom tflite_runtime.interpreter import Interpreter\n\n# Load Labels\nwith open(label_path, 'r') as f:\n    labels = [line.strip() for line in f.readlines()]\n\n# Load Interpreter\ninterpreter = Interpreter(model_path=model_path)\ninterpreter.allocate_tensors()\n\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\ninput_shape = input_details[0]['shape']\ninput_dtype = input_details[0]['dtype']\n\n# Phase 2: Input Acquisition & Preprocessing Loop\ncap = cv2.VideoCapture(input_path)\n\n# Define the codec and create VideoWriter object\nfourcc = cv2.VideoWriter_fourcc(*'mp4v')\nout = cv2.VideoWriter(output_path, fourcc, 20.0, (int(cap.get(3)), int(cap.get(4))))\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n\n    # Preprocess Data\n    input_data = cv2.resize(frame, (input_shape[1], input_shape[2]))\n    input_data = np.expand_dims(input_data, axis=0).astype(input_dtype)\n\n    # Phase 3: Inference\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n    interpreter.invoke()\n\n    # Phase 4: Output Interpretation & Handling Loop\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]  # Bounding box coordinates of detected objects\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]  # Class index of detected objects\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]  # Confidence of detected objects\n\n    height, width, _ = frame.shape\n\n    for i in range(len(scores)):\n        if scores[i] > confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[i]\n            (left, right, top, bottom) = (xmin * width, xmax * width, ymin * height, ymax * height)\n            object_name = labels[int(classes[i])]\n            \n            # Draw bounding box and label on the frame\n            cv2.rectangle(frame, (int(left), int(top)), (int(right), int(bottom)), (0, 255, 0), 2)\n            label = f'{object_name}: {scores[i]:.2f}'\n            cv2.putText(frame, label, (int(left), int(top) - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)\n\n    # Handle Output\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "phi4_3b43_psg_batch",
+      "metadata": {
+        "num_run": 20
+      },
+      "tags": [
+        "benchmark",
+        "phi4:latest",
+        "py_sketch_generator"
+      ],
+      "latency": 13.893,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-16-36-00-847489_chatcmpl-369fb1e7-1244-4693-a8a5-e6c8252279ac",
+          "traceId": "af4c422d",
+          "type": "GENERATION",
+          "name": "af4c_psg_gen_attempt#1",
+          "startTime": "2025-08-05T13:36:00.847000+00:00",
+          "endTime": "2025-08-05T13:36:14.740000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 13893.0,
+          "costDetails": {},
+          "promptTokens": 1598,
+          "totalTokens": 2242,
+          "completionTokens": 644,
+          "environment": "default",
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "environment": "default",
+      "updatedAt": "2025-08-05T13:36:51.979Z",
+      "createdAt": "2025-08-05T13:36:01.364Z"
+    },
+    {
+      "id": "4a7f1f17",
+      "timestamp": "2025-08-05T13:35:09.300000+00:00",
+      "name": "4a7f_py_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import cv2\nimport numpy as np\n\n# Configuration Parameters\nmodel_path  = \"models/ssd-mobilenet_v1/detect.tflite\"\nlabel_path  = \"models/ssd-mobilenet_v1/labelmap.txt\"\ninput_path  = \"data/object_detection/sheeps.mp4\"\noutput_path  = \"results/object_detection/test_results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# Phase 1: Setup\nfrom tflite_runtime.interpreter import Interpreter\n\n# Load Labels\nwith open(label_path, 'r') as f:\n    labels = [line.strip() for line in f.readlines()]\n\n# Load Interpreter\ninterpreter = Interpreter(model_path=model_path)\ninterpreter.allocate_tensors()\n\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\ninput_shape = input_details[0]['shape']\ninput_dtype = input_details[0]['dtype']\n\n# Phase 2: Input Acquisition & Preprocessing Loop\ncap = cv2.VideoCapture(input_path)\n\n# Define the codec and create VideoWriter object\nfourcc = cv2.VideoWriter_fourcc(*'mp4v')\nout = cv2.VideoWriter(output_path, fourcc, 20.0, (int(cap.get(3)), int(cap.get(4))))\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n\n    # Preprocess Data\n    input_data = cv2.resize(frame, (input_shape[1], input_shape[2]))\n    input_data = np.expand_dims(input_data, axis=0).astype(input_dtype)\n\n    # Phase 3: Inference\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n    interpreter.invoke()\n\n    # Phase 4: Output Interpretation & Handling Loop\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]  # Bounding box coordinates of detected objects\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]  # Class index of detected objects\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]  # Confidence of detected objects\n\n    height, width, _ = frame.shape\n\n    for i in range(len(scores)):\n        if scores[i] > confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[i]\n            (left, right, top, bottom) = (xmin * width, xmax * width, ymin * height, ymax * height)\n            object_name = labels[int(classes[i])]\n            \n            # Draw bounding box and label on the frame\n            cv2.rectangle(frame, (int(left), int(top)), (int(right), int(bottom)), (0, 255, 0), 2)\n            label = f'{object_name}: {scores[i]:.2f}'\n            cv2.putText(frame, label, (int(left), int(top) - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)\n\n    # Handle Output\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "phi4_3b43_psg_batch",
+      "metadata": {
+        "num_run": 19
+      },
+      "tags": [
+        "benchmark",
+        "phi4:latest",
+        "py_sketch_generator"
+      ],
+      "latency": 13.894,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-16-35-09-301648_chatcmpl-412b6151-b7d9-4f87-abcb-6ed43e68a80e",
+          "traceId": "4a7f1f17",
+          "type": "GENERATION",
+          "name": "4a7f_psg_gen_attempt#1",
+          "startTime": "2025-08-05T13:35:09.301000+00:00",
+          "endTime": "2025-08-05T13:35:23.195000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 13894.0,
+          "costDetails": {},
+          "promptTokens": 1598,
+          "totalTokens": 2242,
+          "completionTokens": 644,
+          "environment": "default",
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "environment": "default",
+      "updatedAt": "2025-08-05T13:36:00.501Z",
+      "createdAt": "2025-08-05T13:35:09.818Z"
+    },
+    {
+      "id": "e79f380c",
+      "timestamp": "2025-08-05T13:34:17.770000+00:00",
+      "name": "e79f_py_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import cv2\nimport numpy as np\n\n# Configuration Parameters\nmodel_path  = \"models/ssd-mobilenet_v1/detect.tflite\"\nlabel_path  = \"models/ssd-mobilenet_v1/labelmap.txt\"\ninput_path  = \"data/object_detection/sheeps.mp4\"\noutput_path  = \"results/object_detection/test_results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# Phase 1: Setup\nfrom tflite_runtime.interpreter import Interpreter\n\n# Load Labels\nwith open(label_path, 'r') as f:\n    labels = [line.strip() for line in f.readlines()]\n\n# Load Interpreter\ninterpreter = Interpreter(model_path=model_path)\ninterpreter.allocate_tensors()\n\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\ninput_shape = input_details[0]['shape']\ninput_dtype = input_details[0]['dtype']\n\n# Phase 2: Input Acquisition & Preprocessing Loop\ncap = cv2.VideoCapture(input_path)\n\n# Define the codec and create VideoWriter object\nfourcc = cv2.VideoWriter_fourcc(*'mp4v')\nout = cv2.VideoWriter(output_path, fourcc, 20.0, (int(cap.get(3)), int(cap.get(4))))\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n\n    # Preprocess Data\n    input_data = cv2.resize(frame, (input_shape[1], input_shape[2]))\n    input_data = np.expand_dims(input_data, axis=0).astype(input_dtype)\n\n    # Phase 3: Inference\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n    interpreter.invoke()\n\n    # Phase 4: Output Interpretation & Handling Loop\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]  # Bounding box coordinates of detected objects\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]  # Class index of detected objects\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]  # Confidence of detected objects\n\n    height, width, _ = frame.shape\n\n    for i in range(len(scores)):\n        if scores[i] > confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[i]\n            (left, right, top, bottom) = (xmin * width, xmax * width, ymin * height, ymax * height)\n            object_name = labels[int(classes[i])]\n            \n            # Draw bounding box and label on the frame\n            cv2.rectangle(frame, (int(left), int(top)), (int(right), int(bottom)), (0, 255, 0), 2)\n            label = f'{object_name}: {scores[i]:.2f}'\n            cv2.putText(frame, label, (int(left), int(top) - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)\n\n    # Handle Output\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "phi4_3b43_psg_batch",
+      "metadata": {
+        "num_run": 18
+      },
+      "tags": [
+        "benchmark",
+        "phi4:latest",
+        "py_sketch_generator"
+      ],
+      "latency": 13.914,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-16-34-17-774344_chatcmpl-29f20e57-0b4c-4a55-bd5d-060af6642c86",
+          "traceId": "e79f380c",
+          "type": "GENERATION",
+          "name": "e79f_psg_gen_attempt#1",
+          "startTime": "2025-08-05T13:34:17.774000+00:00",
+          "endTime": "2025-08-05T13:34:31.688000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 13914.0,
+          "costDetails": {},
+          "promptTokens": 1598,
+          "totalTokens": 2242,
+          "completionTokens": 644,
+          "environment": "default",
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "environment": "default",
+      "updatedAt": "2025-08-05T13:35:08.922Z",
+      "createdAt": "2025-08-05T13:34:18.290Z"
+    },
+    {
+      "id": "b4cc45b2",
+      "timestamp": "2025-08-05T13:33:24.751000+00:00",
+      "name": "b4cc_py_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import cv2\nimport numpy as np\n\n# Configuration Parameters\nmodel_path  = \"models/ssd-mobilenet_v1/detect.tflite\"\nlabel_path  = \"models/ssd-mobilenet_v1/labelmap.txt\"\ninput_path  = \"data/object_detection/sheeps.mp4\"\noutput_path  = \"results/object_detection/test_results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# Phase 1: Setup\nfrom tflite_runtime.interpreter import Interpreter\n\n# Load Labels\nwith open(label_path, 'r') as f:\n    labels = [line.strip() for line in f.readlines()]\n\n# Load Interpreter\ninterpreter = Interpreter(model_path=model_path)\ninterpreter.allocate_tensors()\n\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\ninput_shape = input_details[0]['shape']\ninput_dtype = input_details[0]['dtype']\n\n# Phase 2: Input Acquisition & Preprocessing Loop\ncap = cv2.VideoCapture(input_path)\n\n# Define the codec and create VideoWriter object\nfourcc = cv2.VideoWriter_fourcc(*'mp4v')\nout = cv2.VideoWriter(output_path, fourcc, 20.0, (int(cap.get(3)), int(cap.get(4))))\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n\n    # Preprocess Data\n    input_data = cv2.resize(frame, (input_shape[1], input_shape[2]))\n    input_data = np.expand_dims(input_data, axis=0).astype(input_dtype)\n\n    # Phase 3: Inference\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n    interpreter.invoke()\n\n    # Phase 4: Output Interpretation & Handling Loop\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]  # Bounding box coordinates of detected objects\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]  # Class index of detected objects\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]  # Confidence of detected objects\n\n    height, width, _ = frame.shape\n\n    for i in range(len(scores)):\n        if scores[i] > confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[i]\n            (left, right, top, bottom) = (xmin * width, xmax * width, ymin * height, ymax * height)\n            object_name = labels[int(classes[i])]\n            \n            # Draw bounding box and label on the frame\n            cv2.rectangle(frame, (int(left), int(top)), (int(right), int(bottom)), (0, 255, 0), 2)\n            label = f'{object_name}: {scores[i]:.2f}'\n            cv2.putText(frame, label, (int(left), int(top) - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)\n\n    # Handle Output\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "phi4_3b43_psg_batch",
+      "metadata": {
+        "num_run": 17
+      },
+      "tags": [
+        "benchmark",
+        "phi4:latest",
+        "py_sketch_generator"
+      ],
+      "latency": 13.922,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-16-33-24-752852_chatcmpl-62c1f4f2-787d-4dd3-a9e2-a69b117c3448",
+          "traceId": "b4cc45b2",
+          "type": "GENERATION",
+          "name": "b4cc_psg_gen_attempt#1",
+          "startTime": "2025-08-05T13:33:24.752000+00:00",
+          "endTime": "2025-08-05T13:33:38.674000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 13922.0,
+          "costDetails": {},
+          "promptTokens": 1598,
+          "totalTokens": 2242,
+          "completionTokens": 644,
+          "environment": "default",
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "environment": "default",
+      "updatedAt": "2025-08-05T13:34:15.938Z",
+      "createdAt": "2025-08-05T13:33:25.268Z"
+    },
+    {
+      "id": "24210cf5",
+      "timestamp": "2025-08-05T13:32:30.210000+00:00",
+      "name": "2421_py_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import cv2\nimport numpy as np\n\n# Configuration Parameters\nmodel_path  = \"models/ssd-mobilenet_v1/detect.tflite\"\nlabel_path  = \"models/ssd-mobilenet_v1/labelmap.txt\"\ninput_path  = \"data/object_detection/sheeps.mp4\"\noutput_path  = \"results/object_detection/test_results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# Phase 1: Setup\nfrom tflite_runtime.interpreter import Interpreter\n\n# Load Labels\nwith open(label_path, 'r') as f:\n    labels = [line.strip() for line in f.readlines()]\n\n# Load Interpreter\ninterpreter = Interpreter(model_path=model_path)\ninterpreter.allocate_tensors()\n\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\ninput_shape = input_details[0]['shape']\ninput_dtype = input_details[0]['dtype']\n\n# Phase 2: Input Acquisition & Preprocessing Loop\ncap = cv2.VideoCapture(input_path)\n\n# Define the codec and create VideoWriter object\nfourcc = cv2.VideoWriter_fourcc(*'mp4v')\nout = cv2.VideoWriter(output_path, fourcc, 20.0, (int(cap.get(3)), int(cap.get(4))))\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n\n    # Preprocess Data\n    input_data = cv2.resize(frame, (input_shape[1], input_shape[2]))\n    input_data = np.expand_dims(input_data, axis=0).astype(input_dtype)\n\n    # Phase 3: Inference\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n    interpreter.invoke()\n\n    # Phase 4: Output Interpretation & Handling Loop\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]  # Bounding box coordinates of detected objects\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]  # Class index of detected objects\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]  # Confidence of detected objects\n\n    height, width, _ = frame.shape\n\n    for i in range(len(scores)):\n        if scores[i] > confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[i]\n            (left, right, top, bottom) = (xmin * width, xmax * width, ymin * height, ymax * height)\n            class_id = int(classes[i])\n            label = f\"{labels[class_id]}: {int(scores[i] * 100)}%\"\n            \n            # Draw bounding box and label on the frame\n            cv2.rectangle(frame, (int(left), int(top)), (int(right), int(bottom)), (0, 255, 0), 2)\n            cv2.putText(frame, label, (int(left), int(top) - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)\n\n    # Handle Output\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "phi4_3b43_psg_batch",
+      "metadata": {
+        "num_run": 16
+      },
+      "tags": [
+        "benchmark",
+        "phi4:latest",
+        "py_sketch_generator"
+      ],
+      "latency": 13.981,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-16-32-30-212558_chatcmpl-c48922c5-fd34-46f9-a8da-0eff60708f19",
+          "traceId": "24210cf5",
+          "type": "GENERATION",
+          "name": "2421_psg_gen_attempt#1",
+          "startTime": "2025-08-05T13:32:30.212000+00:00",
+          "endTime": "2025-08-05T13:32:44.193000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 13981.0,
+          "costDetails": {},
+          "promptTokens": 1598,
+          "totalTokens": 2245,
+          "completionTokens": 647,
+          "environment": "default",
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "environment": "default",
+      "updatedAt": "2025-08-05T13:33:23.958Z",
+      "createdAt": "2025-08-05T13:32:30.728Z"
+    },
+    {
+      "id": "7e752199",
+      "timestamp": "2025-08-05T13:31:35.657000+00:00",
+      "name": "7e75_py_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import cv2\nimport numpy as np\n\n# Configuration Parameters\nmodel_path  = \"models/ssd-mobilenet_v1/detect.tflite\"\nlabel_path  = \"models/ssd-mobilenet_v1/labelmap.txt\"\ninput_path  = \"data/object_detection/sheeps.mp4\"\noutput_path  = \"results/object_detection/test_results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# Phase 1: Setup\nfrom tflite_runtime.interpreter import Interpreter\n\n# Load Labels\nwith open(label_path, 'r') as f:\n    labels = [line.strip() for line in f.readlines()]\n\n# Load Interpreter\ninterpreter = Interpreter(model_path=model_path)\ninterpreter.allocate_tensors()\n\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\ninput_shape = input_details[0]['shape']\ninput_dtype = input_details[0]['dtype']\n\n# Phase 2: Input Acquisition & Preprocessing Loop\ncap = cv2.VideoCapture(input_path)\n\n# Define the codec and create VideoWriter object\nfourcc = cv2.VideoWriter_fourcc(*'mp4v')\nout = cv2.VideoWriter(output_path, fourcc, 20.0, (int(cap.get(3)), int(cap.get(4))))\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n\n    # Preprocess Data\n    input_data = cv2.resize(frame, (input_shape[1], input_shape[2]))\n    input_data = np.expand_dims(input_data, axis=0).astype(input_dtype)\n\n    # Phase 3: Inference\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n    interpreter.invoke()\n\n    # Phase 4: Output Interpretation & Handling Loop\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]  # Bounding box coordinates of detected objects\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]  # Class index of detected objects\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]  # Confidence of detected objects\n\n    height, width, _ = frame.shape\n\n    for i in range(len(scores)):\n        if scores[i] > confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[i]\n            (left, right, top, bottom) = (xmin * width, xmax * width, ymin * height, ymax * height)\n            class_id = int(classes[i])\n            label = f\"{labels[class_id]}: {int(scores[i] * 100)}%\"\n            \n            # Draw bounding box and label on the frame\n            cv2.rectangle(frame, (int(left), int(top)), (int(right), int(bottom)), (0, 255, 0), 2)\n            cv2.putText(frame, label, (int(left), int(top) - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)\n\n    # Handle Output\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "phi4_3b43_psg_batch",
+      "metadata": {
+        "num_run": 15
+      },
+      "tags": [
+        "benchmark",
+        "phi4:latest",
+        "py_sketch_generator"
+      ],
+      "latency": 13.959,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-16-31-35-658758_chatcmpl-5e2160df-6952-4228-b386-efcae8b6e07e",
+          "traceId": "7e752199",
+          "type": "GENERATION",
+          "name": "7e75_psg_gen_attempt#1",
+          "startTime": "2025-08-05T13:31:35.658000+00:00",
+          "endTime": "2025-08-05T13:31:49.617000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 13959.0,
+          "costDetails": {},
+          "promptTokens": 1598,
+          "totalTokens": 2245,
+          "completionTokens": 647,
+          "environment": "default",
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "environment": "default",
+      "updatedAt": "2025-08-05T13:32:29.977Z",
+      "createdAt": "2025-08-05T13:31:36.174Z"
+    },
+    {
+      "id": "4720e61f",
+      "timestamp": "2025-08-05T13:30:41.774000+00:00",
+      "name": "4720_py_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import cv2\nimport numpy as np\n\n# Configuration Parameters\nmodel_path  = \"models/ssd-mobilenet_v1/detect.tflite\"\nlabel_path  = \"models/ssd-mobilenet_v1/labelmap.txt\"\ninput_path  = \"data/object_detection/sheeps.mp4\"\noutput_path  = \"results/object_detection/test_results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# Phase 1: Setup\nfrom tflite_runtime.interpreter import Interpreter\n\n# Load Labels\nwith open(label_path, 'r') as f:\n    labels = [line.strip() for line in f.readlines()]\n\n# Load Interpreter\ninterpreter = Interpreter(model_path=model_path)\ninterpreter.allocate_tensors()\n\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\ninput_shape = input_details[0]['shape']\ninput_dtype = input_details[0]['dtype']\n\n# Phase 2: Input Acquisition & Preprocessing Loop\ncap = cv2.VideoCapture(input_path)\n\n# Define the codec and create VideoWriter object\nfourcc = cv2.VideoWriter_fourcc(*'mp4v')\nout = cv2.VideoWriter(output_path, fourcc, 20.0, (int(cap.get(3)), int(cap.get(4))))\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n\n    # Preprocess Data\n    input_data = cv2.resize(frame, (input_shape[1], input_shape[2]))\n    input_data = np.expand_dims(input_data, axis=0).astype(input_dtype)\n\n    # Phase 3: Inference\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n    interpreter.invoke()\n\n    # Phase 4: Output Interpretation & Handling Loop\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]  # Bounding box coordinates of detected objects\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]  # Class index of detected objects\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]  # Confidence of detected objects\n\n    height, width, _ = frame.shape\n\n    for i in range(len(scores)):\n        if scores[i] > confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[i]\n            (left, right, top, bottom) = (xmin * width, xmax * width, ymin * height, ymax * height)\n            object_name = labels[int(classes[i])]\n            \n            # Draw bounding box and label on the frame\n            cv2.rectangle(frame, (int(left), int(top)), (int(right), int(bottom)), (0, 255, 0), 2)\n            label = f'{object_name}: {scores[i]:.2f}'\n            cv2.putText(frame, label, (int(left), int(top) - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)\n\n    # Handle Output\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "phi4_3b43_psg_batch",
+      "metadata": {
+        "num_run": 14
+      },
+      "tags": [
+        "benchmark",
+        "phi4:latest",
+        "py_sketch_generator"
+      ],
+      "latency": 13.884,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-16-30-41-775646_chatcmpl-48597852-b0ce-4673-a3e5-5aa47c4cee9a",
+          "traceId": "4720e61f",
+          "type": "GENERATION",
+          "name": "4720_psg_gen_attempt#1",
+          "startTime": "2025-08-05T13:30:41.775000+00:00",
+          "endTime": "2025-08-05T13:30:55.659000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 13884.0,
+          "costDetails": {},
+          "promptTokens": 1598,
+          "totalTokens": 2242,
+          "completionTokens": 644,
+          "environment": "default",
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "environment": "default",
+      "updatedAt": "2025-08-05T13:31:34.982Z",
+      "createdAt": "2025-08-05T13:30:42.291Z"
+    },
+    {
+      "id": "9dfb1f48",
+      "timestamp": "2025-08-05T13:29:50.243000+00:00",
+      "name": "9dfb_py_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import cv2\nimport numpy as np\n\n# Configuration Parameters\nmodel_path  = \"models/ssd-mobilenet_v1/detect.tflite\"\nlabel_path  = \"models/ssd-mobilenet_v1/labelmap.txt\"\ninput_path  = \"data/object_detection/sheeps.mp4\"\noutput_path  = \"results/object_detection/test_results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# Phase 1: Setup\nfrom tflite_runtime.interpreter import Interpreter\n\n# Load Labels\nwith open(label_path, 'r') as f:\n    labels = [line.strip() for line in f.readlines()]\n\n# Load Interpreter\ninterpreter = Interpreter(model_path=model_path)\ninterpreter.allocate_tensors()\n\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\ninput_shape = input_details[0]['shape']\ninput_dtype = input_details[0]['dtype']\n\n# Phase 2: Input Acquisition & Preprocessing Loop\ncap = cv2.VideoCapture(input_path)\n\n# Define the codec and create VideoWriter object\nfourcc = cv2.VideoWriter_fourcc(*'mp4v')\nout = cv2.VideoWriter(output_path, fourcc, 20.0, (int(cap.get(3)), int(cap.get(4))))\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n\n    # Preprocess Data\n    input_data = cv2.resize(frame, (input_shape[1], input_shape[2]))\n    input_data = np.expand_dims(input_data, axis=0).astype(input_dtype)\n\n    # Phase 3: Inference\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n    interpreter.invoke()\n\n    # Phase 4: Output Interpretation & Handling Loop\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]  # Bounding box coordinates of detected objects\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]  # Class index of detected objects\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]  # Confidence of detected objects\n\n    height, width, _ = frame.shape\n\n    for i in range(len(scores)):\n        if scores[i] > confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[i]\n            (left, right, top, bottom) = (xmin * width, xmax * width, ymin * height, ymax * height)\n            object_name = labels[int(classes[i])]\n            \n            # Draw bounding box and label on the frame\n            cv2.rectangle(frame, (int(left), int(top)), (int(right), int(bottom)), (0, 255, 0), 2)\n            label = f'{object_name}: {scores[i]:.2f}'\n            cv2.putText(frame, label, (int(left), int(top) - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)\n\n    # Handle Output\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "phi4_3b43_psg_batch",
+      "metadata": {
+        "num_run": 13
+      },
+      "tags": [
+        "benchmark",
+        "phi4:latest",
+        "py_sketch_generator"
+      ],
+      "latency": 13.926,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-16-29-50-244465_chatcmpl-c556e3a6-c550-4a34-8d49-12e1f087ce1b",
+          "traceId": "9dfb1f48",
+          "type": "GENERATION",
+          "name": "9dfb_psg_gen_attempt#1",
+          "startTime": "2025-08-05T13:29:50.244000+00:00",
+          "endTime": "2025-08-05T13:30:04.170000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 13926.0,
+          "costDetails": {},
+          "promptTokens": 1598,
+          "totalTokens": 2242,
+          "completionTokens": 644,
+          "environment": "default",
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "environment": "default",
+      "updatedAt": "2025-08-05T13:30:41.397Z",
+      "createdAt": "2025-08-05T13:29:50.761Z"
+    },
+    {
+      "id": "960dd108",
+      "timestamp": "2025-08-05T13:28:58.649000+00:00",
+      "name": "960d_py_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import cv2\nimport numpy as np\n\n# Configuration Parameters\nmodel_path  = \"models/ssd-mobilenet_v1/detect.tflite\"\nlabel_path  = \"models/ssd-mobilenet_v1/labelmap.txt\"\ninput_path  = \"data/object_detection/sheeps.mp4\"\noutput_path  = \"results/object_detection/test_results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# Phase 1: Setup\nfrom tflite_runtime.interpreter import Interpreter\n\n# Load Labels\nwith open(label_path, 'r') as f:\n    labels = [line.strip() for line in f.readlines()]\n\n# Load Interpreter\ninterpreter = Interpreter(model_path=model_path)\ninterpreter.allocate_tensors()\n\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\ninput_shape = input_details[0]['shape']\ninput_dtype = input_details[0]['dtype']\n\n# Phase 2: Input Acquisition & Preprocessing Loop\ncap = cv2.VideoCapture(input_path)\n\n# Define the codec and create VideoWriter object\nfourcc = cv2.VideoWriter_fourcc(*'mp4v')\nout = cv2.VideoWriter(output_path, fourcc, 20.0, (int(cap.get(3)), int(cap.get(4))))\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n\n    # Preprocess Data\n    input_data = cv2.resize(frame, (input_shape[1], input_shape[2]))\n    input_data = np.expand_dims(input_data, axis=0).astype(input_dtype)\n\n    # Phase 3: Inference\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n    interpreter.invoke()\n\n    # Phase 4: Output Interpretation & Handling Loop\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]  # Bounding box coordinates of detected objects\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]  # Class index of detected objects\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]  # Confidence of detected objects\n\n    height, width, _ = frame.shape\n\n    for i in range(len(scores)):\n        if scores[i] > confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[i]\n            (left, right, top, bottom) = (xmin * width, xmax * width, ymin * height, ymax * height)\n            object_name = labels[int(classes[i])]\n            \n            # Draw bounding box and label on the frame\n            cv2.rectangle(frame, (int(left), int(top)), (int(right), int(bottom)), (0, 255, 0), 2)\n            label = f'{object_name}: {scores[i]:.2f}'\n            cv2.putText(frame, label, (int(left), int(top) - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)\n\n    # Handle Output\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "phi4_3b43_psg_batch",
+      "metadata": {
+        "num_run": 12
+      },
+      "tags": [
+        "benchmark",
+        "phi4:latest",
+        "py_sketch_generator"
+      ],
+      "latency": 14.036,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-16-28-58-650629_chatcmpl-39a67eea-46a7-4b71-a43f-1dcfd774d619",
+          "traceId": "960dd108",
+          "type": "GENERATION",
+          "name": "960d_psg_gen_attempt#1",
+          "startTime": "2025-08-05T13:28:58.650000+00:00",
+          "endTime": "2025-08-05T13:29:12.686000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 14036.0,
+          "costDetails": {},
+          "promptTokens": 1598,
+          "totalTokens": 2242,
+          "completionTokens": 644,
+          "environment": "default",
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "environment": "default",
+      "updatedAt": "2025-08-05T13:29:49.820Z",
+      "createdAt": "2025-08-05T13:28:59.166Z"
+    },
+    {
+      "id": "8b5e35d5",
+      "timestamp": "2025-08-05T13:28:07.090000+00:00",
+      "name": "8b5e_py_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import cv2\nimport numpy as np\n\n# Configuration Parameters\nmodel_path  = \"models/ssd-mobilenet_v1/detect.tflite\"\nlabel_path  = \"models/ssd-mobilenet_v1/labelmap.txt\"\ninput_path  = \"data/object_detection/sheeps.mp4\"\noutput_path  = \"results/object_detection/test_results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# Phase 1: Setup\nfrom tflite_runtime.interpreter import Interpreter\n\n# Load Labels\nwith open(label_path, 'r') as f:\n    labels = [line.strip() for line in f.readlines()]\n\n# Load Interpreter\ninterpreter = Interpreter(model_path=model_path)\ninterpreter.allocate_tensors()\n\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\ninput_shape = input_details[0]['shape']\ninput_dtype = input_details[0]['dtype']\n\n# Phase 2: Input Acquisition & Preprocessing Loop\ncap = cv2.VideoCapture(input_path)\n\n# Define the codec and create VideoWriter object\nfourcc = cv2.VideoWriter_fourcc(*'mp4v')\nout = cv2.VideoWriter(output_path, fourcc, 20.0, (int(cap.get(3)), int(cap.get(4))))\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n\n    # Preprocess Data\n    input_data = cv2.resize(frame, (input_shape[1], input_shape[2]))\n    input_data = np.expand_dims(input_data, axis=0).astype(input_dtype)\n\n    # Phase 3: Inference\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n    interpreter.invoke()\n\n    # Phase 4: Output Interpretation & Handling Loop\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]  # Bounding box coordinates of detected objects\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]  # Class index of detected objects\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]  # Confidence of detected objects\n\n    height, width, _ = frame.shape\n\n    for i in range(len(scores)):\n        if scores[i] > confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[i]\n            (left, right, top, bottom) = (xmin * width, xmax * width, ymin * height, ymax * height)\n            object_name = labels[int(classes[i])]\n            \n            # Draw bounding box and label on the frame\n            cv2.rectangle(frame, (int(left), int(top)), (int(right), int(bottom)), (0, 255, 0), 2)\n            label = f'{object_name}: {scores[i]:.2f}'\n            cv2.putText(frame, label, (int(left), int(top) - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)\n\n    # Handle Output\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "phi4_3b43_psg_batch",
+      "metadata": {
+        "num_run": 11
+      },
+      "tags": [
+        "benchmark",
+        "phi4:latest",
+        "py_sketch_generator"
+      ],
+      "latency": 13.82,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-16-28-07-091822_chatcmpl-27225a24-c3af-410c-904a-0ee89c125afd",
+          "traceId": "8b5e35d5",
+          "type": "GENERATION",
+          "name": "8b5e_psg_gen_attempt#1",
+          "startTime": "2025-08-05T13:28:07.091000+00:00",
+          "endTime": "2025-08-05T13:28:20.911000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 13820.0,
+          "costDetails": {},
+          "promptTokens": 1598,
+          "totalTokens": 2242,
+          "completionTokens": 644,
+          "environment": "default",
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "environment": "default",
+      "updatedAt": "2025-08-05T13:28:57.740Z",
+      "createdAt": "2025-08-05T13:28:07.607Z"
+    },
+    {
+      "id": "2e25c4be",
+      "timestamp": "2025-08-05T13:27:15.577000+00:00",
+      "name": "2e25_py_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import cv2\nimport numpy as np\n\n# Configuration Parameters\nmodel_path  = \"models/ssd-mobilenet_v1/detect.tflite\"\nlabel_path  = \"models/ssd-mobilenet_v1/labelmap.txt\"\ninput_path  = \"data/object_detection/sheeps.mp4\"\noutput_path  = \"results/object_detection/test_results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# Phase 1: Setup\nfrom tflite_runtime.interpreter import Interpreter\n\n# Load Labels\nwith open(label_path, 'r') as f:\n    labels = [line.strip() for line in f.readlines()]\n\n# Load Interpreter\ninterpreter = Interpreter(model_path=model_path)\ninterpreter.allocate_tensors()\n\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\ninput_shape = input_details[0]['shape']\ninput_dtype = input_details[0]['dtype']\n\n# Phase 2: Input Acquisition & Preprocessing Loop\ncap = cv2.VideoCapture(input_path)\n\n# Define the codec and create VideoWriter object\nfourcc = cv2.VideoWriter_fourcc(*'mp4v')\nout = cv2.VideoWriter(output_path, fourcc, 20.0, (int(cap.get(3)), int(cap.get(4))))\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n\n    # Preprocess Data\n    input_data = cv2.resize(frame, (input_shape[1], input_shape[2]))\n    input_data = np.expand_dims(input_data, axis=0).astype(input_dtype)\n\n    # Phase 3: Inference\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n    interpreter.invoke()\n\n    # Phase 4: Output Interpretation & Handling Loop\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]  # Bounding box coordinates of detected objects\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]  # Class index of detected objects\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]  # Confidence of detected objects\n\n    height, width, _ = frame.shape\n\n    for i in range(len(scores)):\n        if scores[i] > confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[i]\n            (left, right, top, bottom) = (xmin * width, xmax * width, ymin * height, ymax * height)\n            object_name = labels[int(classes[i])]\n            \n            # Draw bounding box and label on the frame\n            cv2.rectangle(frame, (int(left), int(top)), (int(right), int(bottom)), (0, 255, 0), 2)\n            label = f'{object_name}: {scores[i]:.2f}'\n            cv2.putText(frame, label, (int(left), int(top) - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)\n\n    # Handle Output\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "phi4_3b43_psg_batch",
+      "metadata": {
+        "num_run": 10
+      },
+      "tags": [
+        "benchmark",
+        "phi4:latest",
+        "py_sketch_generator"
+      ],
+      "latency": 13.938,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-16-27-15-580063_chatcmpl-118170fd-8dc2-42f4-8e90-7fc2ba52f103",
+          "traceId": "2e25c4be",
+          "type": "GENERATION",
+          "name": "2e25_psg_gen_attempt#1",
+          "startTime": "2025-08-05T13:27:15.580000+00:00",
+          "endTime": "2025-08-05T13:27:29.518000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 13938.0,
+          "costDetails": {},
+          "promptTokens": 1598,
+          "totalTokens": 2242,
+          "completionTokens": 644,
+          "environment": "default",
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "environment": "default",
+      "updatedAt": "2025-08-05T13:28:06.759Z",
+      "createdAt": "2025-08-05T13:27:16.107Z"
+    },
+    {
+      "id": "0dc00de2",
+      "timestamp": "2025-08-05T13:26:21.901000+00:00",
+      "name": "0dc0_py_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import cv2\nimport numpy as np\n\n# Configuration Parameters\nmodel_path  = \"models/ssd-mobilenet_v1/detect.tflite\"\nlabel_path  = \"models/ssd-mobilenet_v1/labelmap.txt\"\ninput_path  = \"data/object_detection/sheeps.mp4\"\noutput_path  = \"results/object_detection/test_results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# Phase 1: Setup\nfrom tflite_runtime.interpreter import Interpreter\n\n# Load Labels\nwith open(label_path, 'r') as f:\n    labels = [line.strip() for line in f.readlines()]\n\n# Load Interpreter\ninterpreter = Interpreter(model_path=model_path)\ninterpreter.allocate_tensors()\n\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\ninput_shape = input_details[0]['shape']\ninput_dtype = input_details[0]['dtype']\n\n# Phase 2: Input Acquisition & Preprocessing Loop\ncap = cv2.VideoCapture(input_path)\n\n# Define the codec and create VideoWriter object\nfourcc = cv2.VideoWriter_fourcc(*'mp4v')\nout = cv2.VideoWriter(output_path, fourcc, 20.0, (int(cap.get(3)), int(cap.get(4))))\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n\n    # Preprocess Data\n    input_data = cv2.resize(frame, (input_shape[1], input_shape[2]))\n    input_data = np.expand_dims(input_data, axis=0).astype(input_dtype)\n\n    # Phase 3: Inference\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n    interpreter.invoke()\n\n    # Phase 4: Output Interpretation & Handling Loop\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]  # Bounding box coordinates of detected objects\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]  # Class index of detected objects\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]  # Confidence of detected objects\n\n    height, width, _ = frame.shape\n\n    for i in range(len(scores)):\n        if scores[i] > confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[i]\n            (left, right, top, bottom) = (xmin * width, xmax * width, ymin * height, ymax * height)\n            object_name = labels[int(classes[i])]\n            \n            # Draw bounding box and label on the frame\n            cv2.rectangle(frame, (int(left), int(top)), (int(right), int(bottom)), (0, 255, 0), 2)\n            label = f'{object_name}: {scores[i]:.2f}'\n            cv2.putText(frame, label, (int(left), int(top) - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)\n\n    # Handle Output\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "phi4_3b43_psg_batch",
+      "metadata": {
+        "num_run": 9
+      },
+      "tags": [
+        "benchmark",
+        "phi4:latest",
+        "py_sketch_generator"
+      ],
+      "latency": 14.049,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-16-26-21-902859_chatcmpl-a93a620b-26aa-4b87-8353-59f310a39fa3",
+          "traceId": "0dc00de2",
+          "type": "GENERATION",
+          "name": "0dc0_psg_gen_attempt#1",
+          "startTime": "2025-08-05T13:26:21.902000+00:00",
+          "endTime": "2025-08-05T13:26:35.951000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 14049.0,
+          "costDetails": {},
+          "promptTokens": 1598,
+          "totalTokens": 2242,
+          "completionTokens": 644,
+          "environment": "default",
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "environment": "default",
+      "updatedAt": "2025-08-05T13:27:13.879Z",
+      "createdAt": "2025-08-05T13:26:22.419Z"
+    },
+    {
+      "id": "b2ce77f0",
+      "timestamp": "2025-08-05T13:25:28.357000+00:00",
+      "name": "b2ce_py_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import cv2\nimport numpy as np\n\n# Configuration Parameters\nmodel_path  = \"models/ssd-mobilenet_v1/detect.tflite\"\nlabel_path  = \"models/ssd-mobilenet_v1/labelmap.txt\"\ninput_path  = \"data/object_detection/sheeps.mp4\"\noutput_path  = \"results/object_detection/test_results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# Phase 1: Setup\nfrom tflite_runtime.interpreter import Interpreter\n\n# Load Labels\nwith open(label_path, 'r') as f:\n    labels = [line.strip() for line in f.readlines()]\n\n# Load Interpreter\ninterpreter = Interpreter(model_path=model_path)\ninterpreter.allocate_tensors()\n\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\ninput_shape = input_details[0]['shape']\ninput_dtype = input_details[0]['dtype']\n\n# Phase 2: Input Acquisition & Preprocessing Loop\ncap = cv2.VideoCapture(input_path)\n\n# Define the codec and create VideoWriter object\nfourcc = cv2.VideoWriter_fourcc(*'mp4v')\nout = cv2.VideoWriter(output_path, fourcc, 20.0, (int(cap.get(3)), int(cap.get(4))))\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n\n    # Preprocess Data\n    input_data = cv2.resize(frame, (input_shape[1], input_shape[2]))\n    input_data = np.expand_dims(input_data, axis=0).astype(input_dtype)\n\n    # Phase 3: Inference\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n    interpreter.invoke()\n\n    # Phase 4: Output Interpretation & Handling Loop\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]  # Bounding box coordinates of detected objects\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]  # Class index of detected objects\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]  # Confidence of detected objects\n\n    height, width, _ = frame.shape\n\n    for i in range(len(scores)):\n        if scores[i] > confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[i]\n            (left, right, top, bottom) = (xmin * width, xmax * width, ymin * height, ymax * height)\n            class_id = int(classes[i])\n            label = f\"{labels[class_id]}: {int(scores[i] * 100)}%\"\n            \n            # Draw bounding box and label on the frame\n            cv2.rectangle(frame, (int(left), int(top)), (int(right), int(bottom)), (0, 255, 0), 2)\n            cv2.putText(frame, label, (int(left), int(top) - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)\n\n    # Handle Output\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "phi4_3b43_psg_batch",
+      "metadata": {
+        "num_run": 8
+      },
+      "tags": [
+        "benchmark",
+        "phi4:latest",
+        "py_sketch_generator"
+      ],
+      "latency": 14.028,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-16-25-28-359423_chatcmpl-3a3d54f3-e19d-44fd-ad17-03516cb06c09",
+          "traceId": "b2ce77f0",
+          "type": "GENERATION",
+          "name": "b2ce_psg_gen_attempt#1",
+          "startTime": "2025-08-05T13:25:28.359000+00:00",
+          "endTime": "2025-08-05T13:25:42.387000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 14028.0,
+          "costDetails": {},
+          "promptTokens": 1598,
+          "totalTokens": 2245,
+          "completionTokens": 647,
+          "environment": "default",
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "environment": "default",
+      "updatedAt": "2025-08-05T13:26:20.994Z",
+      "createdAt": "2025-08-05T13:25:28.876Z"
+    },
+    {
+      "id": "baad8bbc",
+      "timestamp": "2025-08-05T13:24:33.813000+00:00",
+      "name": "baad_py_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import cv2\nimport numpy as np\n\n# Configuration Parameters\nmodel_path  = \"models/ssd-mobilenet_v1/detect.tflite\"\nlabel_path  = \"models/ssd-mobilenet_v1/labelmap.txt\"\ninput_path  = \"data/object_detection/sheeps.mp4\"\noutput_path  = \"results/object_detection/test_results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# Phase 1: Setup\nfrom tflite_runtime.interpreter import Interpreter\n\n# Load Labels\nwith open(label_path, 'r') as f:\n    labels = [line.strip() for line in f.readlines()]\n\n# Load Interpreter\ninterpreter = Interpreter(model_path=model_path)\ninterpreter.allocate_tensors()\n\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\ninput_shape = input_details[0]['shape']\ninput_dtype = input_details[0]['dtype']\n\n# Phase 2: Input Acquisition & Preprocessing Loop\ncap = cv2.VideoCapture(input_path)\n\n# Define the codec and create VideoWriter object\nfourcc = cv2.VideoWriter_fourcc(*'mp4v')\nout = cv2.VideoWriter(output_path, fourcc, 20.0, (int(cap.get(3)), int(cap.get(4))))\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n\n    # Preprocess Data\n    input_data = cv2.resize(frame, (input_shape[1], input_shape[2]))\n    input_data = np.expand_dims(input_data, axis=0).astype(input_dtype)\n\n    # Phase 3: Inference\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n    interpreter.invoke()\n\n    # Phase 4: Output Interpretation & Handling Loop\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]  # Bounding box coordinates of detected objects\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]  # Class index of detected objects\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]  # Confidence of detected objects\n\n    height, width, _ = frame.shape\n\n    for i in range(len(scores)):\n        if scores[i] > confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[i]\n            (left, right, top, bottom) = (xmin * width, xmax * width, ymin * height, ymax * height)\n            object_name = labels[int(classes[i])]\n            \n            # Draw bounding box and label on the frame\n            cv2.rectangle(frame, (int(left), int(top)), (int(right), int(bottom)), (0, 255, 0), 2)\n            label = f'{object_name}: {scores[i]:.2f}'\n            cv2.putText(frame, label, (int(left), int(top) - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)\n\n    # Handle Output\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "phi4_3b43_psg_batch",
+      "metadata": {
+        "num_run": 7
+      },
+      "tags": [
+        "benchmark",
+        "phi4:latest",
+        "py_sketch_generator"
+      ],
+      "latency": 14.134,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-16-24-33-815412_chatcmpl-dded2c68-152e-41ba-9b55-2af4a98b31e7",
+          "traceId": "baad8bbc",
+          "type": "GENERATION",
+          "name": "baad_psg_gen_attempt#1",
+          "startTime": "2025-08-05T13:24:33.815000+00:00",
+          "endTime": "2025-08-05T13:24:47.949000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 14134.0,
+          "costDetails": {},
+          "promptTokens": 1598,
+          "totalTokens": 2242,
+          "completionTokens": 644,
+          "environment": "default",
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "environment": "default",
+      "updatedAt": "2025-08-05T13:25:28.009Z",
+      "createdAt": "2025-08-05T13:24:34.331Z"
+    },
+    {
+      "id": "7ef8453c",
+      "timestamp": "2025-08-05T13:23:38.870000+00:00",
+      "name": "7ef8_py_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import cv2\nimport numpy as np\n\n# Configuration Parameters\nmodel_path  = \"models/ssd-mobilenet_v1/detect.tflite\"\nlabel_path  = \"models/ssd-mobilenet_v1/labelmap.txt\"\ninput_path  = \"data/object_detection/sheeps.mp4\"\noutput_path  = \"results/object_detection/test_results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# Phase 1: Setup\nfrom tflite_runtime.interpreter import Interpreter\n\n# Load Labels\nwith open(label_path, 'r') as f:\n    labels = [line.strip() for line in f.readlines()]\n\n# Load Interpreter\ninterpreter = Interpreter(model_path=model_path)\ninterpreter.allocate_tensors()\n\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\ninput_shape = input_details[0]['shape']\ninput_dtype = input_details[0]['dtype']\n\n# Phase 2: Input Acquisition & Preprocessing Loop\ncap = cv2.VideoCapture(input_path)\n\n# Define the codec and create VideoWriter object\nfourcc = cv2.VideoWriter_fourcc(*'mp4v')\nout = cv2.VideoWriter(output_path, fourcc, 20.0, (int(cap.get(3)), int(cap.get(4))))\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n\n    # Preprocess Data\n    input_data = cv2.resize(frame, (input_shape[1], input_shape[2]))\n    input_data = np.expand_dims(input_data, axis=0).astype(input_dtype)\n\n    # Phase 3: Inference\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n    interpreter.invoke()\n\n    # Phase 4: Output Interpretation & Handling Loop\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]  # Bounding box coordinates of detected objects\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]  # Class index of detected objects\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]  # Confidence of detected objects\n\n    height, width, _ = frame.shape\n\n    for i in range(len(scores)):\n        if scores[i] > confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[i]\n            (left, right, top, bottom) = (xmin * width, xmax * width, ymin * height, ymax * height)\n            object_name = labels[int(classes[i])]\n            \n            # Draw bounding box and label on the frame\n            cv2.rectangle(frame, (int(left), int(top)), (int(right), int(bottom)), (0, 255, 0), 2)\n            label = f'{object_name}: {scores[i]:.2f}'\n            cv2.putText(frame, label, (int(left), int(top) - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)\n\n    # Handle Output\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "phi4_3b43_psg_batch",
+      "metadata": {
+        "num_run": 6
+      },
+      "tags": [
+        "benchmark",
+        "phi4:latest",
+        "py_sketch_generator"
+      ],
+      "latency": 14.027,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-16-23-38-872165_chatcmpl-f98a2bc0-7d51-4aad-8488-263c138b425d",
+          "traceId": "7ef8453c",
+          "type": "GENERATION",
+          "name": "7ef8_psg_gen_attempt#1",
+          "startTime": "2025-08-05T13:23:38.872000+00:00",
+          "endTime": "2025-08-05T13:23:52.899000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 14027.0,
+          "costDetails": {},
+          "promptTokens": 1598,
+          "totalTokens": 2242,
+          "completionTokens": 644,
+          "environment": "default",
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "environment": "default",
+      "updatedAt": "2025-08-05T13:24:32.618Z",
+      "createdAt": "2025-08-05T13:23:39.390Z"
+    },
+    {
+      "id": "cf590e4c",
+      "timestamp": "2025-08-05T13:22:44.205000+00:00",
+      "name": "cf59_py_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import cv2\nimport numpy as np\n\n# Configuration Parameters\nmodel_path  = \"models/ssd-mobilenet_v1/detect.tflite\"\nlabel_path  = \"models/ssd-mobilenet_v1/labelmap.txt\"\ninput_path  = \"data/object_detection/sheeps.mp4\"\noutput_path  = \"results/object_detection/test_results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# Phase 1: Setup\nfrom tflite_runtime.interpreter import Interpreter\n\n# Load Labels\nwith open(label_path, 'r') as f:\n    labels = [line.strip() for line in f.readlines()]\n\n# Load Interpreter\ninterpreter = Interpreter(model_path=model_path)\ninterpreter.allocate_tensors()\n\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\ninput_shape = input_details[0]['shape']\ninput_dtype = input_details[0]['dtype']\n\n# Phase 2: Input Acquisition & Preprocessing Loop\ncap = cv2.VideoCapture(input_path)\n\n# Define the codec and create VideoWriter object\nfourcc = cv2.VideoWriter_fourcc(*'mp4v')\nout = cv2.VideoWriter(output_path, fourcc, 20.0, (int(cap.get(3)), int(cap.get(4))))\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n\n    # Preprocess Data\n    input_data = cv2.resize(frame, (input_shape[1], input_shape[2]))\n    input_data = np.expand_dims(input_data, axis=0).astype(input_dtype)\n\n    # Phase 3: Inference\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n    interpreter.invoke()\n\n    # Phase 4: Output Interpretation & Handling Loop\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]  # Bounding box coordinates of detected objects\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]  # Class index of detected objects\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]  # Confidence of detected objects\n\n    height, width, _ = frame.shape\n\n    for i in range(len(scores)):\n        if scores[i] > confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[i]\n            (left, right, top, bottom) = (xmin * width, xmax * width, ymin * height, ymax * height)\n            object_name = labels[int(classes[i])]\n            \n            # Draw bounding box and label on the frame\n            cv2.rectangle(frame, (int(left), int(top)), (int(right), int(bottom)), (0, 255, 0), 2)\n            label = f'{object_name}: {scores[i]:.2f}'\n            cv2.putText(frame, label, (int(left), int(top) - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)\n\n    # Handle Output\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "phi4_3b43_psg_batch",
+      "metadata": {
+        "num_run": 5
+      },
+      "tags": [
+        "benchmark",
+        "phi4:latest",
+        "py_sketch_generator"
+      ],
+      "latency": 14.293,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-16-22-44-207293_chatcmpl-5f1edcc3-bc71-4de7-877c-a85655b17463",
+          "traceId": "cf590e4c",
+          "type": "GENERATION",
+          "name": "cf59_psg_gen_attempt#1",
+          "startTime": "2025-08-05T13:22:44.207000+00:00",
+          "endTime": "2025-08-05T13:22:58.500000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 14293.0,
+          "costDetails": {},
+          "promptTokens": 1598,
+          "totalTokens": 2242,
+          "completionTokens": 644,
+          "environment": "default",
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "environment": "default",
+      "updatedAt": "2025-08-05T13:23:38.432Z",
+      "createdAt": "2025-08-05T13:22:44.723Z"
+    },
+    {
+      "id": "55e7ec9f",
+      "timestamp": "2025-08-05T13:21:49.669000+00:00",
+      "name": "55e7_py_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import cv2\nimport numpy as np\n\n# Configuration Parameters\nmodel_path  = \"models/ssd-mobilenet_v1/detect.tflite\"\nlabel_path  = \"models/ssd-mobilenet_v1/labelmap.txt\"\ninput_path  = \"data/object_detection/sheeps.mp4\"\noutput_path  = \"results/object_detection/test_results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# Phase 1: Setup\nfrom tflite_runtime.interpreter import Interpreter\n\n# Load Labels\nwith open(label_path, 'r') as f:\n    labels = [line.strip() for line in f.readlines()]\n\n# Load Interpreter\ninterpreter = Interpreter(model_path=model_path)\ninterpreter.allocate_tensors()\n\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\ninput_shape = input_details[0]['shape']\ninput_dtype = input_details[0]['dtype']\n\n# Phase 2: Input Acquisition & Preprocessing Loop\ncap = cv2.VideoCapture(input_path)\n\n# Define the codec and create VideoWriter object\nfourcc = cv2.VideoWriter_fourcc(*'mp4v')\nout = cv2.VideoWriter(output_path, fourcc, 20.0, (int(cap.get(3)), int(cap.get(4))))\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n\n    # Preprocess Data\n    input_data = cv2.resize(frame, (input_shape[1], input_shape[2]))\n    input_data = np.expand_dims(input_data, axis=0).astype(input_dtype)\n\n    # Phase 3: Inference\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n    interpreter.invoke()\n\n    # Phase 4: Output Interpretation & Handling Loop\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]  # Bounding box coordinates of detected objects\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]  # Class index of detected objects\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]  # Confidence of detected objects\n\n    height, width, _ = frame.shape\n\n    for i in range(len(scores)):\n        if scores[i] > confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[i]\n            (left, right, top, bottom) = (xmin * width, xmax * width, ymin * height, ymax * height)\n            object_name = labels[int(classes[i])]\n            \n            # Draw bounding box and label on the frame\n            cv2.rectangle(frame, (int(left), int(top)), (int(right), int(bottom)), (0, 255, 0), 2)\n            label = f'{object_name}: {scores[i]:.2f}'\n            cv2.putText(frame, label, (int(left), int(top) - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)\n\n    # Handle Output\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "phi4_3b43_psg_batch",
+      "metadata": {
+        "num_run": 4
+      },
+      "tags": [
+        "benchmark",
+        "phi4:latest",
+        "py_sketch_generator"
+      ],
+      "latency": 13.873,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-16-21-49-670767_chatcmpl-32d8a9f6-3ad8-4c35-b0fb-6ae8c27d794a",
+          "traceId": "55e7ec9f",
+          "type": "GENERATION",
+          "name": "55e7_psg_gen_attempt#1",
+          "startTime": "2025-08-05T13:21:49.670000+00:00",
+          "endTime": "2025-08-05T13:22:03.543000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 13873.0,
+          "costDetails": {},
+          "promptTokens": 1598,
+          "totalTokens": 2242,
+          "completionTokens": 644,
+          "environment": "default",
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "environment": "default",
+      "updatedAt": "2025-08-05T13:22:43.345Z",
+      "createdAt": "2025-08-05T13:21:50.188Z"
+    },
+    {
+      "id": "09927bf3",
+      "timestamp": "2025-08-05T13:20:55.088000+00:00",
+      "name": "0992_py_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import cv2\nimport numpy as np\n\n# Configuration Parameters\nmodel_path  = \"models/ssd-mobilenet_v1/detect.tflite\"\nlabel_path  = \"models/ssd-mobilenet_v1/labelmap.txt\"\ninput_path  = \"data/object_detection/sheeps.mp4\"\noutput_path  = \"results/object_detection/test_results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# Phase 1: Setup\nfrom tflite_runtime.interpreter import Interpreter\n\n# Load Labels\nwith open(label_path, 'r') as f:\n    labels = [line.strip() for line in f.readlines()]\n\n# Load Interpreter\ninterpreter = Interpreter(model_path=model_path)\ninterpreter.allocate_tensors()\n\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\ninput_shape = input_details[0]['shape']\ninput_dtype = input_details[0]['dtype']\n\n# Phase 2: Input Acquisition & Preprocessing Loop\ncap = cv2.VideoCapture(input_path)\n\n# Define the codec and create VideoWriter object\nfourcc = cv2.VideoWriter_fourcc(*'mp4v')\nout = cv2.VideoWriter(output_path, fourcc, 20.0, (int(cap.get(3)), int(cap.get(4))))\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n\n    # Preprocess Data\n    input_data = cv2.resize(frame, (input_shape[1], input_shape[2]))\n    input_data = np.expand_dims(input_data, axis=0).astype(input_dtype)\n\n    # Phase 3: Inference\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n    interpreter.invoke()\n\n    # Phase 4: Output Interpretation & Handling Loop\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]  # Bounding box coordinates of detected objects\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]  # Class index of detected objects\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]  # Confidence of detected objects\n\n    height, width, _ = frame.shape\n\n    for i in range(len(scores)):\n        if scores[i] > confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[i]\n            (left, right, top, bottom) = (xmin * width, xmax * width, ymin * height, ymax * height)\n            object_name = labels[int(classes[i])]\n            \n            # Draw bounding box and label on the frame\n            cv2.rectangle(frame, (int(left), int(top)), (int(right), int(bottom)), (0, 255, 0), 2)\n            label = f'{object_name}: {scores[i]:.2f}'\n            cv2.putText(frame, label, (int(left), int(top) - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)\n\n    # Handle Output\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "phi4_3b43_psg_batch",
+      "metadata": {
+        "num_run": 3
+      },
+      "tags": [
+        "benchmark",
+        "phi4:latest",
+        "py_sketch_generator"
+      ],
+      "latency": 13.971,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-16-20-55-089876_chatcmpl-51b2bb99-3783-481c-b297-f355d1920b5f",
+          "traceId": "09927bf3",
+          "type": "GENERATION",
+          "name": "0992_psg_gen_attempt#1",
+          "startTime": "2025-08-05T13:20:55.089000+00:00",
+          "endTime": "2025-08-05T13:21:09.060000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 13971.0,
+          "costDetails": {},
+          "promptTokens": 1598,
+          "totalTokens": 2242,
+          "completionTokens": 644,
+          "environment": "default",
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "environment": "default",
+      "updatedAt": "2025-08-05T13:21:48.754Z",
+      "createdAt": "2025-08-05T13:20:55.605Z"
+    },
+    {
+      "id": "779a6cce",
+      "timestamp": "2025-08-05T13:20:03.499000+00:00",
+      "name": "779a_py_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import cv2\nimport numpy as np\n\n# Configuration Parameters\nmodel_path  = \"models/ssd-mobilenet_v1/detect.tflite\"\nlabel_path  = \"models/ssd-mobilenet_v1/labelmap.txt\"\ninput_path  = \"data/object_detection/sheeps.mp4\"\noutput_path  = \"results/object_detection/test_results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# Phase 1: Setup\nfrom tflite_runtime.interpreter import Interpreter\n\n# Load Labels\nwith open(label_path, 'r') as f:\n    labels = [line.strip() for line in f.readlines()]\n\n# Load Interpreter\ninterpreter = Interpreter(model_path=model_path)\ninterpreter.allocate_tensors()\n\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\ninput_shape = input_details[0]['shape']\ninput_dtype = input_details[0]['dtype']\n\n# Phase 2: Input Acquisition & Preprocessing Loop\ncap = cv2.VideoCapture(input_path)\n\n# Define the codec and create VideoWriter object\nfourcc = cv2.VideoWriter_fourcc(*'mp4v')\nout = cv2.VideoWriter(output_path, fourcc, 20.0, (int(cap.get(3)), int(cap.get(4))))\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n\n    # Preprocess Data\n    input_data = cv2.resize(frame, (input_shape[1], input_shape[2]))\n    input_data = np.expand_dims(input_data, axis=0).astype(input_dtype)\n\n    # Phase 3: Inference\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n    interpreter.invoke()\n\n    # Phase 4: Output Interpretation & Handling Loop\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]  # Bounding box coordinates of detected objects\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]  # Class index of detected objects\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]  # Confidence of detected objects\n\n    height, width, _ = frame.shape\n\n    for i in range(len(scores)):\n        if scores[i] > confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[i]\n            (left, right, top, bottom) = (xmin * width, xmax * width, ymin * height, ymax * height)\n            class_id = int(classes[i])\n            label = f\"{labels[class_id]}: {int(scores[i] * 100)}%\"\n            \n            # Draw bounding box and label on the frame\n            cv2.rectangle(frame, (int(left), int(top)), (int(right), int(bottom)), (0, 255, 0), 2)\n            cv2.putText(frame, label, (int(left), int(top) - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)\n\n    # Handle Output\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "phi4_3b43_psg_batch",
+      "metadata": {
+        "num_run": 2
+      },
+      "tags": [
+        "benchmark",
+        "phi4:latest",
+        "py_sketch_generator"
+      ],
+      "latency": 13.959,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-16-20-03-500819_chatcmpl-09821e8e-6e49-402e-95ed-f6738310af73",
+          "traceId": "779a6cce",
+          "type": "GENERATION",
+          "name": "779a_psg_gen_attempt#1",
+          "startTime": "2025-08-05T13:20:03.500000+00:00",
+          "endTime": "2025-08-05T13:20:17.459000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 13959.0,
+          "costDetails": {},
+          "promptTokens": 1598,
+          "totalTokens": 2245,
+          "completionTokens": 647,
+          "environment": "default",
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "environment": "default",
+      "updatedAt": "2025-08-05T13:20:54.667Z",
+      "createdAt": "2025-08-05T13:20:04.017Z"
+    },
+    {
+      "id": "74ed980d",
+      "timestamp": "2025-08-05T13:19:09.615000+00:00",
+      "name": "74ed_py_sketch_generator",
+      "input": null,
+      "output": {
+        "status": "success",
+        "sketch": "import cv2\nimport numpy as np\n\n# Configuration Parameters\nmodel_path  = \"models/ssd-mobilenet_v1/detect.tflite\"\nlabel_path  = \"models/ssd-mobilenet_v1/labelmap.txt\"\ninput_path  = \"data/object_detection/sheeps.mp4\"\noutput_path  = \"results/object_detection/test_results/sheeps_detections.mp4\"\nconfidence_threshold  = 0.5\n\n# Phase 1: Setup\nfrom tflite_runtime.interpreter import Interpreter\n\n# Load Labels\nwith open(label_path, 'r') as f:\n    labels = [line.strip() for line in f.readlines()]\n\n# Load Interpreter\ninterpreter = Interpreter(model_path=model_path)\ninterpreter.allocate_tensors()\n\ninput_details = interpreter.get_input_details()\noutput_details = interpreter.get_output_details()\n\ninput_shape = input_details[0]['shape']\ninput_dtype = input_details[0]['dtype']\n\n# Phase 2: Input Acquisition & Preprocessing Loop\ncap = cv2.VideoCapture(input_path)\n\n# Define the codec and create VideoWriter object\nfourcc = cv2.VideoWriter_fourcc(*'mp4v')\nout = cv2.VideoWriter(output_path, fourcc, 20.0, (int(cap.get(3)), int(cap.get(4))))\n\nwhile cap.isOpened():\n    ret, frame = cap.read()\n    if not ret:\n        break\n\n    # Preprocess Data\n    input_data = cv2.resize(frame, (input_shape[1], input_shape[2]))\n    input_data = np.expand_dims(input_data, axis=0).astype(input_dtype)\n\n    # Phase 3: Inference\n    interpreter.set_tensor(input_details[0]['index'], input_data)\n    interpreter.invoke()\n\n    # Phase 4: Output Interpretation & Handling Loop\n    boxes = interpreter.get_tensor(output_details[0]['index'])[0]  # Bounding box coordinates of detected objects\n    classes = interpreter.get_tensor(output_details[1]['index'])[0]  # Class index of detected objects\n    scores = interpreter.get_tensor(output_details[2]['index'])[0]  # Confidence of detected objects\n\n    height, width, _ = frame.shape\n\n    for i in range(len(scores)):\n        if scores[i] > confidence_threshold:\n            ymin, xmin, ymax, xmax = boxes[i]\n            (left, right, top, bottom) = (xmin * width, xmax * width, ymin * height, ymax * height)\n            class_id = int(classes[i])\n            label = f\"{labels[class_id]}: {int(scores[i] * 100)}%\"\n            \n            # Draw bounding box and label on the frame\n            cv2.rectangle(frame, (int(left), int(top)), (int(right), int(bottom)), (0, 255, 0), 2)\n            cv2.putText(frame, label, (int(left), int(top) - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)\n\n    # Handle Output\n    out.write(frame)\n\n# Phase 5: Cleanup\ncap.release()\nout.release()\ncv2.destroyAllWindows()"
+      },
+      "session_id": "phi4_3b43_psg_batch",
+      "metadata": {
+        "num_run": 1
+      },
+      "tags": [
+        "benchmark",
+        "phi4:latest",
+        "py_sketch_generator"
+      ],
+      "latency": 14.565,
+      "total_cost": 0.0,
+      "observations": [
+        {
+          "id": "time-16-19-09-616941_chatcmpl-0079e71f-b96c-4437-aeb8-abba62994991",
+          "traceId": "74ed980d",
+          "type": "GENERATION",
+          "name": "74ed_psg_gen_attempt#1",
+          "startTime": "2025-08-05T13:19:09.616000+00:00",
+          "endTime": "2025-08-05T13:19:24.181000+00:00",
+          "model": "phi4:latest",
+          "modelParameters": {
+            "temperature": "0.1",
+            "top_p": "0.3"
+          },
+          "level": "DEFAULT",
+          "calculatedTotalCost": 0.0,
+          "latency": 14565.0,
+          "costDetails": {},
+          "promptTokens": 1598,
+          "totalTokens": 2245,
+          "completionTokens": 647,
+          "environment": "default",
+          "statusMessage": null,
+          "calculatedInputCost": null,
+          "calculatedOutputCost": null
+        }
+      ],
+      "environment": "default",
+      "updatedAt": "2025-08-05T13:20:02.262Z",
+      "createdAt": "2025-08-05T13:19:10.134Z"
+    }
+  ],
+  "meta": {
+    "total_items": 30
+  }
+}

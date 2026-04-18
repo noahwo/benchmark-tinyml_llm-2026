@@ -1,0 +1,32 @@
+
+    \begin{table}[!h]
+        \centering
+        \resizebox{\textwidth}{!}{%
+        \begin{tabular}{|l|r|r|r|r|r|r|r|r|r|r|r|r|}
+        \hline
+        \multicolumn{1}{|c|}{} &
+          \multicolumn{4}{c|}{Overall Token} &
+          \multicolumn{4}{c|}{Input Token} &
+          \multicolumn{4}{c|}{Output Token} \\ \cline{2-13}
+        \multicolumn{1}{|c|}{\multirow{-2}{*}{Stages}} &
+          \multicolumn{1}{c|}{Ave} &
+          \multicolumn{1}{c|}{Med} &
+          \multicolumn{1}{c|}{Max} &
+          \multicolumn{1}{c|}{Min} &
+          \multicolumn{1}{c|}{Ave} &
+          \multicolumn{1}{c|}{Med} &
+          \multicolumn{1}{c|}{Max} &
+          \multicolumn{1}{c|}{Min} &
+          \multicolumn{1}{c|}{Ave} &
+          \multicolumn{1}{c|}{Med} &
+          \multicolumn{1}{c|}{Max} &
+          \multicolumn{1}{c|}{Min} \\ \hline
+    PSG & 2242 & 2242 & 2245 & 2242 & 1598 & 1598 & 1598 & 1598 & 644 & 644 & 647 & 644 \\ \hline
+TPUSG & 2749 & 2750 & 2787 & 2732 & 1806 & 1806 & 1806 & 1806 & 943 & 944 & 981 & 926 \\ \hline
+
+        \end{tabular}%
+        }
+        \caption{Token consumption details regarding Overall, Input, and Output in three stages. Batch ID: 3b43, Model: phi4:14b, Date: 08.07, Parameters: temperature=0.1, top-p=0.3}
+        \label{tab:token_details_3b43_phi4:14b_08.07}
+        \end{table}
+    
