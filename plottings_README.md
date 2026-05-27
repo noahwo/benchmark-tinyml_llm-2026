@@ -51,7 +51,7 @@ Contains comprehensive box plot statistics for Precision and Recall metrics acro
 Contains success rates grouped by models, prompt types (only for ablation dataset), and processors.
 
 **Columns:**
-- `model`: Internal model name (e.g., 'gpt-5', 'phi4', 'qwen32')
+- `model`: Internal model name (e.g., 'gpt-5', 'phi4', 'qw32')
 - `model_label`: Display label (e.g., 'G5', 'Phi4', 'Qw32B')
 - `processor`: Processor stage ('sg', 'psg', 'tpusg')
 - `processor_label`: Display label ('ArdSG', 'PyCPU-SG', 'PyTPU-SG')
@@ -78,7 +78,7 @@ Contains comprehensive box plot statistics for latency (execution time) and tota
 - `metric`: Performance metric ('latency', 'total_tokens')
 - `processor`: Processor stage ('sg', 'psg', 'tpusg')
 - `processor_label`: Display label ('ArdSG', 'PyCPU-SG', 'PyTPU-SG')
-- `model`: Internal model name ('gpt-5', 'phi4', 'qwen32')
+- `model`: Internal model name ('gpt-5', 'phi4', 'qw32')
 - `model_label`: Display label ('G5', 'Phi4', 'Qw32B')
 - `prompt_type`: Prompt type identifier ('abla-l1', 'abla-l2', 'original') - ONLY ABLATION
 - `prompt_type_label`: Display label ('Prompt L1', 'Prompt L2', 'Prompt Original') - ONLY ABLATION
@@ -140,7 +140,7 @@ Contains average latency and cost statistics for GPT models only, broken down by
 - **Model abbreviations:**
   - `gpt-5` / `G5`: GPT-5
   - `phi4` / `Phi4`: Microsoft Phi-4
-  - `qwen32` / `Qw32B`: Qwen 2.5 Coder 32B
+  - `qw32` / `Qw32B`: Qwen 2.5 Coder 32B
 - **Prompt types (ablation only):**
   - `abla-l1` / `Prompt L1`: Ablation Level 1 prompt
   - `abla-l2` / `Prompt L2`: Ablation Level 2 prompt
